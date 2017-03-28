@@ -1,7 +1,7 @@
 "use strict";
 var ORM = require("Sequelize");
 function initLessonModel(sequelize) {
-    return sequelize.define('Lesson', {
+    return sequelize.define("Lesson", {
         url: ORM.STRING,
         description: ORM.STRING,
         duration: ORM.STRING,

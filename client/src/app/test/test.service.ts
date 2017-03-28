@@ -8,7 +8,7 @@ export class TestService {
   constructor( private http: Http) { }
 
   loadAPI(): Observable<any> {
-    return this.http.get('api/test');
+    return this.http.get('api/test').map(res => res.json());
   }
 
 }

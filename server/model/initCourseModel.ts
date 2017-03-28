@@ -1,10 +1,10 @@
 
 import * as ORM from "Sequelize";
-import {Sequelize} from 'Sequelize';
+import {Sequelize} from "Sequelize";
 
 
-export function initCourseModel(sequelize: Sequelize) {
-    return sequelize.define('Course', {
+export function initCourseModel(sequelize: Sequelize): any {
+    return sequelize.define("Course", {
         description: ORM.STRING,
         url:  ORM.STRING,
         longDescription: ORM.TEXT,
@@ -14,5 +14,5 @@ export function initCourseModel(sequelize: Sequelize) {
         comingSoon: ORM.BOOLEAN,
         isNew: ORM.BOOLEAN,
         isOngoing: ORM.BOOLEAN
-    })
+    });
 }

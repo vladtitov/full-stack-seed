@@ -1,6 +1,7 @@
 /__build__
 /__server_build__
 /node_modules
+/node_modules/
 /typings
 /tsd_typings/
 npm-debug.log
@@ -12,3 +13,4 @@ perf-logs
 v8.log
 *.js.map
 /client/node_modules
+/client/node_modules/

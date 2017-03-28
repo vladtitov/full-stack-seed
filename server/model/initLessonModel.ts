@@ -2,12 +2,12 @@
 
 
 import ORM = require("Sequelize");
-import {Sequelize} from 'Sequelize';
+import {Sequelize} from "Sequelize";
 
 
 
-export function initLessonModel(sequelize:Sequelize) {
-    return sequelize.define('Lesson', {
+export function initLessonModel(sequelize: Sequelize) {
+    return sequelize.define("Lesson", {
         url: ORM.STRING,
         description: ORM.STRING,
         duration: ORM.STRING,

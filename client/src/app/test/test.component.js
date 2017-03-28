@@ -15,7 +15,8 @@ var TestComponent = (function () {
         this.testService = testService;
     }
     TestComponent.prototype.ngOnInit = function () {
-        this.testService.loadAPI().subscribe(console.log);
+        var _this = this;
+        this.testService.loadAPI().subscribe(function (res) { return _this.message = res.payload.message; });
     };
     TestComponent = __decorate([
         core_1.Component({

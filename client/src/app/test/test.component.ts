@@ -4,17 +4,18 @@ import {TestService} from './test.service';
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
-  providers:[TestService]
+  providers: [TestService]
 })
 export class TestComponent implements OnInit {
 
+  message: string;
   constructor( private testService: TestService) {
 
 
   }
 
   ngOnInit() {
-    this.testService.loadAPI().subscribe(console.log);
+    this.testService.loadAPI().subscribe(res => this.message = res.payload.message);
   }
 
 }
