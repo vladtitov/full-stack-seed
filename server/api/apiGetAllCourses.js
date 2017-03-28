@@ -1,5 +1,5 @@
 "use strict";
-var _ = require('lodash');
+var _ = require("lodash");
 var findAllCourses_1 = require("../queries/findAllCourses");
 var onError_1 = require("./onError");
 var onSuccess_1 = require("./onSuccess");
