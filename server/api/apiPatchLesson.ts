@@ -3,12 +3,9 @@
 import {Request, Response} from 'express';
 import * as _ from 'lodash';
 import {updateLesson} from "../queries/updateLesson";
-import {onSuccess} from "./onSuccess";
-import {onError} from "./onError";
-import {databaseErrorHandler} from "./databaseErrorHandler";
-
-
-
+import {onSuccess} from "./com";
+import {onError} from "./com";
+import {databaseErrorHandler} from "./com";
 
 export function apiPatchLesson(req:Request, res:Response) {
 

@@ -1,7 +1,5 @@
 
 
-
-
 import {LessonModel} from "../model/model";
 
 

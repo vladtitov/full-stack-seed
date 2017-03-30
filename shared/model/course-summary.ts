@@ -1,5 +1,4 @@
 
-
 export interface CourseSummary {
     readonly id:number,
     readonly url: string,
@@ -10,6 +9,7 @@ export interface CourseSummary {
 }
 
 
+
 export function createCourseSummary({
     id,
     url,
@@ -17,7 +17,6 @@ export function createCourseSummary({
     iconUrl,
     courseListIcon,
     seqNo}:any): CourseSummary {
-
 
     return {
         id, url, description, iconUrl, courseListIcon, seqNo

@@ -1,23 +1,28 @@
 
 import * as ORM from "Sequelize";
 import {Sequelize, LoggingOptions} from "Sequelize";
-import {initCourseModel} from "./initCourseModel";
-import {initLessonModel} from "./initLessonModel";
-
+import {initPostModel, initUserModel} from './initModel';
 
 
 const dbUrl: string = "postgres://postgres:postgres@localhost:5432/complete-typescript-course";
 
-const options: LoggingOptions = {benchmark: true, logging:console.log};
-
-const sequelize: Sequelize = new ORM(dbUrl, options);
 
 
-export const CourseModel =  initCourseModel(sequelize);
+const options: any = {
+  //benchmark: true,
+  //logging:console.log,
+  dialect: "sqlite",
+  storage: "server/data/posts.sqlite"
+};
 
-export const LessonModel =  initLessonModel(sequelize);
+//const sequelize: Sequelize = new ORM(dbUrl, options);
+const sequelize: Sequelize = new ORM('','','',options);
+
+export const UserModel =  initUserModel(sequelize);
+
+export const PostModel =  initPostModel(sequelize);
 
 
-CourseModel.hasMany(LessonModel, {foreignKey: "courseId"});
+//UserModel.hasMany(PostModel, {foreignKey: "userId"});
 
-LessonModel.belongsTo(CourseModel, {foreignKey: "courseId"});
+//PostModel.belongsTo(UserModel, {foreignKey: "userId"});

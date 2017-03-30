@@ -6,12 +6,14 @@ import {Application} from "express";
 // import {apiPatchLesson} from "./apiPatchLesson";
 // import {apiDeleteLesson} from "./apiDeleteLesson";
 import {apiTest} from "./apTest";
+import {apiGetAllPosts} from './apiGetAllPosts';
 
 
 export function initRestApi(app: Application ): void {
 
     app.route("/api/test").get(apiTest);
-    // app.route("/api/courses").get(apiGetAllCourses);
+
+     app.route("/api/posts").get(apiGetAllPosts);
   //  app.route("/api/courses/:id").get(apiGetCourseDetail);
 //
    // app.route("/api/lesson").post(apiCreateLesson);
@@ -19,3 +21,4 @@ export function initRestApi(app: Application ): void {
    // app.route("lesson/:id").delete(apiDeleteLesson);
 
 }
+

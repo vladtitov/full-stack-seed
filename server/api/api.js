@@ -5,9 +5,10 @@
 // import {apiPatchLesson} from "./apiPatchLesson";
 // import {apiDeleteLesson} from "./apiDeleteLesson";
 var apTest_1 = require("./apTest");
+var apiGetAllPosts_1 = require('./apiGetAllPosts');
 function initRestApi(app) {
     app.route("/api/test").get(apTest_1.apiTest);
-    // app.route("/api/courses").get(apiGetAllCourses);
+    app.route("/api/posts").get(apiGetAllPosts_1.apiGetAllPosts);
     //  app.route("/api/courses/:id").get(apiGetCourseDetail);
     //
     // app.route("/api/lesson").post(apiCreateLesson);

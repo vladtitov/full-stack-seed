@@ -1,6 +1,3 @@
-
-
-
 import {CourseDetail} from "./course-detail";
 
 

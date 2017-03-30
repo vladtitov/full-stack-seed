@@ -1,5 +1,14 @@
 "use strict";
 var hri = require('human-readable-ids').hri;
+function onSuccess(res, data) {
+    res.status(200).json({ data: data });
+}
+exports.onSuccess = onSuccess;
+function onError(res, message, err) {
+    console.error("Promise chain error ", message, err);
+    res.status(500).send();
+}
+exports.onError = onError;
 function databaseErrorHandler(res, err) {
     var id = hri.random();
     console.error("Database error occurred ", id, err);
@@ -7,4 +16,4 @@ function databaseErrorHandler(res, err) {
         message: "Error occurred error code " + id });
 }
 exports.databaseErrorHandler = databaseErrorHandler;
-//# sourceMappingURL=databaseErrorHandler.js.map
+//# sourceMappingURL=com.js.map
