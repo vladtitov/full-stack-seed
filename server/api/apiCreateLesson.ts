@@ -8,9 +8,6 @@ import {onError} from "./onError";
 import {onSuccess} from "./onSuccess";
 import {databaseErrorHandler} from "./databaseErrorHandler";
 
-
-
-
 export function apiCreateLesson(req:Request, res:Response) {
 
     createLesson(req.body)

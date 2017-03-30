@@ -1,10 +1,10 @@
 "use strict";
 var ORM = require("Sequelize");
 var initModel_1 = require('./initModel');
-var dbUrl = "postgres://postgres:postgres@localhost:5432/complete-typescript-course";
+//const dbUrl: string = "postgres://postgres:postgres@localhost:5432/complete-typescript-course";
 var options = {
-    //benchmark: true,
-    //logging:console.log,
+    benchmark: true,
+    logging: console.log,
     dialect: "sqlite",
     storage: "server/data/posts.sqlite"
 };

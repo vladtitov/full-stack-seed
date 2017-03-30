@@ -7,7 +7,6 @@ import {onSuccess} from "./com";
 import {PostModel} from '../model/model';
 
 
-
 export function apiGetAllPosts(req: Request, res: Response): void {
 
     PostModel.findAll({
