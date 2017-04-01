@@ -12,10 +12,9 @@ import {apiLogin} from './apiLogin';
 
 export function initRestApi(app: Application ): void {
 
-    app.route("/api/test").get(apiTest);
-     app.route("/api/posts").get(apiGetAllPosts);
-
-    app.route("/api/login").get(apiLogin);
+  app.route("/api/test").get(apiTest);
+  app.route("/api/posts").get(apiGetAllPosts);
+  app.route("/api/login").post(apiLogin);
   //  app.route("/api/courses/:id").get(apiGetCourseDetail);
 //
    // app.route("/api/lesson").post(apiCreateLesson);

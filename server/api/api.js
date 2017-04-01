@@ -10,7 +10,7 @@ var apiLogin_1 = require('./apiLogin');
 function initRestApi(app) {
     app.route("/api/test").get(apTest_1.apiTest);
     app.route("/api/posts").get(apiGetAllPosts_1.apiGetAllPosts);
-    app.route("/api/login").get(apiLogin_1.apiLogin);
+    app.route("/api/login").post(apiLogin_1.apiLogin);
     //  app.route("/api/courses/:id").get(apiGetCourseDetail);
     //
     // app.route("/api/lesson").post(apiCreateLesson);
