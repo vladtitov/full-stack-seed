@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { TestComponent } from './test/test.component';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import {AuthHttp, AuthModule} from './test/angular2-jwt';
 
 @NgModule({
   declarations: [
@@ -16,9 +17,10 @@ import 'rxjs/add/operator/toPromise';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    AuthModule
   ],
-  providers: [],
+  providers: [AuthHttp],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

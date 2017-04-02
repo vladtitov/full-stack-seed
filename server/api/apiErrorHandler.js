@@ -5,4 +5,3 @@ function apiErrorHandler(err, req, res, next) {
         message: 'Internal Server Error' });
 }
 exports.apiErrorHandler = apiErrorHandler;
-//# sourceMappingURL=apiErrorHandler.js.map

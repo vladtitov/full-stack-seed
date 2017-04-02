@@ -6,6 +6,7 @@ import {onError, onSuccess} from './com';
 import * as JWT from "jsonwebtoken";
 
 const EXPIRATION_TIME:number = 180;
+const MY_SECRET:string = 'my secrete 2';
 /**
  * Created by Vlad on 3/29/2017.
  */
@@ -13,57 +14,69 @@ const EXPIRATION_TIME:number = 180;
 export function apiLogin(req: Request, respond: Response): void {
  // let  email:string = 'uplight.ca@gmail.com' , password:string = '$2a$10$Op3rW9gYT6uXDlAOrmRsHOheTy6jwwDamZONx.apHaQjzmqj8Tiem';
   console.log(req.body)
-  var params = _.pick(req.body, 'username', 'password', 'deviceId');
-
+  let params = _.pick(req.body, 'username', 'password', 'deviceId');
 
   if (!params.username || !params.password || !params.deviceId) {
     respond.status(400).send({error: 'username, password, and deviceId  are required parameters'});
     return
   }
 
-  var user = UserModel.findOne({where:{ email:params.username}})
-    .then(userR => {
-      if (_.isNull(userR)){
-        respond.status(404).send({error: 'User does not exist'});
-        return
-      }
-     // console.log(userR);
-      if(_.isMatch(userR,{password:params.password}))  return userR
-      respond.status(200).send(userR);
-      return;
-     // userR.comparePassword(params.password);
-    })
-    .then((item:any) => {
-
-      let userKey = uuidV4();
-      let issuedAt = new Date().getTime();
-      let expiresAt = issuedAt + (EXPIRATION_TIME * 1000);
-
-      let token = JWT.sign({email:item.email,did:params.deviceId,iat:issuedAt,eat:expiresAt},'my secrete 2');
-
-      return {id:item.id, at:item.createdAt, token:token};
-
-    }).then(res=>{
-      console.log(res);
-      return res
-  })
+  let user = UserModel.findOne({where:{ email:params.username}})
+    .then(_.partial(checkUser, params.password, respond))
+    .then(_.partial(generateToken, respond))
     .then(_.partial(onSuccess, respond))
     .catch(_.partial(onError, respond, "Login Failed"));
+}
 
+export function checkUser(password:string, respond:Response, user:any){
+
+  if (_.isNull(user)){
+    respond.status(404).send({error: 'User does not exist'});
+    return null
+  }
+  // console.log(userR);
+  if(_.isMatch(user, {password:password}))  return user;
+  respond.status(403).send({err:'password not match'});
+  return null;
+}
+
+export function generateToken(respond:Response, user:any):string{
+  if(!user) return '';
+  let token:any ={}
+  token.userId = user.id;
+  token.id = uuidV4();
+  token.iat =  new Date().getTime();
+  token.eat = token.iat + (EXPIRATION_TIME * 1000);
+  let t = JWT.sign(token, MY_SECRET);
+  respond.header('x-access-token', t);
+  respond.cookie('token', t, { maxAge: 86400 });
+  return  t;
+}
+
+export function readToken(token:string):any{
+  return JWT.verify(token, MY_SECRET);
+}
+
+export function verifyLogin(req:any, res:Response, next:Function):void{
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  console.log(token);
+  if (token) {
+    JWT.verify(token, MY_SECRET, function(err:any, decoded:any) {
+      console.log(err, decoded);
+      if (err) {
+        res.json({ success: false, message: 'Failed to authenticate token.' });
+      } else {
+        req.decoded = decoded;
+        next();
+      }
+    });
+
+  } else {
+    res.status(403).send({
+      success: false,
+      message: 'No token provided.'
+    });
+  }
 }
 
 
-
-export function generateToken(user:{id:number, email:string}):AccessToken{
-
-  return {id:'jjjjjj',  userId:user.id, ttl:34455, created:"00000" }
-}
-
-
-
-export interface AccessToken{
-  id:string;
-  ttl:number;
-  created:string;
-  userId: number;
-}

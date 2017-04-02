@@ -15,7 +15,15 @@ export class TestComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.testService.loadAPI().subscribe(res => this.message = res.payload.message);
+    this.testService.loadAPI().subscribe(res => {
+      this.message = res.data.message;
+      this.testService.login().subscribe(res =>{
+        console.log(res);
+        this.testService.getPosts().subscribe(res=>{
+          console.log(res);
+        })
+      });
+    })
   }
 
 }

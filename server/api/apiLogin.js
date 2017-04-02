@@ -5,6 +5,7 @@ var model_1 = require('../model/model');
 var com_1 = require('./com');
 var JWT = require("jsonwebtoken");
 var EXPIRATION_TIME = 180;
+var MY_SECRET = 'my secrete 2';
 /**
  * Created by Vlad on 3/29/2017.
  */
@@ -17,34 +18,62 @@ function apiLogin(req, respond) {
         return;
     }
     var user = model_1.UserModel.findOne({ where: { email: params.username } })
-        .then(function (userR) {
-        if (_.isNull(userR)) {
-            respond.status(404).send({ error: 'User does not exist' });
-            return;
-        }
-        // console.log(userR);
-        if (_.isMatch(userR, { password: params.password }))
-            return userR;
-        respond.status(200).send(userR);
-        return;
-        // userR.comparePassword(params.password);
-    })
-        .then(function (item) {
-        var userKey = uuidV4();
-        var issuedAt = new Date().getTime();
-        var expiresAt = issuedAt + (EXPIRATION_TIME * 1000);
-        var token = JWT.sign({ email: item.email, did: params.deviceId, iat: issuedAt, eat: expiresAt }, 'my secrete 2');
-        return { id: item.id, at: item.createdAt, token: token };
-    }).then(function (res) {
-        console.log(res);
-        return res;
-    })
+        .then(_.partial(checkUser, params.password, respond))
+        .then(_.partial(generateToken, respond))
         .then(_.partial(com_1.onSuccess, respond))
         .catch(_.partial(com_1.onError, respond, "Login Failed"));
 }
 exports.apiLogin = apiLogin;
-function generateToken(user) {
-    return { id: 'jjjjjj', userId: user.id, ttl: 34455, created: "00000" };
+function checkUser(password, respond, user) {
+    if (_.isNull(user)) {
+        respond.status(404).send({ error: 'User does not exist' });
+        return null;
+    }
+    // console.log(userR);
+    if (_.isMatch(user, { password: password }))
+        return user;
+    respond.status(403).send({ err: 'password not match' });
+    return null;
+}
+exports.checkUser = checkUser;
+function generateToken(respond, user) {
+    if (!user)
+        return '';
+    var token = {};
+    token.userId = user.id;
+    token.id = uuidV4();
+    token.iat = new Date().getTime();
+    token.eat = token.iat + (EXPIRATION_TIME * 1000);
+    var t = JWT.sign(token, MY_SECRET);
+    respond.header('x-access-token', t);
+    respond.cookie('token', t, { maxAge: 86400 });
+    return t;
 }
 exports.generateToken = generateToken;
-//# sourceMappingURL=apiLogin.js.map
+function readToken(token) {
+    return JWT.verify(token, MY_SECRET);
+}
+exports.readToken = readToken;
+function verifyLogin(req, res, next) {
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    console.log(token);
+    if (token) {
+        JWT.verify(token, MY_SECRET, function (err, decoded) {
+            console.log(err, decoded);
+            if (err) {
+                res.json({ success: false, message: 'Failed to authenticate token.' });
+            }
+            else {
+                req.decoded = decoded;
+                next();
+            }
+        });
+    }
+    else {
+        res.status(403).send({
+            success: false,
+            message: 'No token provided.'
+        });
+    }
+}
+exports.verifyLogin = verifyLogin;

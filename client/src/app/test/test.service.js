@@ -15,7 +15,7 @@ var TestService = (function () {
         this.http = http;
     }
     TestService.prototype.loadAPI = function () {
-        return this.http.get('api/test').map(function (res) { return res.json(); });
+        return this.http.get('http://localhost:8090/api/test').map(function (res) { return res.json(); });
     };
     TestService = __decorate([
         core_1.Injectable(), 

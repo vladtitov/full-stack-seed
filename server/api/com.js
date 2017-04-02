@@ -1,7 +1,8 @@
 "use strict";
 var hri = require('human-readable-ids').hri;
 function onSuccess(res, data) {
-    res.status(200).json({ data: data });
+    if (data)
+        res.status(200).json({ data: data });
 }
 exports.onSuccess = onSuccess;
 function onError(res, message, err) {

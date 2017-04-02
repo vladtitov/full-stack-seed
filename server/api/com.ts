@@ -5,9 +5,7 @@ import {Response} from 'express';
 const hri = require('human-readable-ids').hri;
 
 export function onSuccess(res:Response, data:any) {
-
-  res.status(200).json({data:data});
-
+if(data)  res.status(200).json({data:data});
 }
 
 

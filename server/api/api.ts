@@ -1,25 +1,12 @@
 
 import {Application} from "express";
-// import {apiGetAllCourses} from "./apiGetAllCourses";
-// import {apiGetCourseDetail} from "./apiGetCourseDetail";
-// import {apiCreateLesson} from "./apiCreateLesson";
-// import {apiPatchLesson} from "./apiPatchLesson";
-// import {apiDeleteLesson} from "./apiDeleteLesson";
-import {apiTest} from "./apTest";
 import {apiGetAllPosts} from './apiGetAllPosts';
 import {apiLogin} from './apiLogin';
 
 
 export function initRestApi(app: Application ): void {
 
-  app.route("/api/test").get(apiTest);
   app.route("/api/posts").get(apiGetAllPosts);
-  app.route("/api/login").post(apiLogin);
-  //  app.route("/api/courses/:id").get(apiGetCourseDetail);
-//
-   // app.route("/api/lesson").post(apiCreateLesson);
-   // app.route("/api/lesson/:id").patch(apiPatchLesson);
-   // app.route("lesson/:id").delete(apiDeleteLesson);
 
 }
 

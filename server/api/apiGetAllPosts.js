@@ -21,4 +21,3 @@ function apiGetAllPosts(req, res) {
   */
 }
 exports.apiGetAllPosts = apiGetAllPosts;
-//# sourceMappingURL=apiGetAllPosts.js.map
