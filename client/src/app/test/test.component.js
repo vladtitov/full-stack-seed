@@ -10,13 +10,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var test_service_1 = require('./test.service');
+var angular2_jwt_1 = require('./angular2-jwt');
 var TestComponent = (function () {
-    function TestComponent(testService) {
+    function TestComponent(testService, auth) {
         this.testService = testService;
+        this.auth = auth;
     }
     TestComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.testService.loadAPI().subscribe(function (res) { return _this.message = res.payload.message; });
+        this.testService.loadAPI().subscribe(function (res) {
+            _this.message = res.data.message;
+            _this.testService.login().subscribe(function (res) {
+                console.log(res);
+                localStorage.setItem('id_token', res.data),
+                    _this.testService.getPosts().subscribe(function (res) {
+                        console.log(res);
+                    });
+            });
+        });
     };
     TestComponent = __decorate([
         core_1.Component({
@@ -24,7 +35,7 @@ var TestComponent = (function () {
             templateUrl: './test.component.html',
             providers: [test_service_1.TestService]
         }), 
-        __metadata('design:paramtypes', [test_service_1.TestService])
+        __metadata('design:paramtypes', [test_service_1.TestService, angular2_jwt_1.AuthHttp])
     ], TestComponent);
     return TestComponent;
 }());

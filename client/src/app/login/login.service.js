@@ -8,19 +8,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+/**
+ * Created by Vlad on 4/3/2017.
+ */
 var core_1 = require('@angular/core');
-var AppComponent = (function () {
-    function AppComponent() {
-        this.title = 'app works!';
+var LoginService = (function () {
+    function LoginService() {
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'app-root',
-            template: "      \n      \n      <h1>\n      {{title}}\n          <app-test></app-test>\n  </h1>\n      <router-outlet></router-outlet>\n  "
-        }), 
+    LoginService = __decorate([
+        core_1.Injectable(), 
         __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ], LoginService);
+    return LoginService;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.LoginService = LoginService;
+//# sourceMappingURL=login.service.js.map

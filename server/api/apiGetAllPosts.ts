@@ -7,10 +7,14 @@ import {onSuccess} from "./com";
 import {PostModel} from '../model/model';
 
 
-export function apiGetAllPosts(req: Request, res: Response): void {
+export function apiGetAllPosts(req:any, res: Response): void {
 
+ // console.log(req.decoded);
+  let userId = req.decoded.userId;
+  console.log('userId  '+ userId);
     PostModel.findAll({
    //  order: ['seqNo']
+      where:{userId:userId}
    })
    .then((res:any[]) => {
      return res.map(function ({id, description}) {

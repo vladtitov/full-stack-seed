@@ -12,11 +12,20 @@ var platform_browser_1 = require('@angular/platform-browser');
 var core_1 = require('@angular/core');
 var forms_1 = require('@angular/forms');
 var http_1 = require('@angular/http');
+var router_1 = require('@angular/router');
+var app_routes_1 = require('./app.routes');
 var app_component_1 = require('./app.component');
 var test_component_1 = require('./test/test.component');
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/toPromise');
 var angular2_jwt_1 = require('./test/angular2-jwt');
+var about_component_1 = require('./about/about.component');
+var home_component_1 = require('./home/home.component');
+var repo_browser_component_1 = require('./github/repo-browser/repo-browser.component');
+var repo_list_component_1 = require('./github/repo-list/repo-list.component');
+var repo_detail_component_1 = require('./github/repo-detail/repo-detail.component');
+var contact_component_1 = require('./contact/contact.component');
+var github_service_1 = require('./github/shared/github.service');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -24,15 +33,27 @@ var AppModule = (function () {
         core_1.NgModule({
             declarations: [
                 app_component_1.AppComponent,
-                test_component_1.TestComponent
+                test_component_1.TestComponent,
+                about_component_1.AboutComponent,
+                repo_browser_component_1.RepoBrowserComponent,
+                repo_list_component_1.RepoListComponent,
+                repo_detail_component_1.RepoDetailComponent,
+                home_component_1.HomeComponent,
+                contact_component_1.ContactComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,
                 forms_1.FormsModule,
+                forms_1.ReactiveFormsModule,
                 http_1.HttpModule,
-                angular2_jwt_1.AuthModule
+                angular2_jwt_1.AuthModule,
+                router_1.RouterModule.forRoot(app_routes_1.rootRouterConfig, { useHash: true })
             ],
-            providers: [angular2_jwt_1.AuthHttp],
+            providers: [
+                angular2_jwt_1.AuthHttp,
+                github_service_1.GithubService,
+                angular2_jwt_1.provideAuth({})
+            ],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

@@ -5,7 +5,13 @@ var com_2 = require("./com");
 //import {findAllPosts} from '../queries/findAllPosts';
 var model_1 = require('../model/model');
 function apiGetAllPosts(req, res) {
-    model_1.PostModel.findAll({})
+    // console.log(req.decoded);
+    var userId = req.decoded.userId;
+    console.log('userId  ' + userId);
+    model_1.PostModel.findAll({
+        //  order: ['seqNo']
+        where: { userId: userId }
+    })
         .then(function (res) {
         return res.map(function (_a) {
             var id = _a.id, description = _a.description;
@@ -21,3 +27,4 @@ function apiGetAllPosts(req, res) {
   */
 }
 exports.apiGetAllPosts = apiGetAllPosts;
+//# sourceMappingURL=apiGetAllPosts.js.map

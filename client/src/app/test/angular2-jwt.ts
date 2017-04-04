@@ -374,10 +374,20 @@ function objectAssign(target: any, ...source: any[]) {
  * Module for angular2-jwt
  * @experimental
  */
+
+export function authHttpFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig({
+    tokenName: 'token',
+    tokenGetter: (() => localStorage.getItem('token')),
+    globalHeaders: [{'Content-Type':'application/json'}],
+  }), http, options);
+}
+
 @NgModule({
   imports: [HttpModule],
   providers: [AuthHttp, JwtHelper]
 })
+
 export class AuthModule {
   constructor(@Optional() @SkipSelf() parentModule: AuthModule) {
     if (parentModule) {
