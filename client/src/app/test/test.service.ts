@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {AuthHttp} from './angular2-jwt';
+import {AuthHttp} from '../libs/angular2-jwt';
 
 @Injectable()
 export class TestService {

@@ -9,16 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var angular2_jwt_1 = require('./libs/angular2-jwt');
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(http) {
+        this.http = http;
         this.title = 'app works!';
     }
+    AppComponent.prototype.ngOnInit = function () {
+        /*this.menu = this.http.get('http://localhost:8090/api/menu/1').map(res=>{
+    
+          console.log(res.json().menu);
+          return res.json().menu;
+        })*/
+    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'app-root',
-            template: "      \n      \n      <h1>\n      {{title}}\n          <app-test></app-test>\n  </h1>\n      <router-outlet></router-outlet>\n  "
+            template: "       \n      <h1>{{title}}</h1>\n      <div>\n          {{menu | async}}\n      <ul>\n          UL\n         <!-- <li *ngFor = \"let item of (menu | async)\" >\n              {{item}}\n          </li>-->\n      </ul>\n      \n      </div>\n      <app-test> </app-test>      \n      <router-outlet></router-outlet>\n  "
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp])
     ], AppComponent);
     return AppComponent;
 }());

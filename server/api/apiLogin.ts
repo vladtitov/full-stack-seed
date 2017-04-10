@@ -55,7 +55,7 @@ export function generateToken(respond:Response, user:any):string{
   token.userId = user.id;
   token.id = uuidV4();
   token.iat =  new Date().getTime();
-  token.eat = token.iat + (EXPIRATION_TIME * 1000);
+  token.exp = token.iat + (EXPIRATION_TIME * 1000);
   let t = JWT.sign(token, MY_SECRET);
  // respond.header('x-access-token', t);
   respond.cookie('token', t, { maxAge: 86400 });

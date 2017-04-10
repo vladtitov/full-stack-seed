@@ -12,12 +12,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Created by Vlad on 4/3/2017.
  */
 var core_1 = require('@angular/core');
-var LoginService = (function () {
-    function LoginService() {
+var rxjs_1 = require('rxjs');
+var http_1 = require('@angular/http');
+var User = (function () {
+    function User() {
     }
+    return User;
+}());
+exports.User = User;
+exports.UNKNOWN_USER = {
+    firstName: 'Unknown'
+};
+var LoginService = (function () {
+    function LoginService(http) {
+        this.http = http;
+        this.subject = new rxjs_1.BehaviorSubject(exports.UNKNOWN_USER);
+        this.user$ = this.subject.asObservable();
+    }
+    LoginService.prototype.login = function (username, password) {
+        var _this = this;
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.post('/api/login', { username: username, password: password }, headers)
+            .map(function (res) { return res.json(); })
+            .do(function (user) { return console.log(user); })
+            .do(function (user) { return _this.subject.next(user); })
+            .publishLast().refCount();
+    };
     LoginService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [http_1.Http])
     ], LoginService);
     return LoginService;
 }());

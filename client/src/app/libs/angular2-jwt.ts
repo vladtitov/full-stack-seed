@@ -11,6 +11,7 @@ import {
   Response,
   HttpModule
 } from "@angular/http";
+
 import {Injectable, Provider, NgModule, Optional, SkipSelf, ModuleWithProviders} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/observable/fromPromise";
@@ -40,6 +41,7 @@ export interface IAuthConfigOptional {
 }
 
 export class AuthConfigConsts {
+
   public static DEFAULT_TOKEN_NAME = 'id_token';
   public static DEFAULT_HEADER_NAME = 'Authorization';
   public static HEADER_PREFIX_BEARER = 'Bearer ';
@@ -303,6 +305,15 @@ export class JwtHelper {
  * Checks for presence of token and that token hasn't expired.
  * For use with the @CanActivate router decorator and NgIf
  */
+
+export function getTokenExpiredDate(tokenName = AuthConfigConsts.DEFAULT_TOKEN_NAME, jwt?:string): any {
+
+  const token: string = jwt || localStorage.getItem(tokenName);
+
+  const jwtHelper = new JwtHelper();
+
+  return jwtHelper.getTokenExpirationDate(token);
+}
 export function tokenNotExpired(tokenName = AuthConfigConsts.DEFAULT_TOKEN_NAME, jwt?:string): boolean {
 
   const token: string = jwt || localStorage.getItem(tokenName);
@@ -370,10 +381,7 @@ function objectAssign(target: any, ...source: any[]) {
   }
   return to;
 }
-/**
- * Module for angular2-jwt
- * @experimental
- */
+
 
 export function authHttpFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -388,7 +396,12 @@ export function authHttpFactory(http: Http, options: RequestOptions) {
   providers: [AuthHttp, JwtHelper]
 })
 
+
+
+
+
 export class AuthModule {
+
   constructor(@Optional() @SkipSelf() parentModule: AuthModule) {
     if (parentModule) {
       throw new Error(

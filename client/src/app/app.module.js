@@ -18,7 +18,7 @@ var app_component_1 = require('./app.component');
 var test_component_1 = require('./test/test.component');
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/toPromise');
-var angular2_jwt_1 = require('./test/angular2-jwt');
+var angular2_jwt_1 = require('./libs/angular2-jwt');
 var about_component_1 = require('./about/about.component');
 var home_component_1 = require('./home/home.component');
 var repo_browser_component_1 = require('./github/repo-browser/repo-browser.component');
@@ -26,6 +26,11 @@ var repo_list_component_1 = require('./github/repo-list/repo-list.component');
 var repo_detail_component_1 = require('./github/repo-detail/repo-detail.component');
 var contact_component_1 = require('./contact/contact.component');
 var github_service_1 = require('./github/shared/github.service');
+var login_main_component_1 = require('./login/login-main.component');
+var login_service_1 = require('./login/login.service');
+var material_1 = require('@angular/material');
+//import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+var home_service_1 = require('./home/home.service');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -39,12 +44,15 @@ var AppModule = (function () {
                 repo_list_component_1.RepoListComponent,
                 repo_detail_component_1.RepoDetailComponent,
                 home_component_1.HomeComponent,
-                contact_component_1.ContactComponent
+                contact_component_1.ContactComponent,
+                login_main_component_1.LoginMain
             ],
             imports: [
                 platform_browser_1.BrowserModule,
                 forms_1.FormsModule,
                 forms_1.ReactiveFormsModule,
+                material_1.MaterialModule,
+                // BrowserAnimationsModule,
                 http_1.HttpModule,
                 angular2_jwt_1.AuthModule,
                 router_1.RouterModule.forRoot(app_routes_1.rootRouterConfig, { useHash: true })
@@ -52,6 +60,8 @@ var AppModule = (function () {
             providers: [
                 angular2_jwt_1.AuthHttp,
                 github_service_1.GithubService,
+                login_service_1.LoginService,
+                home_service_1.HomeService,
                 angular2_jwt_1.provideAuth({})
             ],
             bootstrap: [app_component_1.AppComponent]

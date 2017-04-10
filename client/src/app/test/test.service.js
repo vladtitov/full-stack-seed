@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
-var angular2_jwt_1 = require('./angular2-jwt');
+var angular2_jwt_1 = require('../libs/angular2-jwt');
 var TestService = (function () {
     function TestService(http, auth) {
         this.http = http;

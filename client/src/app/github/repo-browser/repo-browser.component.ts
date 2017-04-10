@@ -4,8 +4,12 @@ import { GithubService } from '../shared/github.service';
 
 @Component({
   selector: 'repo-browser',
-  templateUrl: './repo-browser.component.html',
-  styleUrls: ['./repo-browser.component.css']
+  template: `
+      <h3>GitHub Browser</h3>
+      <input type="text" #repoName placeholder="Search Github Orgs" value="angular" />
+      <button (click)="searchForOrg(repoName.value)">Search Orgs</button>
+      <router-outlet></router-outlet>  
+  `
 })
 export class RepoBrowserComponent {
 

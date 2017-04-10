@@ -13,13 +13,18 @@ import {onSuccess} from "./api/com";
 const app: Application = express();
 const cors = require('cors');
 app.use(bodyParser.json());
+
+app.use('/node_modules',express.static('./client/node_modules'));
 app.use(cors({credentials:true}));
-app.use(function(req:any, res:Response , next:Function){
+app.use('/api',function(req:any, res:Response , next:Function){
+ // console.log(req.path);
+
   let method = req.method && req.method.toUpperCase && req.method.toUpperCase();
-  if (req.path === '/api/login') apiLogin(req, res);
-  else if(req.path === '/api/test') onSuccess(res,{message:"Test from server"});
+  if (req.path === '/login') apiLogin(req, res);
+  else if(req.path === '/test') onSuccess(res,{message:"Test from server"});
   else verifyLogin(req,res,next);
 });
+app.use('/',express.static('./client/src'));
 initRestApi(app);
 app.use(apiErrorHandler);
 
