@@ -10,25 +10,25 @@ import {Router} from '@angular/router';
   template:`
   <div>
       <div>
-          <div>
-             <div>
-                <div>
+          <div>             
+              <form  [formGroup]="loginForm" novalidate>
+                  <div>
                     <md-input-container>
                         <input #username mdInput  type="text"  formControlName="username"  placeholder="username"  />
                     </md-input-container>
-                </div>
-                <div>
-                    <md-input-container>
-                        <input #password mdInput type="password"  formControlName="password" placeholder="password" required />
-                    </md-input-container>
-                </div>
+                  </div>
                   <div>
-                      <button [disabled]="!loginForm.valid" md-raised-button color="accent" (click)="login(email.value, password.value)" >Login</button>
+                      <md-input-container>
+                          <input #password mdInput type="password"  formControlName="password" placeholder="password" required />
+                      </md-input-container>
+                  </div>
+                  <div>
+                      <button [disabled]="!loginForm.valid" md-raised-button color="accent" (click)="login(username.value, password.value)" >Login</button>
                   </div>
                 <div>
                     
                 </div>
-              </div>
+              </form>            
               
           </div>
       </div>

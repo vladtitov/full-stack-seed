@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var angular2_jwt_1 = require('../libs/angular2-jwt');
+var Observable_1 = require('rxjs/Observable');
 /**
  * Created by Vlad on 4/3/2017.
  */
@@ -18,11 +19,21 @@ var HomeService = (function () {
         this.http = http;
     }
     HomeService.prototype.getPosts = function () {
-        console.log(angular2_jwt_1.getTokenExpiredDate());
-        if (angular2_jwt_1.tokenNotExpired()) {
-            console.log(' not yet');
-        }
-        return this.http.get('http://localhost:8090/api/posts').map(function (res) { return res.json().data; });
+        //console.log(getTokenExpiredDate());
+        // if(tokenNotExpired()){
+        //  console.log(' not yet');
+        //}
+        var url = 'http://localhost:8090/api/posts';
+        console.log(url);
+        return this.http.get(url)
+            .map(function (res) {
+            var r = res.json().data;
+            console.log(r);
+            return r;
+        })
+            .catch(function (err) {
+            return Observable_1.Observable.throw(err);
+        });
     };
     HomeService = __decorate([
         core_1.Injectable(), 

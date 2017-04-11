@@ -12,7 +12,7 @@ import {
   HttpModule
 } from "@angular/http";
 
-import {Injectable, Provider, NgModule, Optional, SkipSelf, ModuleWithProviders} from "@angular/core";
+import {Injectable, Provider, NgModule, Optional, SkipSelf, ModuleWithProviders, Output, EventEmitter} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/observable/fromPromise";
 import "rxjs/add/observable/defer";
@@ -27,6 +27,7 @@ export interface IAuthConfig {
   noTokenScheme?: boolean;
   tokenGetter: () => string | Promise<string>;
   tokenName: string;
+  authError?:(why:string)=>void;
 }
 
 export interface IAuthConfigOptional {
@@ -38,6 +39,7 @@ export interface IAuthConfigOptional {
   noClientCheck?: boolean;
   globalHeaders?: Array<Object>;
   noTokenScheme?: boolean;
+  authError?:(why:string)=>void;
 }
 
 export class AuthConfigConsts {
@@ -88,7 +90,10 @@ export class AuthConfig {
 
 }
 
+
+
 export class AuthHttpError extends Error {
+
 }
 
 /**
@@ -98,6 +103,7 @@ export class AuthHttpError extends Error {
 @Injectable()
 export class AuthHttp {
 
+  @Output() authError:EventEmitter<string> = new EventEmitter();
   private config: IAuthConfig;
   public tokenStream: Observable<string>;
 
@@ -108,6 +114,7 @@ export class AuthHttp {
       obs.next(this.config.tokenGetter());
     });
   }
+
 
   private mergeOptions(providedOpts: RequestOptionsArgs, defaultOpts?: RequestOptions) {
     let newOptions = defaultOpts || new RequestOptions();
@@ -128,11 +135,15 @@ export class AuthHttp {
     return this.request(new Request(this.mergeOptions(options, this.defOpts)));
   }
 
+
   public requestWithToken(req: Request, token: string): Observable<Response> {
     if (!this.config.noClientCheck && !tokenNotExpired(undefined, token)) {
       if (!this.config.noJwtError) {
         return new Observable<Response>((obs: any) => {
+          this.authError.next('NoJWT');
+          if(this.config.authError)this.config.authError('No JWT present or has expired');
           obs.error(new AuthHttpError('No JWT present or has expired'));
+         // obs.error('No JWT present or has expired');
         });
       }
     } else {
@@ -306,9 +317,16 @@ export class JwtHelper {
  * For use with the @CanActivate router decorator and NgIf
  */
 
+export function setToken(token:string, tokenName = AuthConfigConsts.DEFAULT_TOKEN_NAME):any{
+  localStorage.setItem(tokenName,token);
+  const jwtHelper = new JwtHelper();
+  return jwtHelper.decodeToken(token);
+}
+
 export function getTokenExpiredDate(tokenName = AuthConfigConsts.DEFAULT_TOKEN_NAME, jwt?:string): any {
 
   const token: string = jwt || localStorage.getItem(tokenName);
+  if(!token) return null;
 
   const jwtHelper = new JwtHelper();
 

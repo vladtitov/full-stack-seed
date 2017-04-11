@@ -20,7 +20,7 @@ var HomeComponent = (function () {
         this.homeService.getPosts().subscribe(function (res) {
             _this.posts = res;
             console.log(res);
-        });
+        }, console.warn);
     };
     HomeComponent = __decorate([
         core_1.Component({

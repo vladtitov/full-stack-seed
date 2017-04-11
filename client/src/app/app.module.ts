@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import {RouterModule} from '@angular/router';
+import {Router, RouterModule} from '@angular/router';
 import {rootRouterConfig} from './app.routes';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
@@ -10,6 +10,9 @@ import { AppComponent } from './app.component';
 import { TestComponent } from './test/test.component';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/observable/throw';
+import 'rxjs/operator/publishLast';
+
 import {AuthHttp, AuthModule, provideAuth, AuthConfig} from './libs/angular2-jwt';
 
 
@@ -64,6 +67,7 @@ import {HomeService} from './home/home.service';
      // tokenGetter: (() => localStorage.getItem('id_token')),
     //  globalHeaders: [{ 'Content-Type': 'application/json' }],
     // noJwtError: true
+     // authError:(why:string)=>{ console.warn(why) }
     })
   ],
   bootstrap: [AppComponent]

@@ -20,7 +20,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
  * Created by Vlad on 4/2/2017.
  */
 var http_1 = require("@angular/http");
-var core_1 = require("@angular/core");
+var core_1 = require('@angular/core');
 var Observable_1 = require("rxjs/Observable");
 require("rxjs/add/observable/fromPromise");
 require("rxjs/add/observable/defer");
@@ -86,6 +86,7 @@ var AuthHttp = (function () {
         var _this = this;
         this.http = http;
         this.defOpts = defOpts;
+        this.authError = new core_1.EventEmitter();
         this.config = options.getConfig();
         this.tokenStream = new Observable_1.Observable(function (obs) {
             obs.next(_this.config.tokenGetter());
@@ -107,10 +108,15 @@ var AuthHttp = (function () {
         return this.request(new http_1.Request(this.mergeOptions(options, this.defOpts)));
     };
     AuthHttp.prototype.requestWithToken = function (req, token) {
+        var _this = this;
         if (!this.config.noClientCheck && !tokenNotExpired(undefined, token)) {
             if (!this.config.noJwtError) {
                 return new Observable_1.Observable(function (obs) {
+                    _this.authError.next('NoJWT');
+                    if (_this.config.authError)
+                        _this.config.authError('No JWT present or has expired');
                     obs.error(new AuthHttpError('No JWT present or has expired'));
+                    // obs.error('No JWT present or has expired');
                 });
             }
         }
@@ -171,6 +177,10 @@ var AuthHttp = (function () {
     AuthHttp.prototype.options = function (url, options) {
         return this.requestHelper({ body: '', method: http_1.RequestMethod.Options, url: url }, options);
     };
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', core_1.EventEmitter)
+    ], AuthHttp.prototype, "authError", void 0);
     AuthHttp = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [AuthConfig, http_1.Http, http_1.RequestOptions])
@@ -268,9 +278,18 @@ exports.JwtHelper = JwtHelper;
  * Checks for presence of token and that token hasn't expired.
  * For use with the @CanActivate router decorator and NgIf
  */
+function setToken(token, tokenName) {
+    if (tokenName === void 0) { tokenName = AuthConfigConsts.DEFAULT_TOKEN_NAME; }
+    localStorage.setItem(tokenName, token);
+    var jwtHelper = new JwtHelper();
+    return jwtHelper.decodeToken(token);
+}
+exports.setToken = setToken;
 function getTokenExpiredDate(tokenName, jwt) {
     if (tokenName === void 0) { tokenName = AuthConfigConsts.DEFAULT_TOKEN_NAME; }
     var token = jwt || localStorage.getItem(tokenName);
+    if (!token)
+        return null;
     var jwtHelper = new JwtHelper();
     return jwtHelper.getTokenExpirationDate(token);
 }

@@ -18,6 +18,8 @@ var app_component_1 = require('./app.component');
 var test_component_1 = require('./test/test.component');
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/toPromise');
+require('rxjs/add/observable/throw');
+require('rxjs/operator/publishLast');
 var angular2_jwt_1 = require('./libs/angular2-jwt');
 var about_component_1 = require('./about/about.component');
 var home_component_1 = require('./home/home.component');
