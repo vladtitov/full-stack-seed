@@ -278,6 +278,12 @@ exports.JwtHelper = JwtHelper;
  * Checks for presence of token and that token hasn't expired.
  * For use with the @CanActivate router decorator and NgIf
  */
+function getToken() {
+    var token = localStorage.getItem(AuthConfigConsts.DEFAULT_TOKEN_NAME);
+    var jwtHelper = new JwtHelper();
+    return jwtHelper.decodeToken(token);
+}
+exports.getToken = getToken;
 function setToken(token, tokenName) {
     if (tokenName === void 0) { tokenName = AuthConfigConsts.DEFAULT_TOKEN_NAME; }
     localStorage.setItem(tokenName, token);

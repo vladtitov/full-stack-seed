@@ -23,6 +23,8 @@ var HomeService = (function () {
         // if(tokenNotExpired()){
         //  console.log(' not yet');
         //}
+        var decoded = angular2_jwt_1.getToken();
+        console.log(new Date(decoded.exp * 1000).toLocaleString());
         var url = 'http://localhost:8090/api/posts';
         console.log(url);
         return this.http.get(url)

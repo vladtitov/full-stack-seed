@@ -45,24 +45,28 @@ function generateToken(respond, user) {
     var token = {};
     token.userId = user.id;
     token.id = uuidV4();
-    token.iat = new Date().getTime();
-    token.exp = token.iat + (EXPIRATION_TIME * 1000);
+    token.iat = Math.floor(new Date().getTime() / 1000);
+    token.exp = token.iat + EXPIRATION_TIME;
     var t = JWT.sign(token, MY_SECRET);
     // respond.header('x-access-token', t);
     respond.cookie('token', t, { maxAge: 86400 });
     return t;
 }
 exports.generateToken = generateToken;
-function readToken(token) {
-    return JWT.verify(token, MY_SECRET);
+/*
+export function readToken(token:string ):any{
+  return JWT.verify(token, MY_SECRET,function (err, decoded) {
+    console.log(err);
+  });
 }
-exports.readToken = readToken;
+*/
 function verifyLogin(req, res, next) {
     var token = req.body.token || req.query.token || req.headers.authorization ? req.headers.authorization.replace('Bearer ', '') : ''; //req.headers['x-access-token'];
     // console.log('token '+ token);
     if (token) {
         JWT.verify(token, MY_SECRET, function (err, decoded) {
-            // console.log(err, decoded);
+            console.log(new Date().toLocaleString());
+            console.log(err, decoded);
             if (err) {
                 res.json({ success: false, message: 'Failed to authenticate token.' });
             }

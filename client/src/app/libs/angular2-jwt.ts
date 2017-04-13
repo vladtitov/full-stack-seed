@@ -317,6 +317,11 @@ export class JwtHelper {
  * For use with the @CanActivate router decorator and NgIf
  */
 
+export function getToken():any{
+ let token =  localStorage.getItem(AuthConfigConsts.DEFAULT_TOKEN_NAME);
+  const jwtHelper = new JwtHelper();
+  return jwtHelper.decodeToken(token);
+}
 export function setToken(token:string, tokenName = AuthConfigConsts.DEFAULT_TOKEN_NAME):any{
   localStorage.setItem(tokenName,token);
   const jwtHelper = new JwtHelper();

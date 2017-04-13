@@ -54,28 +54,35 @@ export function generateToken(respond:Response, user:any):string{
   let token:any ={}
   token.userId = user.id;
   token.id = uuidV4();
-  token.iat =  new Date().getTime();
-  token.exp = token.iat + (EXPIRATION_TIME * 1000);
+  token.iat =  Math.floor(new Date().getTime()/1000);
+  token.exp = token.iat + EXPIRATION_TIME;
   let t = JWT.sign(token, MY_SECRET);
  // respond.header('x-access-token', t);
   respond.cookie('token', t, { maxAge: 86400 });
   return  t;
 }
 
-export function readToken(token:string):any{
-  return JWT.verify(token, MY_SECRET);
+/*
+export function readToken(token:string ):any{
+  return JWT.verify(token, MY_SECRET,function (err, decoded) {
+    console.log(err);
+  });
 }
+*/
 
 export function verifyLogin(req:any, res:Response, next:Function):void{
   let token = req.body.token || req.query.token || req.headers.authorization?req.headers.authorization.replace('Bearer ',''):'';//req.headers['x-access-token'];
  // console.log('token '+ token);
   if (token) {
     JWT.verify(token, MY_SECRET, function(err:any, decoded:any) {
-     // console.log(err, decoded);
+      console.log(new Date().toLocaleString());
+     console.log(err, decoded);
       if (err) {
         res.json({ success: false, message: 'Failed to authenticate token.' });
       } else {
+
         req.decoded = decoded;
+
         next();
       }
     });

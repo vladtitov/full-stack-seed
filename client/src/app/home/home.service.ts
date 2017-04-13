@@ -1,5 +1,5 @@
 import {Injectable, OnInit} from '@angular/core';
-import {AuthHttp, getTokenExpiredDate, tokenNotExpired} from '../libs/angular2-jwt';
+import {AuthHttp, getToken, getTokenExpiredDate, tokenNotExpired} from '../libs/angular2-jwt';
 import {Observable} from 'rxjs/Observable';
 /**
  * Created by Vlad on 4/3/2017.
@@ -15,6 +15,11 @@ export class HomeService{
    // if(tokenNotExpired()){
     //  console.log(' not yet');
     //}
+    let decoded = getToken();
+
+    console.log(new Date(decoded.exp*1000).toLocaleString());
+
+
     let url ='http://localhost:8090/api/posts';
 
     console.log(url)
