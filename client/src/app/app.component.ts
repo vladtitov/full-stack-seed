@@ -30,12 +30,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit():void{
-
     this.http.authError.subscribe((err:any)=>{
       console.warn(err);
       this.router.navigateByUrl('/login');
+    });
 
-    })
     /*this.menu = this.http.get('http://localhost:8090/api/menu/1').map(res=>{
 
       console.log(res.json().menu);

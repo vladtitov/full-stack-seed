@@ -88,6 +88,7 @@ var AuthHttp = (function () {
         this.defOpts = defOpts;
         this.authError = new core_1.EventEmitter();
         this.config = options.getConfig();
+        //console.log(this.config);
         this.tokenStream = new Observable_1.Observable(function (obs) {
             obs.next(_this.config.tokenGetter());
         });
@@ -112,11 +113,11 @@ var AuthHttp = (function () {
         if (!this.config.noClientCheck && !tokenNotExpired(undefined, token)) {
             if (!this.config.noJwtError) {
                 return new Observable_1.Observable(function (obs) {
-                    _this.authError.next('NoJWT');
-                    if (_this.config.authError)
-                        _this.config.authError('No JWT present or has expired');
-                    obs.error(new AuthHttpError('No JWT present or has expired'));
-                    // obs.error('No JWT present or has expired');
+                    _this.authError.next('No JWT');
+                    // console.log(obs);
+                    // if(this.config.authError)this.config.authError('No JWT present or has expired');
+                    // obs.error(new AuthHttpError('No JWT present or has expired'));
+                    //obs.error('No JWT present');
                 });
             }
         }

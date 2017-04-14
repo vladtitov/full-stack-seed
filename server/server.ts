@@ -28,6 +28,8 @@ app.use('/',express.static('./client/src'));
 initRestApi(app);
 app.use(apiErrorHandler);
 
+
+
 const port:number = 8090;
 app.listen(port, () => {
     console.log("Server is now running on port " + port);

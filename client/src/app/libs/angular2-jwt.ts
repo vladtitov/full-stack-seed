@@ -103,12 +103,16 @@ export class AuthHttpError extends Error {
 @Injectable()
 export class AuthHttp {
 
+
+
   @Output() authError:EventEmitter<string> = new EventEmitter();
   private config: IAuthConfig;
   public tokenStream: Observable<string>;
 
   constructor(options: AuthConfig, private http: Http, private defOpts?: RequestOptions) {
     this.config = options.getConfig();
+
+    //console.log(this.config);
 
     this.tokenStream = new Observable<string>((obs: any) => {
       obs.next(this.config.tokenGetter());
@@ -120,6 +124,7 @@ export class AuthHttp {
     let newOptions = defaultOpts || new RequestOptions();
     if (this.config.globalHeaders) {
       this.setGlobalHeaders(this.config.globalHeaders, providedOpts);
+
     }
 
     newOptions = newOptions.merge(new RequestOptions(providedOpts));
@@ -140,10 +145,12 @@ export class AuthHttp {
     if (!this.config.noClientCheck && !tokenNotExpired(undefined, token)) {
       if (!this.config.noJwtError) {
         return new Observable<Response>((obs: any) => {
-          this.authError.next('NoJWT');
-          if(this.config.authError)this.config.authError('No JWT present or has expired');
-          obs.error(new AuthHttpError('No JWT present or has expired'));
-         // obs.error('No JWT present or has expired');
+          this.authError.next('No JWT');
+         // console.log(obs);
+
+         // if(this.config.authError)this.config.authError('No JWT present or has expired');
+         // obs.error(new AuthHttpError('No JWT present or has expired'));
+          //obs.error('No JWT present');
         });
       }
     } else {

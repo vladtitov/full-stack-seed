@@ -16,16 +16,17 @@ var HomeComponent = (function () {
         this.posts = [];
     }
     HomeComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.homeService.getPosts().subscribe(function (res) {
-            _this.posts = res;
-            console.log(res);
-        }, console.warn);
+        this.posts$ = this.homeService.getPosts();
+        /* .subscribe(res=>{
+          this.posts = res;
+          console.log(res);
+        },
+        console.warn);*/
     };
     HomeComponent = __decorate([
         core_1.Component({
             selector: 'home',
-            template: "\n  <div>\n      <h3>Home</h3>\n      <div>\n          Posts\n          <div>\n              <ul>\n                <li *ngFor=\"let post of posts\">                \n                        {{ post.description }}                 \n                </li>\n              </ul>\n          </div>\n      </div>\n  </div>"
+            template: "\n  <div>\n      <h3>Home</h3>\n      <div>\n          Posts\n          <div>\n              <md-list>\n                <md-list-item *ngFor=\"let post of (posts$ | async)\">\n                    <md-icon md-list-icon class=\"fa fa-snowflake-o\"></md-icon>\n                    <md-icon md-list-avatar class=\"fa fa-area-chart\"></md-icon>\n                    <p md-line> {{ post.description }} </p>                                \n                </md-list-item>\n              </md-list>\n          </div>\n      </div>\n  </div>\n  "
         }), 
         __metadata('design:paramtypes', [home_service_1.HomeService])
     ], HomeComponent);
