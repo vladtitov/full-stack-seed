@@ -10,12 +10,14 @@ import { RepoListComponent } from './github/repo-list/repo-list.component';
 import { RepoDetailComponent } from './github/repo-detail/repo-detail.component';
 import { ContactComponent } from './contact/contact.component';
 import {LoginMain} from './login/login-main.component';
+import {SsMainComponent} from './ss-browse/ss-main/ss-main.component';
 
 export const rootRouterConfig: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'ss-main', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginMain },
   { path: 'about', component: AboutComponent },
+  { path: 'ss-main', component: SsMainComponent },
   { path: 'github', component: RepoBrowserComponent,
     children: [
       { path: '', component: RepoListComponent },
@@ -26,6 +28,5 @@ export const rootRouterConfig: Routes = [
         ]
       }]
   },
-
   { path: 'contact', component: ContactComponent }
 ];

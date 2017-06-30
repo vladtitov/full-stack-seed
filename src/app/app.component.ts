@@ -5,21 +5,7 @@ import {Http} from '@angular/http';
 
 @Component({
   selector: 'app-root',
-  template: `       
-      <h1>{{title}}</h1>
-      <div>
-          {{menu | async}}
-      <ul>
-          UL
-         <!-- <li *ngFor = "let item of (menu | async)" >
-              {{item}}
-          </li>-->
-      </ul>
-      
-      </div>
-     <!-- <app-test> </app-test>    -->  
-      <router-outlet></router-outlet>
-  `
+  templateUrl:'app.component.html'
 })
 export class AppComponent implements OnInit {
   title = 'app works!';

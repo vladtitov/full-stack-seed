@@ -28,6 +28,7 @@ import {LoginService} from './login/login.service';
 import {MaterialModule} from '@angular/material';
 //import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HomeService} from './home/home.service';
+import {SsBrowseModule} from './ss-browse/ss-browse.module';
 
 
 
@@ -48,6 +49,7 @@ import {HomeService} from './home/home.service';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    SsBrowseModule,
     MaterialModule,
    // BrowserAnimationsModule,
     HttpModule,
