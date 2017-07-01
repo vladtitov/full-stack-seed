@@ -10,13 +10,19 @@ import {VOExchangeData} from '../../models/SS-models';
 export class SsMainComponent implements OnInit {
 
   sortedAllCoins:VOExchangeData[]
+  counter:number=0;
   constructor(private service:AllCoinsService) { }
 
 
   ngOnInit() {
     this.service.sortedAllCoins$.subscribe(res=>this.sortedAllCoins=res);
     this.service.loadData()
+    this.service.counter$.subscribe(res=>this.counter = res);
 
+  }
+
+  onRefresh(){
+    this.service.loadData();
   }
 
 }

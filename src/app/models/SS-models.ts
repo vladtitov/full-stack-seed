@@ -19,11 +19,4 @@ export class VOExchangeData{
   last_updated: number;
   last_updated_date:string;
   selected:boolean;
-
-  constructor(obj) {
-    this.volume_usd_24h = +obj['24h_volume_usd'];
-    delete obj['24h_volume_usd'];
-    for(let str in obj) this[str] = isNaN(obj[str])?obj[str]:+obj[str];
-
-  }
 }

@@ -9,15 +9,25 @@ import * as _ from 'lodash';
 export class AllCoinsTableComponent implements OnInit {
 
   @Input()sortedAllCoins:VOExchangeData[];
+  creteria:string;
+  asc_desc='asc';
+
   constructor() { }
 
   ngOnInit() {
   }
 
+
   onClick(creteria:string):void{
     console.log(creteria);
-    this.sortedAllCoins = _.sortBy(this.sortedAllCoins,creteria);
+    if(this.creteria === creteria){
+      if(this.asc_desc === 'asc') this.asc_desc ='desc';
+      else  this.asc_desc='asc';
+    }else this.asc_desc = 'asc';
+    console.log(this.asc_desc)
 
+    this.sortedAllCoins = _.orderBy(this.sortedAllCoins, creteria, this.asc_desc);
+    this.creteria = creteria;
 
   }
 
