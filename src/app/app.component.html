@@ -1,6 +1,16 @@
 <diV>
-<h1>{{title}}</h1>
     {{menu | async}}
-        <router-outlet></router-outlet>
+    <md-sidenav-container >
+        <md-sidenav #sidenav>
+            <md-list>
+                <a md-list-item routerLink='/ss-main'>ShapeShift Selected</a>
+            </md-list>
 
+        </md-sidenav>
+
+        <div>
+            <div (click)="sidenav.open()" class="fa fa-bars">  </div>
+        </div>
+        <router-outlet></router-outlet>
+    </md-sidenav-container>
 </diV>

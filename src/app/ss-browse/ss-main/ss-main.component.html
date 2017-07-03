@@ -1,6 +1,17 @@
 <div>
-    <app-selected-coins></app-selected-coins>
-  <button (click)="onRefresh()">Refresh</button>
+<div>
+
+    <button  md-raised-button (click)="onRefresh()">Refresh</button>
     <span>{{counter}}</span>
-    <app-all-coins-table  [allCoins]="allCoins" (selectedCoinsNamesChange)="onSelectChanged(ar)"></app-all-coins-table>
+    <button  md-button (click)="showAllCoins()">All Coins</button>
+
+</div>
+    <hr/>
+
+    <app-selected-coins [modelCoins]="selectedCoins"></app-selected-coins>
+    <div *ngIf="isAllcoins">
+        <hr/>
+        <div class="fa fa-close" (click)="onClose()"></div>
+        <app-all-coins-table  [allCoins]="allCoins" (selectedCoinsNamesChange)="onSelectChanged($event)"></app-all-coins-table>
+    </div>
 </div>

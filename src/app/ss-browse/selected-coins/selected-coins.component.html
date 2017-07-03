@@ -1,15 +1,14 @@
 <div>
     <table>
         <tr>
-            <th (click)="onClickHeader('market_cap_usd')">market cap usd</th>
-            <th (click)="onClickHeader('percent_change_1h')">1h%</th>
-            <th (click)="onClickHeader('percent_change_24h')" >24h%</th>
-            <th (click)="onClickHeader('percent_change_7d')">7 days%</th>
-            <th (click)="onClickHeader('price_usd')">$US</th>
-            <th (click)="onClickHeader('rank')">Rank</th>
-            <th (click)="onClickHeader('symbol')">Symbol</th>
+            <th><button md-button (click)="onClickHeader('market_cap_usd')">market cap usd</button></th>
+            <th><button md-button (click)="onClickHeader('percent_change_1h')">1h%</button></th>
+            <th><button md-button (click)="onClickHeader('percent_change_24h')" >24h%</button></th>
+            <th><button md-button (click)="onClickHeader('percent_change_7d')">7 days%</button></th>
+            <th><button md-button (click)="onClickHeader('price_usd')">$US</button></th>
+            <th><button md-button (click)="onClickHeader('rank')">Rank</button></th>
+            <th><button md-button (click)="onClickHeader('symbol')">Symbol</button></th>
         </tr>
-
 
         <tbody *ngFor="let item of modelCoins">
 
@@ -21,9 +20,7 @@
             <td>{{item.price_usd}}</td>
             <td>{{item.rank}}</td>
             <td>{{item.symbol}}</td>
-            <td><input type="checkbox"/></td>
             <td>{{item.name}}</td>
-
         </tr>
 
         </tbody>

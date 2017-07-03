@@ -21,7 +21,7 @@
                 <td>{{item.price_usd}}</td>
                 <td>{{item.rank}}</td>
                 <td>{{item.symbol}}</td>
-                <td><input type="checkbox"  (change)="onCoinSelected($event, item)"    name="selected"/></td>
+                <td><input type="checkbox"  (change)="onCoinSelected($event, item)" [checked]="item.selected"   name="selected"/></td>
                 <td>{{item.name}}</td>
 
             </tr>
