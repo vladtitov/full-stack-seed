@@ -6,7 +6,7 @@ import {initRestApi} from "./api/api";
 import {apiErrorHandler} from "./api/apiErrorHandler";
 
 const bodyParser:any = require("body-parser");
-import * as JWT from "jsonwebtoken";
+//import * as JWT from "jsonwebtoken";
 import {apiLogin, verifyLogin} from './api/apiLogin';
 import {onSuccess} from "./api/com";
 import {initChangelly} from './api/changelly-api';
