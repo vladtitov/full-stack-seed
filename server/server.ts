@@ -38,7 +38,7 @@ initShapeSift(app);
 
 app.use(apiErrorHandler);
 
-const port:number = 8090;
+const port:number = 50488;
 app.listen(port, () => {
     console.log("Server is now running on port " + port);
 });
