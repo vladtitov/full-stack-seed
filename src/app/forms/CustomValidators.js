@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var CustomValidators = (function () {
     function CustomValidators() {
     }
@@ -15,6 +16,5 @@ var CustomValidators = (function () {
     };
     return CustomValidators;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = CustomValidators;
 //# sourceMappingURL=CustomValidators.js.map

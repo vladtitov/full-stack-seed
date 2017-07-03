@@ -1,10 +1,11 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var uuidV4 = require('uuid/v4');
-var model_1 = require('../model/model');
-var com_1 = require('./com');
+var model_1 = require("../model/model");
+var com_1 = require("./com");
 var JWT = require("jsonwebtoken");
-var crypto = require('crypto');
+var crypto = require("crypto");
 var EXPIRATION_TIME = 180;
 var MY_SECRET = 'my secrete 2';
 /**

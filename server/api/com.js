@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var hri = require('human-readable-ids').hri;
 function onSuccess(res, data) {
     if (data)

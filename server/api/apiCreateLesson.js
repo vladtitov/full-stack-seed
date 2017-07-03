@@ -1,5 +1,6 @@
 "use strict";
-var _ = require('lodash');
+Object.defineProperty(exports, "__esModule", { value: true });
+var _ = require("lodash");
 var createLesson_1 = require("../queries/createLesson");
 var onError_1 = require("./onError");
 var onSuccess_1 = require("./onSuccess");

@@ -1,6 +1,7 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var ORM = require("Sequelize");
-var initModel_1 = require('./initModel');
+var initModel_1 = require("./initModel");
 //const dbUrl: string = "postgres://postgres:postgres@localhost:5432/complete-typescript-course";
 var options = {
     benchmark: true,
@@ -14,3 +15,4 @@ exports.UserModel = initModel_1.initUserModel(sequelize);
 exports.PostModel = initModel_1.initPostModel(sequelize);
 //UserModel.hasMany(PostModel, {foreignKey: "userId"});
 //PostModel.belongsTo(UserModel, {foreignKey: "userId"}); 
+//# sourceMappingURL=model.js.map

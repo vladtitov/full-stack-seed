@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var findAllCourses_1 = require("../queries/findAllCourses");
 var onError_1 = require("./onError");

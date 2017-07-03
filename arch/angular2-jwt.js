@@ -1,26 +1,29 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Created by Vlad on 4/2/2017.
  */
 var http_1 = require("@angular/http");
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
 require("rxjs/add/observable/fromPromise");
 require("rxjs/add/observable/defer");
@@ -28,11 +31,11 @@ require("rxjs/add/operator/mergeMap");
 var AuthConfigConsts = (function () {
     function AuthConfigConsts() {
     }
-    AuthConfigConsts.DEFAULT_TOKEN_NAME = 'id_token';
-    AuthConfigConsts.DEFAULT_HEADER_NAME = 'Authorization';
-    AuthConfigConsts.HEADER_PREFIX_BEARER = 'Bearer ';
     return AuthConfigConsts;
 }());
+AuthConfigConsts.DEFAULT_TOKEN_NAME = 'id_token';
+AuthConfigConsts.DEFAULT_HEADER_NAME = 'Authorization';
+AuthConfigConsts.HEADER_PREFIX_BEARER = 'Bearer ';
 exports.AuthConfigConsts = AuthConfigConsts;
 var AuthConfigDefaults = {
     headerName: AuthConfigConsts.DEFAULT_HEADER_NAME,
@@ -73,7 +76,7 @@ exports.AuthConfig = AuthConfig;
 var AuthHttpError = (function (_super) {
     __extends(AuthHttpError, _super);
     function AuthHttpError() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return AuthHttpError;
 }(Error));
@@ -178,16 +181,14 @@ var AuthHttp = (function () {
     AuthHttp.prototype.options = function (url, options) {
         return this.requestHelper({ body: '', method: http_1.RequestMethod.Options, url: url }, options);
     };
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', core_1.EventEmitter)
-    ], AuthHttp.prototype, "authError", void 0);
-    AuthHttp = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [AuthConfig, http_1.Http, http_1.RequestOptions])
-    ], AuthHttp);
     return AuthHttp;
 }());
+__decorate([
+    core_1.Output()
+], AuthHttp.prototype, "authError", void 0);
+AuthHttp = __decorate([
+    core_1.Injectable()
+], AuthHttp);
 exports.AuthHttp = AuthHttp;
 /**
  * Helper class to decode and find JWT expiration.
@@ -223,7 +224,9 @@ var JwtHelper = (function () {
         if (str.length % 4 == 1) {
             throw new Error("'atob' failed: The string to be decoded is not correctly encoded.");
         }
-        for (var bc = 0, bs = void 0, buffer = void 0, idx = 0; 
+        for (
+        // initialize result and counters
+        var bc = 0, bs = void 0, buffer = void 0, idx = 0; 
         // get next character
         buffer = str.charAt(idx++); 
         // character found in table? initialize bit storage and add its ascii value;
@@ -371,7 +374,7 @@ function authHttpFactory(http, options) {
     }), http, options);
 }
 exports.authHttpFactory = authHttpFactory;
-var AuthModule = (function () {
+var AuthModule = AuthModule_1 = (function () {
     function AuthModule(parentModule) {
         if (parentModule) {
             throw new Error('AuthModule is already loaded. Import it in the AppModule only');
@@ -379,22 +382,21 @@ var AuthModule = (function () {
     }
     AuthModule.forRoot = function (config) {
         return {
-            ngModule: AuthModule,
+            ngModule: AuthModule_1,
             providers: [
                 { provide: AuthConfig, useValue: config }
             ]
         };
     };
-    AuthModule = __decorate([
-        core_1.NgModule({
-            imports: [http_1.HttpModule],
-            providers: [AuthHttp, JwtHelper]
-        }),
-        __param(0, core_1.Optional()),
-        __param(0, core_1.SkipSelf()), 
-        __metadata('design:paramtypes', [AuthModule])
-    ], AuthModule);
     return AuthModule;
 }());
+AuthModule = AuthModule_1 = __decorate([
+    core_1.NgModule({
+        imports: [http_1.HttpModule],
+        providers: [AuthHttp, JwtHelper]
+    }),
+    __param(0, core_1.Optional()), __param(0, core_1.SkipSelf())
+], AuthModule);
 exports.AuthModule = AuthModule;
+var AuthModule_1;
 //# sourceMappingURL=angular2-jwt.js.map

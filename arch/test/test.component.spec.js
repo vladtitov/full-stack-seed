@@ -1,6 +1,7 @@
 "use strict";
-var testing_1 = require('@angular/core/testing');
-var test_component_1 = require('./test.component');
+Object.defineProperty(exports, "__esModule", { value: true });
+var testing_1 = require("@angular/core/testing");
+var test_component_1 = require("./test.component");
 describe('TestComponent', function () {
     var component;
     var fixture;

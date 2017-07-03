@@ -5,12 +5,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var core_1 = require('@angular/core');
-var angular2_jwt_1 = require('../../../arch/angular2-jwt');
-var Observable_1 = require('rxjs/Observable');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+//import {AuthHttp, getToken, getTokenExpiredDate, tokenNotExpired} from '../../../arch/angular2-jwt';
+var Observable_1 = require("rxjs/Observable");
 /**
  * Created by Vlad on 4/3/2017.
  */
@@ -23,8 +21,8 @@ var HomeService = (function () {
         // if(tokenNotExpired()){
         //  console.log(' not yet');
         //}
-        var decoded = angular2_jwt_1.getToken();
-        console.log(new Date(decoded.exp * 1000).toLocaleString());
+        //let decoded = getToken();
+        // console.log(new Date(decoded.exp*1000).toLocaleString());
         var url = 'http://localhost:8090/api/posts';
         console.log(url);
         return this.http.get(url)
@@ -37,11 +35,10 @@ var HomeService = (function () {
             return Observable_1.Observable.throw(err);
         });
     };
-    HomeService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp])
-    ], HomeService);
     return HomeService;
 }());
+HomeService = __decorate([
+    core_1.Injectable()
+], HomeService);
 exports.HomeService = HomeService;
 //# sourceMappingURL=home.service.js.map

@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var ORM = require("Sequelize");
 function initLessonModel(sequelize) {
     return sequelize.define("Lesson", {

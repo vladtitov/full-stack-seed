@@ -7,25 +7,37 @@ import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class AllCoinsService {
-  private url='https://utils.jaxx.io/api/exchange/proxy';
-  allData:VOExchangeData[];
-  sortedData:VOExchangeData[];
-  sortCreteria:string = 'rank';
+  //private url='https://utils.jaxx.io/api/exchange/proxy';
+  private url='/api/exchange/shapeshift/all-market';
+
+
+ // sortedData:VOExchangeData[];
+ // sortCreteria:string = 'rank';
+
+
+
+
+
+ // selectedSortCreteria:string = 'rank'
+
   //$emitter:JQuery = $({});
   CHANGE:string = 'CHANGE';
   NEW_DATA = 'NEW_DATA';
 
-  goingDown24Ar:VOExchangeData[];
-  goingUp24Ar:VOExchangeData[];
+ /* goingDown24Ar:VOExchangeData[];
+  goingUp24Ar:VOExchangeData[];*/
 
-  sortedAllCoins$:Observable<VOExchangeData[]>;
-  sortedAllCoinsSub:BehaviorSubject<VOExchangeData[]>
+  allCoins:VOExchangeData[];
+  allCoins$:Observable<VOExchangeData[]>;
+  allCoinsSub:BehaviorSubject<VOExchangeData[]>
+
   counterSub:Subject<number>;
-  counter$:Observable<number>
+  counter$:Observable<number>;
+
   counter=0;
   constructor(private http:Http) {
-    this.sortedAllCoinsSub =  new BehaviorSubject([]);
-    this.sortedAllCoins$ =  this.sortedAllCoinsSub.asObservable();
+    this.allCoinsSub =  new BehaviorSubject([]);
+    this.allCoins$ =  this.allCoinsSub.asObservable();
     this.counterSub = new Subject()
     this.counter$ = this.counterSub.asObservable();
   }
@@ -38,10 +50,10 @@ export class AllCoinsService {
   }
 
   setData(data:VOExchangeData[]):void{
-    this.allData = data;
+    this.allCoins = data;
     console.log(data.length);
     this.counterSub.next(this.counter++);
-    this.sortedAllCoinsSub.next(data);
+    this.allCoinsSub.next(data);
   }
 
 

@@ -9,13 +9,17 @@ const bodyParser:any = require("body-parser");
 import * as JWT from "jsonwebtoken";
 import {apiLogin, verifyLogin} from './api/apiLogin';
 import {onSuccess} from "./api/com";
+import {initChangelly} from './api/changelly-api';
+import {initShapeSift} from './api/shapeshift-api';
 
 const app: Application = express();
 const cors = require('cors');
 app.use(bodyParser.json());
 
-app.use('/node_modules',express.static('./client/node_modules'));
+//app.use('/node_modules',express.static('./client/node_modules'));
 app.use(cors({credentials:true}));
+
+/*
 app.use('/api',function(req:any, res:Response , next:Function){
  // console.log(req.path);
 
@@ -24,11 +28,15 @@ app.use('/api',function(req:any, res:Response , next:Function){
   else if(req.path === '/test') onSuccess(res,{message:"Test from server"});
   else verifyLogin(req,res,next);
 });
+*/
+
+
 app.use('/',express.static('./client/src'));
 initRestApi(app);
+initChangelly(app);
+initShapeSift(app);
+
 app.use(apiErrorHandler);
-
-
 
 const port:number = 8090;
 app.listen(port, () => {

@@ -1,6 +1,7 @@
 "use strict";
-var testing_1 = require('@angular/core/testing');
-var test_service_1 = require('./test.service');
+Object.defineProperty(exports, "__esModule", { value: true });
+var testing_1 = require("@angular/core/testing");
+var test_service_1 = require("./test.service");
 describe('TestService', function () {
     beforeEach(function () {
         testing_1.TestBed.configureTestingModule({

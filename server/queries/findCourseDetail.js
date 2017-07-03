@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var model_1 = require("../model/model");
 var createCourseDetail_1 = require("../../shared/model/createCourseDetail");
 function findCourseDetail(courseId) {

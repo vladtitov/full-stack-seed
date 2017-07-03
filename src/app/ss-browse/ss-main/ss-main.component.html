@@ -1,5 +1,6 @@
 <div>
+    <app-selected-coins></app-selected-coins>
   <button (click)="onRefresh()">Refresh</button>
     <span>{{counter}}</span>
-    <app-all-coins-table [sortedAllCoins]="sortedAllCoins"></app-all-coins-table>
+    <app-all-coins-table  [allCoins]="allCoins" (selectedCoinsNamesChange)="onSelectChanged(ar)"></app-all-coins-table>
 </div>

@@ -1,17 +1,17 @@
 <div>
     <table>
         <tr>
-            <th (click)="onClick('market_cap_usd')">market cap usd</th>
-            <th (click)="onClick('percent_change_1h')">1h%</th>
-            <th (click)="onClick('percent_change_24h')" >24h%</th>
-            <th (click)="onClick('percent_change_7d')">7 days%</th>
-            <th (click)="onClick('price_usd')">$US</th>
-            <th (click)="onClick('rank')">Rank</th>
-            <th (click)="onClick('symbol')">Symbol</th>
+            <th (click)="onClickHeader('market_cap_usd')">market cap usd</th>
+            <th (click)="onClickHeader('percent_change_1h')">1h%</th>
+            <th (click)="onClickHeader('percent_change_24h')" >24h%</th>
+            <th (click)="onClickHeader('percent_change_7d')">7 days%</th>
+            <th (click)="onClickHeader('price_usd')">$US</th>
+            <th (click)="onClickHeader('rank')">Rank</th>
+            <th (click)="onClickHeader('symbol')">Symbol</th>
         </tr>
 
 
-        <tbody *ngFor="let item of sortedAllCoins">
+        <tbody *ngFor="let item of modelCoins">
 
             <tr>
                 <td>{{item.market_cap_usd}}</td>
@@ -21,7 +21,7 @@
                 <td>{{item.price_usd}}</td>
                 <td>{{item.rank}}</td>
                 <td>{{item.symbol}}</td>
-                <td><input type="checkbox"/></td>
+                <td><input type="checkbox"  (change)="onCoinSelected($event, item)"    name="selected"/></td>
                 <td>{{item.name}}</td>
 
             </tr>

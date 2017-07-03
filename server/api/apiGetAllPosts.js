@@ -1,9 +1,10 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var com_1 = require("./com");
 var com_2 = require("./com");
 //import {findAllPosts} from '../queries/findAllPosts';
-var model_1 = require('../model/model');
+var model_1 = require("../model/model");
 function apiGetAllPosts(req, res) {
     // console.log(req.decoded);
     var userId = req.decoded.userId;

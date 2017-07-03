@@ -1,5 +1,6 @@
 "use strict";
-var _ = require('lodash');
+Object.defineProperty(exports, "__esModule", { value: true });
+var _ = require("lodash");
 var updateLesson_1 = require("../queries/updateLesson");
 var com_1 = require("./com");
 var com_2 = require("./com");
