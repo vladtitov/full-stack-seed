@@ -1,5 +1,5 @@
 
-import * as ORM from "sequelize";
+/*import * as ORM from "sequelize";
 import {Sequelize, LoggingOptions} from "sequelize";
 import {initPostModel, initUserModel} from './initModel';
 
@@ -24,4 +24,4 @@ export const PostModel =  initPostModel(sequelize);
 
 //UserModel.hasMany(PostModel, {foreignKey: "userId"});
 
-//PostModel.belongsTo(UserModel, {foreignKey: "userId"});
+//PostModel.belongsTo(UserModel, {foreignKey: "userId"});*/
