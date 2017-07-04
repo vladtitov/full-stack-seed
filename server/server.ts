@@ -31,7 +31,7 @@ app.use('/api',function(req:any, res:Response , next:Function){
 */
 
 
-app.use('/',express.static('./client/src'));
+app.use('/',express.static('./dist'));
 initRestApi(app);
 initChangelly(app);
 initShapeSift(app);
