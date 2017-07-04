@@ -8,15 +8,22 @@ import * as request from 'request';
 
 let all_market:any ={
   timestamp:0,
-  payload:'no data'
+  payload:'[]'
 }
 
 
 function updateAllMarket(){
-  request.get('https://api.coinmarketcap.com/v1/ticker/',function (err,r,body){
-    if(!err){
-     console.error(err);
+  let url = 'https://api.coinmarketcap.com/v1/ticker/';
+  console.log(url)
+  
+  request.get(url,function (err,r,body){
+
+    if(err){
+     console.error(' error from https://api.coinmarketcap.com/v1/ticker/ ', err);
+     //console.log(body);
+    // console.log(body);
     }else{
+     // console.log(body)
       all_market.payload = body;
     }
 

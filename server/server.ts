@@ -1,5 +1,5 @@
 
-
+import * as path from 'path';
 import * as express from "express";
 import {Application, Response} from "express";
 import {initRestApi} from "./api/api";
@@ -31,7 +31,7 @@ app.use('/api',function(req:any, res:Response , next:Function){
 */
 
 app.get('/', function(req,res) {
-  res.sendfile('pub/index.html');
+  res.sendFile(path.join(__dirname, '../pub', 'index.html'));
 });
 app.use('/',express.static('./pub'));
 initRestApi(app);

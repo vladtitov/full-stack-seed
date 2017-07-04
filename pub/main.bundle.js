@@ -1366,6 +1366,8 @@ var SsMainComponent = (function () {
             var str = localStorage.getItem('selectedCoinsNames');
             if (str)
                 this.selectedCoinsNames = JSON.parse(str);
+            else
+                this.selectedCoinsNames = [];
         }
         return this.selectedCoinsNames;
     };

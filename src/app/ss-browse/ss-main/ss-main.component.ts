@@ -39,6 +39,7 @@ export class SsMainComponent implements OnInit {
     if(!this.selectedCoinsNames){
       let str=localStorage.getItem('selectedCoinsNames');
       if(str) this.selectedCoinsNames = JSON.parse(str);
+      else this.selectedCoinsNames = [];
     }
     return this.selectedCoinsNames;
   }
