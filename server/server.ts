@@ -30,7 +30,9 @@ app.use('/api',function(req:any, res:Response , next:Function){
 });
 */
 
-
+app.get('/', function(req,res) {
+  res.sendfile('pub/index.html');
+});
 app.use('/',express.static('./pub'));
 initRestApi(app);
 initChangelly(app);
