@@ -14,7 +14,7 @@ export class SsMainComponent implements OnInit {
   selectedCoins:VOExchangeData[];
   isAllcoins:boolean;
 
-  counter:number=0;
+  timestamp:string = '';
   constructor(private service:AllCoinsService) { }
 
   ngOnInit() {
@@ -24,7 +24,7 @@ export class SsMainComponent implements OnInit {
       this.populateSelected();
     });
     this.service.loadData()
-    this.service.counter$.subscribe(res=>this.counter = res);
+    this.service.timestamp$.subscribe(res=>this.timestamp = (new Date(res)).toLocaleTimeString());
   }
 
   showAllCoins(){
@@ -36,11 +36,17 @@ export class SsMainComponent implements OnInit {
   }
 
   getSelectedNames():string[]{
-    if(!this.selectedCoinsNames){
-      let str=localStorage.getItem('selectedCoinsNames');
-      if(str) this.selectedCoinsNames = JSON.parse(str);
-      else this.selectedCoinsNames = [];
+
+    if(!this.selectedCoinsNames) {
+      this.selectedCoinsNames = []
+      let str = localStorage.getItem('selectedCoinsNames');
+      try {
+        if (str) this.selectedCoinsNames = JSON.parse(str);
+      } catch (e) {
+        console.error(e);
+      }
     }
+
     return this.selectedCoinsNames;
   }
 
@@ -73,7 +79,7 @@ export class SsMainComponent implements OnInit {
   }
 
   onRefresh(){
-    this.service.loadData();
+    this.service.loadData('now');
   }
 
 }

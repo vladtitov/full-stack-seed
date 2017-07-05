@@ -7,39 +7,20 @@ import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class AllCoinsService {
-  //private url='https://utils.jaxx.io/api/exchange/proxy';
-  private url='/api/exchange/shapeshift/all-market';
-
-
- // sortedData:VOExchangeData[];
- // sortCreteria:string = 'rank';
-
-
-
-
-
- // selectedSortCreteria:string = 'rank'
-
-  //$emitter:JQuery = $({});
-  CHANGE:string = 'CHANGE';
-  NEW_DATA = 'NEW_DATA';
-
- /* goingDown24Ar:VOExchangeData[];
-  goingUp24Ar:VOExchangeData[];*/
 
   allCoins:VOExchangeData[];
   allCoins$:Observable<VOExchangeData[]>;
   allCoinsSub:BehaviorSubject<VOExchangeData[]>
 
-  counterSub:Subject<number>;
-  counter$:Observable<number>;
+  timestampSub:Subject<number>;
+  timestamp$:Observable<number>;
+  timestamp=0;
 
-  counter=0;
   constructor(private http:Http) {
     this.allCoinsSub =  new BehaviorSubject([]);
     this.allCoins$ =  this.allCoinsSub.asObservable();
-    this.counterSub = new Subject()
-    this.counter$ = this.counterSub.asObservable();
+    this.timestampSub = new Subject()
+    this.timestamp$ = this.timestampSub.asObservable();
   }
 
 
@@ -49,38 +30,24 @@ export class AllCoinsService {
     this.loadData();
   }
 
-  setData(data:VOExchangeData[]):void{
-    this.allCoins = data;
-    console.log(data.length);
-    this.counterSub.next(this.counter++);
-    this.allCoinsSub.next(data);
+  setData(data:{payload:VOExchangeData[],timestamp:number}):void{
+
+    this.allCoins = data.payload;
+    this.timestamp = data.timestamp;
+    console.log(this.allCoins.length);
+    this.timestampSub.next(this.timestamp);
+    this.allCoinsSub.next(this.allCoins);
   }
 
 
 
-  loadData():void {
-
-   /* let str = localStorage.getItem('exchange');
-    if(str){
-      let data = JSON.parse(str);
-     // console.log(data);
-      if(data.exchange && (Date.now() - data.timestamp)< 100000 ) {
-        this.setData(data.exchange.map(this.mapExchangeData));
-        return;
-      }
-    }
-*/
-    this.http.get(this.url).map(res=>{
-      return res.json().map(this.mapExchangeData)
-
+  loadData(now?:string):void {
+  let url='/api/exchange/shapeshift/all-market'+(now?'/now':'');
+    this.http.get(url).map(res=>{
+      let data = res.json();
+      data.payload = data.payload.map(this.mapExchangeData)
+      return data
     }).subscribe(result=>{
-      //localStorage.setItem('exchange',JSON.stringify(result));
-
-      /*let now = Date.now();
-      let diff=  - (item.last_updated*1000);
-      item.last_updated_date = Math.round(diff/1000/60)+ 'm';*/
-
-
       this.setData(result);
     })
   }
