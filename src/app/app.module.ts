@@ -30,6 +30,7 @@ import {MaterialModule} from '@angular/material';
 import {HomeService} from './home/home.service';
 import {SsBrowseModule} from './ss-browse/ss-browse.module';
 import {MaterialAppModule} from './material-app.module';
+import {WalletsModule} from './wallets/wallets.module';
 
 
 
@@ -52,6 +53,7 @@ import {MaterialAppModule} from './material-app.module';
     ReactiveFormsModule,
     SsBrowseModule,
     MaterialAppModule,
+    WalletsModule,
    // MaterialModule,
    // BrowserAnimationsModule,
     HttpModule,

@@ -11,6 +11,7 @@ import { RepoDetailComponent } from './github/repo-detail/repo-detail.component'
 import { ContactComponent } from './contact/contact.component';
 import {LoginMain} from './login/login-main.component';
 import {SsMainComponent} from './ss-browse/ss-main/ss-main.component';
+import {WalletsMainComponent} from './wallets/wallets-main/wallets-main.component';
 
 export const rootRouterConfig: Routes = [
   { path: '', redirectTo: 'ss-main', pathMatch: 'full' },
@@ -18,6 +19,7 @@ export const rootRouterConfig: Routes = [
   { path: 'login', component: LoginMain },
   { path: 'about', component: AboutComponent },
   { path: 'ss-main', component: SsMainComponent },
+  { path: 'wallets', component: WalletsMainComponent },
   { path: 'github', component: RepoBrowserComponent,
     children: [
       { path: '', component: RepoListComponent },
