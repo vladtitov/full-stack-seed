@@ -1,0 +1,12 @@
+<div>
+
+    <md-input-container>
+        <input mdInput placeholder="Private Key">
+    </md-input-container>
+    <md-select placeholder="Select Coin">
+        <md-option *ngFor="let coin of coinsAvalable" [value]="coin.symbol">
+            {{ coin.symbol}} {{ coin.displayName}}
+        </md-option>
+    </md-select>
+
+</div>

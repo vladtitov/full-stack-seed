@@ -12,4 +12,8 @@ export class MyWalletsComponent implements OnInit {
   ngOnInit() {
   }
 
+  addWallet(evt){
+
+
+  }
 }

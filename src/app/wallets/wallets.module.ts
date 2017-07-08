@@ -4,11 +4,20 @@ import { WalletsMainComponent } from './wallets-main/wallets-main.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { WaletsAllComponent } from './walets-all/walets-all.component';
 import { MyWalletsComponent } from './my-wallets/my-wallets.component';
+import {MaterialAppModule} from '../material-app.module';
+import { WalletCreateComponent } from './wallet-create/wallet-create.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialAppModule
   ],
-  declarations: [WalletsMainComponent, WalletComponent, WaletsAllComponent, MyWalletsComponent]
+  declarations: [
+    WalletsMainComponent,
+    WalletComponent,
+    WaletsAllComponent,
+    MyWalletsComponent,
+    WalletCreateComponent
+  ]
 })
 export class WalletsModule { }

@@ -32,6 +32,7 @@ import {SsBrowseModule} from './ss-browse/ss-browse.module';
 import {MaterialAppModule} from './material-app.module';
 import {WalletsModule} from './wallets/wallets.module';
 
+declare const Buffer:any;
 
 
 @NgModule({
