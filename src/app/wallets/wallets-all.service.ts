@@ -55,9 +55,11 @@ export class WalletsAllService {
       let wallets  = JSON.parse(str);
 
       this.myWallets = wallets.map(function (item) {
+
         item.privateKey = crypto.AES.decrypt(item.privateKey, password).toString(crypto.enc.Utf8);
         return item;
-      })
+      });
+
 
       console.log(this.myWallets)
       this.myWalletsSub.next(this.myWallets);
@@ -65,13 +67,16 @@ export class WalletsAllService {
   }
 
   saveWalletes(){
-    let password= this.password;
+
+    console.log(this);
+    let password = this.password;
     let crypto = CryptoJS.AES
     let walets = _.cloneDeep(this.myWallets);
-    walets = _.map(walets, function (item) {
-      item.privateKey = crypto.encrypt(item.privateKey, this.password).toString();
-    })
 
+    walets = _.map(walets, function (item) {
+      item.privateKey = crypto.encrypt(item.privateKey, password).toString();
+      return item;
+    });
     localStorage.setItem('mywallets',JSON.stringify(walets));
   }
 

@@ -1,0 +1,22 @@
+<div>
+    <div class="fa fa-close" (click)="onClose()"></div>
+    <h2 md-dialog-title>Edit Wallet</h2>
+    <md-dialog-content>
+        <md-input-container>
+            <input [(ngModel)]="wallet.label"  mdInput placeholder="Wallet Name" name="label">
+        </md-input-container>
+        <md-input-container>
+            <input [(ngModel)]="wallet.privateKey"  mdInput placeholder="Private Key" name="privatekey" (blur)="onPrivateKeyBlur($event)">
+        </md-input-container>
+
+        <md-input-container>
+            <input [(ngModel)]="wallet.address"  mdInput placeholder="Address" disabled=true name="address">
+        </md-input-container>
+        <button md-raised-button color="accent"  (click)="saveWallet($event)">Save</button>
+    </md-dialog-content>
+    <md-dialog-actions>
+
+    </md-dialog-actions>
+
+
+</div>

@@ -4,6 +4,7 @@
 export interface CoinConfig{
   privateKey:string;
   symbol:string;
+  network:any;
   active:string;
   icon:string;
   contractAddress:string;
@@ -28,7 +29,11 @@ export class CoinsAvailable{
 
 
 export class WalletModel{
-  config:CoinConfig;
+ // config:CoinConfig;
+  selected:boolean;
+  network:any;
+  displayName:string;
+  hdindex:number;
   privateKey:string;
   label:string;
   symbol:string;

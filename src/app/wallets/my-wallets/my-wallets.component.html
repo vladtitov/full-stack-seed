@@ -5,9 +5,11 @@
     <div>
         <hr/>
         <md-list *ngFor="let wallet of myWallets">
-            <md-list-item>
+            <md-list-item (click)="onWalletSelected(wallet)"  [class.selected] = wallet.selected >
                 <app-wallet  [wallet]="wallet">  </app-wallet>
                 <div class="fa fa-edit" (click)="onEditClick(wallet)"></div>
+                <div class="fa fa-delete" (click)="onEditClick(wallet)"></div>
+
             </md-list-item>
 
         </md-list>

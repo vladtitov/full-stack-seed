@@ -8,6 +8,7 @@ import {MaterialAppModule} from '../material/material-app.module';
 import { WalletCreateComponent } from './wallet-create/wallet-create.component';
 import {WalletsAllService} from './wallets-all.service';
 import {FormsModule} from '@angular/forms';
+import { WalletEditComponent } from './wallet-edit/wallet-edit.component';
 
 @NgModule({
   imports: [
@@ -20,10 +21,12 @@ import {FormsModule} from '@angular/forms';
     WalletComponent,
     WaletsAllComponent,
     MyWalletsComponent,
-    WalletCreateComponent
+    WalletCreateComponent,
+    WalletEditComponent
   ],
   providers:[
     WalletsAllService
-  ]
+  ],
+  entryComponents: [WalletEditComponent]
 })
 export class WalletsModule { }

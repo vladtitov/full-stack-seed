@@ -4,7 +4,9 @@ import {WalletsAllService} from '../wallets-all.service';
 import {MdDialog} from '@angular/material';
 import {DialogSimpleComponent} from '../../shared/dialog-simple/dialog-simple.component';
 import * as _ from 'lodash';
+import {generateAddressFromPrivateKey} from '../../shared/generate-address';
 import {GeneratorBlockchain} from '../wallet-core/generator-blockchain';
+
 
 
 @Component({
@@ -42,26 +44,15 @@ export class WalletCreateComponent implements OnInit {
   }
 
 
-
-
   onPrivateKeyBlur($event){
     this.generateAddress();
   }
 
   generateAddress(){
 
-    if(this.wallet.privateKey  && this.wallet.privateKey.length > 50 && this.wallet.config && this.wallet.symbol){
-      let address:string
-      switch (this.wallet.config.generator){
-        case 'ETH':
-          address = this.generator.generateEtherAddressFromPrivateKey(this.wallet.privateKey);
-          break;
-        case 'BTC':
-          address = this.generator.generateBitcoinAddressFromPrivateKey(this.wallet.privateKey, this.wallet.symbol);
-          break
-      }
+    if(this.wallet.privateKey  && this.wallet.privateKey.length > 50 && this.wallet.network){
 
-      this.wallet.address = address;
+      this.wallet.address = generateAddressFromPrivateKey(this.wallet.privateKey,this.wallet.network);
     }
 
 
@@ -83,15 +74,13 @@ export class WalletCreateComponent implements OnInit {
 
 
   coinSelectChanged(event){
-
     console.log(event.value);
-
     let cfg = this.waletsService.getCoinConfigBySymbol(event.value);
-
     if(!cfg) return
-
-    this.wallet.config = cfg;
     this.wallet.symbol = cfg.symbol;
+    this.wallet.network = cfg.network;
+    this.wallet.displayName = cfg.displayName;
+
     if(!this.wallet.label) {
       let wallets =  this.waletsService.getAllWallets();
       let exists = _.filter(wallets, {symbol:this.wallet.symbol});
