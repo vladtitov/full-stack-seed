@@ -1,12 +1,13 @@
 <div>
 
     <md-input-container>
-        <input mdInput placeholder="Private Key">
+        <input [(ngModel)]="privateKey"  mdInput placeholder="Private Key" name="privatekey">
     </md-input-container>
-    <md-select placeholder="Select Coin">
+    <md-select placeholder="Select Coin" (change)="coinSelectChanged($event)">
         <md-option *ngFor="let coin of coinsAvalable" [value]="coin.symbol">
             {{ coin.symbol}} {{ coin.displayName}}
         </md-option>
     </md-select>
+    <button md-raised-button color="accent" (click)="addWallet($event)">Create</button>
 
 </div>

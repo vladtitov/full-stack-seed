@@ -29,8 +29,10 @@ import {MaterialModule} from '@angular/material';
 //import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HomeService} from './home/home.service';
 import {SsBrowseModule} from './ss-browse/ss-browse.module';
-import {MaterialAppModule} from './material-app.module';
+import {MaterialAppModule} from './material/material-app.module';
 import {WalletsModule} from './wallets/wallets.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {SharedModule} from './shared/shared.module';
 
 declare const Buffer:any;
 
@@ -55,9 +57,9 @@ declare const Buffer:any;
     SsBrowseModule,
     MaterialAppModule,
     WalletsModule,
-   // MaterialModule,
-   // BrowserAnimationsModule,
+    BrowserAnimationsModule,
     HttpModule,
+    SharedModule,
    // AuthModule,
     RouterModule.forRoot(rootRouterConfig, { useHash: true })
   ],

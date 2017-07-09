@@ -6,7 +6,8 @@ export interface CoinConfig{
   symbol:string;
   active:string;
   icon:string;
-  tokenAddress:string;
+  contractAddress:string;
+  parent:string;
   displayName:string;
 }
 
@@ -27,6 +28,7 @@ export class CoinsAvailable{
 
 export class WalletModel{
   config:CoinConfig;
+  symbol:string;
   sort:number;
   createdAt:string;
   updateAt:string;
