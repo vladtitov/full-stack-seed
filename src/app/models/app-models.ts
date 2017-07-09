@@ -8,6 +8,7 @@ export interface CoinConfig{
   icon:string;
   contractAddress:string;
   parent:string;
+  generator:string;
   displayName:string;
 }
 
@@ -28,11 +29,13 @@ export class CoinsAvailable{
 
 export class WalletModel{
   config:CoinConfig;
+  privateKey:string;
+  label:string;
   symbol:string;
+  address:string;
   sort:number;
   createdAt:string;
   updateAt:string;
-  publicAddress:string;
   index:number;
   amountSmall:number;
   amountString:string;

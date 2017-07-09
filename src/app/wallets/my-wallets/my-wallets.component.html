@@ -2,5 +2,18 @@
     <button md-raised-button color="accent" (click)="addWallet($event)">Add Wallet</button>
 
     <app-wallet-create></app-wallet-create>
+    <div>
+        <hr/>
+        <md-list *ngFor="let wallet of myWallets">
+            <md-list-item>
+                <app-wallet  [wallet]="wallet">  </app-wallet>
+                <div class="fa fa-edit" (click)="onEditClick(wallet)"></div>
+            </md-list-item>
+
+        </md-list>
+
+
+        <hr/>
+    </div>
   my-wallets works!
 </div>

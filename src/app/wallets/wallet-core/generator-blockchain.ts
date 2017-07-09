@@ -4,22 +4,22 @@ declare var require: any;
 import * as bitcoin from 'bitcoinjs-lib';
 import * as cryptojs from 'crypto-js';
 import {Buffer} from 'buffer';
+import {Injectable} from '@angular/core';
+import {getNetwork} from './networks-definitions';
 var etherutils = require('ethereumjs-util');
-
 
 export class GeneratorBlockchain {
 
     masterNode: any;
     seedHex: string;
-    isETH: boolean;
+   // isETH: boolean;
     network: any;
+    constructor() {
+       // this.network = networkConfig.mainNet;
+       // console.log(etherutils);
 
-    constructor(private name: string, private coinIndex: number, private networkConfig: any) {
-        this.network = networkConfig.mainNet;
-        console.log(etherutils);
 
-
-        if (coinIndex === 60 || coinIndex == 61 || coinIndex === (137 + 37173)) this.isETH = true;
+        //if (coinIndex === 60 || coinIndex == 61 || coinIndex === (137 + 37173)) this.isETH = true;
     }
 
     private getMasterNode() {
@@ -27,8 +27,8 @@ export class GeneratorBlockchain {
         return this.masterNode;
     }
 
-    getXpubAddress(): string {
-        return this.getMasterNode().deriveHardened(44).deriveHardened(this.coinIndex).deriveHardened(0).neutered().toBase58();
+    getXpubAddress(HDIndex:number): string {
+        return this.getMasterNode().deriveHardened(44).deriveHardened(HDIndex).deriveHardened(0).neutered().toBase58();
     }
 
     generateEtherAddressFromPrivateKey(privateKey: string): string {
@@ -51,44 +51,47 @@ export class GeneratorBlockchain {
         return add;//.toString('hex');
     }
 
-    generateBitcoinAddressFromPrivateKey(privateKey:string, network?:any):string{
-      return  bitcoin.ECPair.fromWIF(privateKey, network || this.network).getAddress();
+    generateBitcoinAddressFromPrivateKey(privateKey:string, symbol:string):string{
+
+      let network:any = getNetwork(symbol).mainNet;
+
+      return  bitcoin.ECPair.fromWIF(privateKey, network).getAddress();
     }
 
     restorePairFromPrivateKey(privateKey: string): ECPair{
         return bitcoin.ECPair.fromWIF(privateKey, this.network);
     }
 
-    private generateNodeReceive(index: number): any {
-        return this.getMasterNode().deriveHardened(44).deriveHardened(this.coinIndex).deriveHardened(0).derive(0).derive(index);
+    private generateNodeReceive(index: number, HDIndex:number): any {
+        return this.getMasterNode().deriveHardened(44).deriveHardened(HDIndex).deriveHardened(0).derive(0).derive(index);
     }
 
-    private generateNodeChage(index: number): any {
-        return this.getMasterNode().deriveHardened(44).deriveHardened(this.coinIndex).deriveHardened(0).derive(1).derive(index);
+    private generateNodeChage(index: number, HDIndex:number): any {
+        return this.getMasterNode().deriveHardened(44).deriveHardened(HDIndex).deriveHardened(0).derive(1).derive(index);
     }
 
     private getNodePrivateKey(node: any): string {
         return node.keyPair.d.toBuffer(32).toString('hex');
     }
 
-    generatePrivateKeyReceive(index: number): string {
-        let node = this.generateNodeReceive(index);
+    generatePrivateKeyReceive(index: number, HDIndex:number): string {
+        let node = this.generateNodeReceive(index, HDIndex);
         return this.getNodePrivateKey(node);
     }
 
-    generatePrivateKeyChange(index: number): string {
-        let node = this.generateNodeChage(index);
+    generatePrivateKeyChange(index: number, HDIndex:number): string {
+        let node = this.generateNodeChage(index, HDIndex);
         return this.getNodePrivateKey(node);
     }
 
-    generateAddressReceive(index: number): string {
-        let node = this.generateNodeReceive(index);
-        return this.isETH ? GeneratorBlockchain.getEtherAddress(node) : node.keyPair.getAddress();
+    generateAddressReceive(index: number, HDIndex:number, isETH:boolean): string {
+        let node = this.generateNodeReceive(index, HDIndex);
+        return isETH ? GeneratorBlockchain.getEtherAddress(node) : node.keyPair.getAddress();
     }
 
-    generateAddressChange(index: number): string {
-        let node = this.generateNodeChage(index);
-        return this.isETH ? GeneratorBlockchain.getEtherAddress(node) : node.keyPair.getAddress();
+    generateAddressChange(index: number, HDIndex:number): string {
+        let node = this.generateNodeChage(index, HDIndex);
+        return  node.keyPair.getAddress();
     }
 
 
