@@ -1,6 +1,7 @@
 <div>
     <div class="fa fa-close" (click)="onClose()"></div>
     <h2 md-dialog-title>Edit Wallet</h2>
+    <h2>Network: {{wallet.symbol}}</h2>
     <md-dialog-content>
         <md-input-container>
             <input [(ngModel)]="wallet.label"  mdInput placeholder="Wallet Name" name="label">

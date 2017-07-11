@@ -1,3 +1,4 @@
+
 /**
  * Created by Vlad on 7/8/2017.
  */
@@ -35,6 +36,8 @@ export class WalletModel{
   displayName:string;
   hdindex:number;
   privateKey:string;
+  balance:number;
+  balanceDisplay:number;
   label:string;
   symbol:string;
   address:string;
@@ -45,4 +48,5 @@ export class WalletModel{
   amountSmall:number;
   amountString:string;
   amountLarge:number;
+
 }

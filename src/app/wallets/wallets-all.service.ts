@@ -25,12 +25,20 @@ export class WalletsAllService {
   ) {
     this.myWallets$ = this.myWalletsSub.asObservable();
     this.coinsAvailable$ = this.coinsAvailableSub.asObservable();
-    this.loadConfig();
-    this.loadWallets();
+    //this.loadConfig();
+    //this.loadWallets();
   }
 
   getAllWallets():WalletModel[]{
     return this.myWallets;
+  }
+
+  deleteWallet(wallet:WalletModel){
+
+    let ar = this.myWallets;
+    for(let i =ar.length-1;i>=0;i--)if(ar[i].label == wallet.label)ar.splice(i,1);
+    this.saveWalletes();
+    this.loadWallets();
   }
 
   createNewWallet(wallet:WalletModel){
@@ -54,6 +62,7 @@ export class WalletsAllService {
       let crypto = CryptoJS
       let wallets  = JSON.parse(str);
 
+
       this.myWallets = wallets.map(function (item) {
 
         item.privateKey = crypto.AES.decrypt(item.privateKey, password).toString(crypto.enc.Utf8);
@@ -67,7 +76,6 @@ export class WalletsAllService {
   }
 
   saveWalletes(){
-
     console.log(this);
     let password = this.password;
     let crypto = CryptoJS.AES
@@ -84,10 +92,17 @@ export class WalletsAllService {
     this.password = password;
   }
 
-  getWalletBySymbol(symbol:string):WalletModel{
-    let ar = this.myWallets;
-    for(let i= ar.length -1; i>=0; i--) if(ar[i].symbol == symbol) return ar[i];
-    return null;
+  getWalletsBySymbol(symbol:string):WalletModel[]{
+
+    return _.filter(this.myWallets,{symbol:symbol});
+    //for(let i= ar.length -1; i>=0; i--) if(ar[i].symbol == symbol) return ar[i];
+    //return null;
+  }
+  getWalletsByName(label:string):WalletModel[]{
+
+    return _.filter(this.myWallets,{label:label});
+    //for(let i= ar.length -1; i>=0; i--) if(ar[i].symbol == symbol) return ar[i];
+    //return null;
   }
 
   getCoinConfigBySymbol(symbol:string):CoinConfig{

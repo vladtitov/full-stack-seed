@@ -13,12 +13,14 @@ import {LoginMain} from './login/login-main.component';
 import {SsMainComponent} from './ss-browse/ss-main/ss-main.component';
 import {WalletsMainComponent} from './wallets/wallets-main/wallets-main.component';
 import {MyWalletsComponent} from './wallets/my-wallets/my-wallets.component';
+import {ExchangeSsComponent} from './exchange-ss/exchange-ss.component';
 
 export const rootRouterConfig: Routes = [
   { path: '', redirectTo: 'ss-main', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginMain },
   { path: 'about', component: AboutComponent },
+  { path: 'exchange-ss', component:ExchangeSsComponent },
   { path: 'ss-main', component: SsMainComponent },
   { path: 'wallets', component: WalletsMainComponent },
   { path: 'my-wallets', component: MyWalletsComponent },

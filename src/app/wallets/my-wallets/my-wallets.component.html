@@ -1,14 +1,16 @@
 <div>
-    <button md-raised-button color="accent" (click)="addWallet($event)">Add Wallet</button>
-
+    <button md-raised-button color="primary" (click)="addWallet($event)"><div class="fa fa-plus"></div></button>
+    <button md-raised-button color="warn" (click)="editWallet($event)"  ><div class="fa fa-edit"></div></button>
+    <button md-raised-button color="accent" (click)="deleteWallet($event)"><div class="fa fa-minus"></div></button>
     <app-wallet-create></app-wallet-create>
     <div>
         <hr/>
-        <md-list *ngFor="let wallet of myWallets">
-            <md-list-item (click)="onWalletSelected(wallet)"  [class.selected] = wallet.selected >
+
+
+        <md-list>
+
+            <md-list-item *ngFor="let wallet of myWallets" (click)="onWalletSelected(wallet)"  [class.selected] = wallet.selected >
                 <app-wallet  [wallet]="wallet">  </app-wallet>
-                <div class="fa fa-edit" (click)="onEditClick(wallet)"></div>
-                <div class="fa fa-delete" (click)="onEditClick(wallet)"></div>
 
             </md-list-item>
 

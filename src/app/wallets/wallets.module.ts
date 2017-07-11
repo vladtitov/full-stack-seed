@@ -25,7 +25,6 @@ import { WalletEditComponent } from './wallet-edit/wallet-edit.component';
     WalletEditComponent
   ],
   providers:[
-    WalletsAllService
   ],
   entryComponents: [WalletEditComponent]
 })

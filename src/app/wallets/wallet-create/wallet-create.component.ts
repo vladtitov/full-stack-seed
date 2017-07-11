@@ -5,7 +5,7 @@ import {MdDialog} from '@angular/material';
 import {DialogSimpleComponent} from '../../shared/dialog-simple/dialog-simple.component';
 import * as _ from 'lodash';
 import {generateAddressFromPrivateKey} from '../../shared/generate-address';
-import {GeneratorBlockchain} from '../wallet-core/generator-blockchain';
+
 
 
 
@@ -18,7 +18,6 @@ export class WalletCreateComponent implements OnInit {
 
   coinsAvalable:CoinConfig[];
   wallet:WalletModel;
-  generator:GeneratorBlockchain;
 
   privateKeyETH = 'f6ebe5512937e1eea5eda7b40a497276008954ff30d48f5ff5e7873aa694fa12';///0xc724cb4bb59210caaf1e71c9111f191aca5f1bf9
   privateKeyBTC0='L5ZXWJbQfrYKFcf27R9g25DTY568Hwst5ceyz8bC2J9TqxayCzdP';//1Mfu3eqLrMAbhGGdPXiQivtRvL2s4TgybB
@@ -34,8 +33,7 @@ export class WalletCreateComponent implements OnInit {
   ) {
     this.wallet = new WalletModel();
     this.wallet.privateKey = this.privateKeyETH;
-    this.generator = new GeneratorBlockchain();
-    console.log(this.generator);
+
   }
 
   ngOnInit() {
@@ -86,10 +84,11 @@ export class WalletCreateComponent implements OnInit {
       let exists = _.filter(wallets, {symbol:this.wallet.symbol});
       this.wallet.label = this.wallet.symbol + ' '+ exists.length;
     }
+
     if(cfg.contractAddress){
-      let parent:WalletModel = this.waletsService.getWalletBySymbol(cfg.parent);
-      console.log(parent)
-      if(parent){
+     // let parent:WalletModel = this.waletsService.getWalletBySymbol(cfg.parent);
+     // console.log(parent)
+    //  if(parent){
 
 
 
@@ -97,9 +96,6 @@ export class WalletCreateComponent implements OnInit {
         this.dialog.open(DialogSimpleComponent, {data:{message:'You have to have wallet on '+ cfg.parent}})
 
       }
-    }else{
-
-    }
 
     this.generateAddress();
 

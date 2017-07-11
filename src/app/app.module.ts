@@ -33,6 +33,10 @@ import {MaterialAppModule} from './material/material-app.module';
 import {WalletsModule} from './wallets/wallets.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SharedModule} from './shared/shared.module';
+import { ExchangeSsComponent } from './exchange-ss/exchange-ss.component';
+import {ExchangeSsService} from './exchange-ss/exchange-ss.service';
+import {SelectedCoinsService} from './ss-browse/selected-coins/selected-coins.service';
+import {WalletsAllService} from './wallets/wallets-all.service';
 
 declare const Buffer:any;
 
@@ -47,7 +51,8 @@ declare const Buffer:any;
     RepoDetailComponent,
     HomeComponent,
     ContactComponent,
-    LoginMain
+    LoginMain,
+    ExchangeSsComponent
 
   ],
   imports: [
@@ -68,7 +73,10 @@ declare const Buffer:any;
     //AuthHttp,
     GithubService,
     LoginService,
-    HomeService
+    HomeService,
+    ExchangeSsService,
+    SelectedCoinsService,
+    WalletsAllService
    // provideAuth({
      // headerName: 'Authorization',
     //  headerPrefix: 'Bearer',

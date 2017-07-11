@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AllCoinsService} from '../all-coins.service';
 import {VOExchangeData} from '../../models/SS-models';
+import {SelectedCoinsService} from '../selected-coins/selected-coins.service';
 
 @Component({
   selector: 'app-ss-main',
@@ -11,20 +12,25 @@ export class SsMainComponent implements OnInit {
 
   allCoins:VOExchangeData[];
   selectedCoinsNames:string[];
+
   selectedCoins:VOExchangeData[];
+
   isAllcoins:boolean;
 
   timestamp:string = '';
-  constructor(private service:AllCoinsService) { }
+  constructor(
+    private allCoinsService:AllCoinsService,
+    private selectedService:SelectedCoinsService
+  ) { }
 
   ngOnInit() {
-    this.service.allCoins$.subscribe(res=>{
+    this.allCoinsService.allCoins$.subscribe(res=>{
       this.markSelected(res)
       this.allCoins=res;
       this.populateSelected();
     });
-    this.service.loadData()
-    this.service.timestamp$.subscribe(res=>this.timestamp = (new Date(res)).toLocaleTimeString());
+    this.allCoinsService.loadData()
+    this.allCoinsService.timestamp$.subscribe(res=>this.timestamp = (new Date(res)).toLocaleTimeString());
   }
 
   showAllCoins(){
@@ -79,7 +85,7 @@ export class SsMainComponent implements OnInit {
   }
 
   onRefresh(){
-    this.service.loadData('now');
+    this.allCoinsService.loadData('now');
   }
 
 }
