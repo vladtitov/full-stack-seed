@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component,  OnInit} from '@angular/core';
 import {VOExchangeData} from '../../models/SS-models';
 import * as _ from 'lodash';
+import {AllCoinsService} from '../all-coins.service';
 @Component({
   selector: 'app-all-coins-table',
   templateUrl: './all-coins-table.component.html',
@@ -8,46 +9,55 @@ import * as _ from 'lodash';
 })
 export class AllCoinsTableComponent implements OnInit {
 
-  @Input() allCoins:VOExchangeData[];
+  //@Input() allCoins:VOExchangeData[];
 
-  @Output()selectedCoinsNamesChange = new EventEmitter();
+  //@Output()selectedCoinsNamesChange = new EventEmitter();
 
 
 
-  modelCoins:VOExchangeData[];
+
+  allCoinsData:VOExchangeData[];
+
+ //modelCoins:VOExchangeData[];
   creteria:string;
 
   asc_desc='asc';
 
-  constructor() { }
+  constructor( private allCoinsService:AllCoinsService) { }
 
-  ngOnChanges(changes: any) {
-    console.log(changes);
+ // ngOnChanges(changes: any) {
+   // console.log(changes);
 
-    this.modelCoins  = changes.allCoins.currentValue;// _.reject(changes.allCoins,'selected')
+    //this.modelCoins  = changes.allCoins.currentValue;// _.reject(changes.allCoins,'selected')
 
     //this.doSomething(changes.categoryId.currentValue);
 
-  }
+  //}
 
   ngOnInit() {
+
+    this.allCoinsService.allCoins$.subscribe(res=>this.allCoinsData = res);
   }
 
 
   private changeStatus(coin:VOExchangeData):void{
 
   }
+
   onCoinSelected(event, coin:VOExchangeData):void {
     console.log(event.target.checked, coin);
     coin.selected = event.target.checked;
 
+
+
+/*
     let selectedCoinsNames = this.allCoins.reduce(function (result, item) {
       if(item.selected)  result.push(item.symbol);
       return result;
     },[]);
 
 
-    this.selectedCoinsNamesChange.emit(selectedCoinsNames);
+    this.selectedCoinsNamesChange.emit(selectedCoinsNames);*/
   }
 
   onClickHeader(creteria:string):void{
@@ -58,7 +68,7 @@ export class AllCoinsTableComponent implements OnInit {
     }else this.asc_desc = 'asc';
     console.log(this.asc_desc);
 
-    this.modelCoins = _.orderBy(this.modelCoins, creteria, this.asc_desc);
+    this.allCoinsData = _.orderBy(this.allCoinsData, creteria, this.asc_desc);
     this.creteria = creteria;
 
   }

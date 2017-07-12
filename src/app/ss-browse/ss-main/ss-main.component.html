@@ -8,10 +8,11 @@
 </div>
     <hr/>
 
-    <app-selected-coins [modelCoins]="selectedCoins"></app-selected-coins>
+    <app-selected-coins></app-selected-coins>
+
     <div *ngIf="isAllcoins">
         <hr/>
         <div class="fa fa-close" (click)="onClose()"></div>
-        <app-all-coins-table  [allCoins]="allCoins" (selectedCoinsNamesChange)="onSelectChanged($event)"></app-all-coins-table>
+        <app-all-coins-table ></app-all-coins-table>
     </div>
 </div>

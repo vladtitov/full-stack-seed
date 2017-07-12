@@ -35,8 +35,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SharedModule} from './shared/shared.module';
 import { ExchangeSsComponent } from './exchange-ss/exchange-ss.component';
 import {ExchangeSsService} from './exchange-ss/exchange-ss.service';
-import {SelectedCoinsService} from './ss-browse/selected-coins/selected-coins.service';
 import {WalletsAllService} from './wallets/wallets-all.service';
+import {AllCoinsService} from './ss-browse/all-coins.service';
 
 declare const Buffer:any;
 
@@ -75,8 +75,8 @@ declare const Buffer:any;
     LoginService,
     HomeService,
     ExchangeSsService,
-    SelectedCoinsService,
-    WalletsAllService
+    WalletsAllService,
+    AllCoinsService
    // provideAuth({
      // headerName: 'Authorization',
     //  headerPrefix: 'Bearer',

@@ -13,6 +13,6 @@ import {MaterialAppModule} from '../material/material-app.module';
     MaterialAppModule
   ],
   declarations: [SsMainComponent, AllCoinsTableComponent, SelectedCoinsComponent],
-  providers:[AllCoinsService]
+  providers:[]
 })
 export class SsBrowseModule {}

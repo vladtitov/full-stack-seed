@@ -11,12 +11,18 @@ import {VOExchangeData} from '../models/SS-models';
 export class ExchangeSsComponent implements OnInit {
 
   myWallets:WalletModel[];
-  myCoins:VOExchangeData[]
+  myCoins:VOExchangeData[];
+
+
   constructor(private exchangeService:ExchangeSsService) { }
 
   ngOnInit() {
     this.exchangeService.init();
     this.exchangeService.myWallets$.subscribe(res=>this.myWallets= res);
+    this.exchangeService.myCoins$.subscribe(res=>{
+      console.log(res);
+      this.myCoins = res
+    });
 
   }
 

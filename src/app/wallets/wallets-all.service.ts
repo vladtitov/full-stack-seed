@@ -69,7 +69,6 @@ export class WalletsAllService {
         return item;
       });
 
-
       console.log(this.myWallets)
       this.myWalletsSub.next(this.myWallets);
     }
@@ -91,6 +90,7 @@ export class WalletsAllService {
   setPassword(password:string){
     this.password = password;
   }
+
 
   getWalletsBySymbol(symbol:string):WalletModel[]{
 

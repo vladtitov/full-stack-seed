@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component,  OnInit} from '@angular/core';
 import {VOExchangeData} from '../../models/SS-models';
 import * as _ from 'lodash';
-import {SelectedCoinsService} from './selected-coins.service';
+import {AllCoinsService} from '../all-coins.service';
 
 @Component({
   selector: 'app-selected-coins',
@@ -10,15 +10,17 @@ import {SelectedCoinsService} from './selected-coins.service';
 })
 export class SelectedCoinsComponent implements OnInit {
 
-  @Input() modelCoins:VOExchangeData[];
+  //@Input() modelCoins:VOExchangeData[];
+
+  selectedCoins:VOExchangeData[]
   sortCreteria:string = 'rank';
   asc_desc='asc';
-  constructor(private selectedCoinsService:SelectedCoinsService) { }
+  constructor(private allCoinsService:AllCoinsService) { }
 
   ngOnInit() {
+    this.allCoinsService.selectedCoins$.subscribe(res=>this.selectedCoins = res)
 
   }
-
 
   onClickHeader(creteria:string):void{
     console.log(creteria);
@@ -28,7 +30,7 @@ export class SelectedCoinsComponent implements OnInit {
     }else this.asc_desc = 'asc';
     console.log(this.asc_desc);
 
-    this.modelCoins = _.orderBy(this.modelCoins, creteria, this.asc_desc);
+    this.selectedCoins = _.orderBy(this.selectedCoins, creteria, this.asc_desc);
     this.sortCreteria = creteria;
 
   }

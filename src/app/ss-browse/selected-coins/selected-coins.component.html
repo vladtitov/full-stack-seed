@@ -1,4 +1,5 @@
 <div>
+    <h4>Total {{selectedCoins.length}}</h4>
     <table>
         <tr>
             <th><button md-button (click)="onClickHeader('market_cap_usd')">market cap usd</button></th>
@@ -10,7 +11,7 @@
             <th><button md-button (click)="onClickHeader('symbol')">Symbol</button></th>
         </tr>
 
-        <tbody *ngFor="let item of modelCoins">
+        <tbody *ngFor="let item of selectedCoins">
 
         <tr>
             <td>{{item.market_cap_usd}}</td>
