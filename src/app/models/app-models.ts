@@ -3,17 +3,28 @@
  * Created by Vlad on 7/8/2017.
  */
 export interface CoinConfig{
-  privateKey:string;
   symbol:string;
   network:any;
   active:string;
   icon:string;
   contractAddress:string;
-  parent:string;
   generator:string;
   displayName:string;
+  mainNet:any;
+  parent:string;
+  urlBalance:string;
+  urlSendTransaction:string;
+  urlNonce:string;
+  shapeshift:any;
+  transactionType:string;
 }
 
+export class UTXO{
+  address:string;
+  balance:number;
+  vouts:number;
+  txid:string;
+}
 
 export interface UserProfile{
   ver:number;

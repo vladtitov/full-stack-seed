@@ -1,15 +1,58 @@
 import { Injectable } from '@angular/core';
-import {WalletModel} from '../../models/app-models';
+import {CoinConfig, WalletModel} from '../../models/app-models';
+import {Http} from '@angular/http';
 
 @Injectable()
 export class WalletService {
 
   private wallet:WalletModel;
-  constructor() { }
+  private config:CoinConfig;
+  balance:number;
+  utxos:any[];
+
+  miningFee:number;
+
+  gasLimit:number;
+  gasPrice:number;
+
+  constructor( private http:Http) { }
 
   setWallet(wallet:WalletModel){
     this.wallet = wallet;
   }
 
+  setCoinConfig(config:CoinConfig){
+    console.log(config);
+    this.config = config;
+
+    this.loadBalance();
+  }
+
+  loadBalance(){
+    let url = this.config.urlBalance
+    url = url.replace('{{address}}',this.wallet.address);
+    this.http.get(url).map(res=>res.json()).subscribe(res=>{
+      console.log(res);
+    })
+
+  }
+
+  senTransaction(amount:number, address:string){
+
+
+  }
+
+  buildTransactionNitcoin(){
+
+  }
+
+  buildTransactionEther(){
+
+  }
+
+
 
 }
+
+
+

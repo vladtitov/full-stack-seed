@@ -113,13 +113,12 @@ export class WalletsAllService {
 
   loadConfig(){
     let url = 'api/app-config';
-
     this.http.get(url).map(res=>res.json()).subscribe(res=>{
       console.log(res);
+
       this.config = res;
       this.coinsAvailable = res.coins.concat(res.tokens);
       this.coinsAvailableSub.next(this.coinsAvailable);
-
     })
   }
 
