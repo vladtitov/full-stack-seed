@@ -12,8 +12,10 @@ export function generateAddressFromPrivateKey(privateKey:string, network:string 
 
   switch(network){
     case 'ETH':
+      console.log('ETH address')
       return etherutils.addHexPrefix(etherutils.privateToAddress(new Buffer(privateKey, 'hex')).toString('hex'));
     default:
+      console.log('BTC  address')
       return bitcoin.ECPair.fromWIF(privateKey, <any>getNetwork(network).mainNet).getAddress()
   }
 

@@ -25,6 +25,8 @@ export class WalletsAllService {
   ) {
     this.myWallets$ = this.myWalletsSub.asObservable();
     this.coinsAvailable$ = this.coinsAvailableSub.asObservable();
+
+
     //this.loadConfig();
     //this.loadWallets();
   }
@@ -43,16 +45,18 @@ export class WalletsAllService {
 
   createNewWallet(wallet:WalletModel){
 
-    let ecrypted = CryptoJS.AES.encrypt(wallet.privateKey, this.password);
-    wallet.privateKey = ecrypted.toString();
+   // let ecrypted = CryptoJS.AES.encrypt(wallet.privateKey, this.password);
+   // wallet.privateKey = ecrypted.toString();
    // console.log(ecrypted.toString());
 
-    let bytes  = CryptoJS.AES.decrypt(wallet.privateKey, this.password);
-    let plaintext = bytes.toString(CryptoJS.enc.Utf8);
+    //let bytes  = CryptoJS.AES.decrypt(wallet.privateKey, this.password);
+    //let plaintext = bytes.toString(CryptoJS.enc.Utf8);
+
     this.myWallets.push(wallet);
+
     this.myWalletsSub.next(this.myWallets);
+
     this.saveWalletes();
-    console.log(plaintext);
   }
 
   loadWallets(){
@@ -62,14 +66,14 @@ export class WalletsAllService {
       let crypto = CryptoJS
       let wallets  = JSON.parse(str);
 
-
-      this.myWallets = wallets.map(function (item) {
-
+      wallets.forEach(function (item) {
+        console.log('1 '+item.privateKey);
         item.privateKey = crypto.AES.decrypt(item.privateKey, password).toString(crypto.enc.Utf8);
-        return item;
+        console.log('2 '+item.privateKey);
       });
 
-      console.log(this.myWallets)
+      console.log(wallets)
+      this.myWallets = wallets;
       this.myWalletsSub.next(this.myWallets);
     }
   }
@@ -80,9 +84,10 @@ export class WalletsAllService {
     let crypto = CryptoJS.AES
     let walets = _.cloneDeep(this.myWallets);
 
-    walets = _.map(walets, function (item) {
+
+
+    _.each(walets, function (item) {
       item.privateKey = crypto.encrypt(item.privateKey, password).toString();
-      return item;
     });
     localStorage.setItem('mywallets',JSON.stringify(walets));
   }

@@ -29,8 +29,9 @@ export class WalletService {
   }
 
   loadBalance(){
-    let url = this.config.urlBalance
-    url = url.replace('{{address}}',this.wallet.address);
+
+    let url = '/api/token/balance/'+this.config.symbol+'/'+this.wallet.address;
+    console.log(url);
     this.http.get(url).map(res=>res.json()).subscribe(res=>{
       console.log(res);
     })

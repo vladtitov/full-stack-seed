@@ -75,9 +75,12 @@ export class WalletCreateComponent implements OnInit {
     console.log(event.value);
     let cfg = this.waletsService.getCoinConfigBySymbol(event.value);
     if(!cfg) return
+    console.log(cfg);
+
     this.wallet.symbol = cfg.symbol;
     this.wallet.network = cfg.network;
     this.wallet.displayName = cfg.displayName;
+
 
     if(!this.wallet.label) {
       let wallets =  this.waletsService.getAllWallets();
@@ -85,15 +88,19 @@ export class WalletCreateComponent implements OnInit {
       this.wallet.label = this.wallet.symbol + ' '+ exists.length;
     }
 
+
+
     if(cfg.contractAddress){
+
+
      // let parent:WalletModel = this.waletsService.getWalletBySymbol(cfg.parent);
      // console.log(parent)
     //  if(parent){
 
-
+      this.dialog.open(DialogSimpleComponent, {data:{message:'You have to have wallet on '+ cfg.parent}})
 
       }else {
-        this.dialog.open(DialogSimpleComponent, {data:{message:'You have to have wallet on '+ cfg.parent}})
+
 
       }
 

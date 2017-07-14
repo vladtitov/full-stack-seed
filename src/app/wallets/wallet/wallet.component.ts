@@ -26,7 +26,7 @@ export class WalletComponent implements OnInit, AfterContentInit {
   }
 
   setConfig(){
-    if(this.coinConfigs.length && this.wallet.symbol){
+    if(this.coinConfigs && this.wallet && this.coinConfigs.length && this.wallet.symbol){
 
       let mySymbol:string = this.wallet.symbol;
       let configs = this.coinConfigs.filter(function (item) {
@@ -45,6 +45,7 @@ export class WalletComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit(){
+
     this.walletService.setWallet(this.wallet);
     this.setConfig();
    // console.log(this.wallet);

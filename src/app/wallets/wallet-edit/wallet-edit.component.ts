@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
+import {MD_DIALOG_DATA, MdDialogRef, MdSnackBar} from '@angular/material';
 import {WalletModel} from '../../models/app-models';
 import {generateAddressFromPrivateKey} from '../../shared/generate-address';
 
@@ -12,16 +12,29 @@ export class WalletEditComponent implements OnInit {
 
   wallet:WalletModel;
 
-  constructor( public dialogRef: MdDialogRef<WalletEditComponent>, @Inject(MD_DIALOG_DATA) public data: WalletModel) {
+  constructor(
+    public dialogRef: MdDialogRef<WalletEditComponent>,
+    @Inject(MD_DIALOG_DATA) public data: WalletModel,
+    public snackBar: MdSnackBar
+  ) {
    this.wallet = data;
 
   }
 
   ngOnInit() {
+
   }
 
   onPrivateKeyBlur(evt){
-    this.wallet.address = generateAddressFromPrivateKey(this.wallet.privateKey, this.wallet.network);
+    let pk = this.wallet.privateKey
+    try{
+      this.wallet.address = generateAddressFromPrivateKey(pk, this.wallet.network);
+    }catch(e){
+      console.error(e);
+      console.log(pk);
+      this.snackBar.open(' Error ' + e.toString(),'Message',{ duration: 3000});
+    }
+
   }
 
   onClose(){

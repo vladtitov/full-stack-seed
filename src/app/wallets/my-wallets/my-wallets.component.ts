@@ -15,6 +15,7 @@ import {DialogSimpleComponent} from '../../shared/dialog-simple/dialog-simple.co
 export class MyWalletsComponent implements OnInit {
 
   myWallets:WalletModel[];
+
   walletSelected:WalletModel;
 
 
@@ -26,7 +27,10 @@ export class MyWalletsComponent implements OnInit {
   ngOnInit() {
     this.walletsService.loadConfig();
     this.walletsService.loadWallets();
-    this.walletsService.myWallets$.subscribe(res=>this.myWallets = res);
+    this.walletsService.myWallets$.subscribe(res=>{
+      console.log(res);
+      this.myWallets = res
+    });
   }
 
   addWallet(evt){
