@@ -42,6 +42,7 @@ export class CoinsAvailable{
 
 export class WalletModel{
  // config:CoinConfig;
+  id:string;
   selected:boolean;
   network:any;
   displayName:string;

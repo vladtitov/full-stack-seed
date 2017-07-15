@@ -17,6 +17,7 @@ export class MyWalletsComponent implements OnInit {
   myWallets:WalletModel[];
 
   walletSelected:WalletModel;
+  isCreate:boolean;
 
 
   constructor(
@@ -28,13 +29,14 @@ export class MyWalletsComponent implements OnInit {
     this.walletsService.loadConfig();
     this.walletsService.loadWallets();
     this.walletsService.myWallets$.subscribe(res=>{
-      console.log(res);
+     // console.log(res);
       this.myWallets = res
     });
   }
 
   addWallet(evt){
 
+    this.isCreate = !this.isCreate;
 
   }
 

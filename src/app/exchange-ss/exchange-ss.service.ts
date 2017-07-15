@@ -5,6 +5,8 @@ import {WalletsAllService} from '../wallets/wallets-all.service';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
 import {AllCoinsService} from '../ss-browse/all-coins.service';
+import {Http} from '@angular/http';
+import {ApiServerService} from '../api-server.service';
 
 @Injectable()
 export class ExchangeSsService {
@@ -26,7 +28,11 @@ export class ExchangeSsService {
 
 
 
-  constructor(private allWallets:WalletsAllService, private allCoinsService:AllCoinsService) {
+  constructor(
+    private allWallets:WalletsAllService,
+    private allCoinsService:AllCoinsService,
+    private api:ApiServerService
+  ) {
 
     this.myWalletsSub =  new BehaviorSubject<WalletModel[]>([])
     this.myWallets$ = this.myWalletsSub.asObservable();
@@ -51,6 +57,15 @@ export class ExchangeSsService {
     })
 
     allCoinsService.loadData();
+
+  }
+
+
+  updateBalance(wallet:WalletModel){
+
+    this.api.getTokenBalance(wallet.symbol, wallet.address).subscribe(res=>{
+      console.log(res);
+    })
 
   }
 

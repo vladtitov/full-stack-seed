@@ -26,4 +26,9 @@ export class ExchangeSsComponent implements OnInit {
 
   }
 
+  updateBalance(wallet:WalletModel){
+    this.exchangeService.updateBalance(wallet);
+  }
+
+
 }

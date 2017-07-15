@@ -6,7 +6,7 @@
     </div>
     <div>
         <h3>Wallets</h3>
-        <div *ngFor="let wallet of myWallets">{{wallet.label}} {{wallet.balanceDisplay}}</div>
+        <div *ngFor="let wallet of myWallets">{{wallet.label}} <h2 (click)="updateBalance(wallet)">{{wallet.balanceDisplay}}</h2></div>
     </div>
   exchange-ss works!
 </div>

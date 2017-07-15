@@ -19,6 +19,7 @@ export class WalletsAllService {
 
   config:any;
   password:string = 'my secure password';
+  //password:string = '';
 
   constructor(
     private http:Http
@@ -36,14 +37,17 @@ export class WalletsAllService {
   }
 
   deleteWallet(wallet:WalletModel){
-
     let ar = this.myWallets;
     for(let i =ar.length-1;i>=0;i--)if(ar[i].label == wallet.label)ar.splice(i,1);
+
     this.saveWalletes();
     this.loadWallets();
   }
 
   createNewWallet(wallet:WalletModel){
+
+    wallet = _.clone(wallet);
+    wallet.id=wallet.symbol + '_'+wallet.address;
 
    // let ecrypted = CryptoJS.AES.encrypt(wallet.privateKey, this.password);
    // wallet.privateKey = ecrypted.toString();
@@ -59,28 +63,46 @@ export class WalletsAllService {
     this.saveWalletes();
   }
 
-  loadWallets(){
+  dispattchWalletChanges():void{
+    this.myWalletsSub.next(this.myWallets);
+  }
+
+  loadWallets():void{
+
     let str =  localStorage.getItem('mywallets');
     if(str) {
-      let password= this.password;
+      let wallets =[]
       let crypto = CryptoJS
-      let wallets  = JSON.parse(str);
+      let password= this.password;
 
-      wallets.forEach(function (item) {
-        console.log('1 '+item.privateKey);
-        item.privateKey = crypto.AES.decrypt(item.privateKey, password).toString(crypto.enc.Utf8);
-        console.log('2 '+item.privateKey);
-      });
+      try{
+         wallets = JSON.parse(str);
 
-      console.log(wallets)
+        wallets.forEach(function (item) {
+          console.log('1 '+item.privateKey);
+          item.privateKey = crypto.AES.decrypt(item.privateKey, password).toString(crypto.enc.Utf8);
+          console.log('2 '+item.privateKey);
+        });
+
+        console.log(wallets)
+      } catch (e){
+        console.log(e.toString());
+        e.toString();
+      }
+
       this.myWallets = wallets;
-      this.myWalletsSub.next(this.myWallets);
+      this.dispattchWalletChanges();
+
     }
   }
 
-  saveWalletes(){
-    console.log(this);
+  saveWalletes():boolean{
+
+    //console.log(this);
     let password = this.password;
+    if(!password) {
+      throw new Error('Password required')
+    }
     let crypto = CryptoJS.AES
     let walets = _.cloneDeep(this.myWallets);
 
@@ -90,24 +112,33 @@ export class WalletsAllService {
       item.privateKey = crypto.encrypt(item.privateKey, password).toString();
     });
     localStorage.setItem('mywallets',JSON.stringify(walets));
+
+    return true;
   }
 
   setPassword(password:string){
     this.password = password;
+    this.loadWallets();
   }
 
 
-  getWalletsBySymbol(symbol:string):WalletModel[]{
+  getMyWalletsBySymbol(symbol:string):WalletModel[]{
 
     return _.filter(this.myWallets,{symbol:symbol});
     //for(let i= ar.length -1; i>=0; i--) if(ar[i].symbol == symbol) return ar[i];
     //return null;
   }
-  getWalletsByName(label:string):WalletModel[]{
+  getMyWalletsByName(label:string):WalletModel[]{
 
     return _.filter(this.myWallets,{label:label});
     //for(let i= ar.length -1; i>=0; i--) if(ar[i].symbol == symbol) return ar[i];
     //return null;
+  }
+
+  getMyWalletById(id:string):WalletModel{
+    let ar = this.getAllWallets()
+    for(let i = ar.length -1; i>=0; i--) if(ar[i].id === id) return ar[i];
+    return null;
   }
 
   getCoinConfigBySymbol(symbol:string):CoinConfig{

@@ -2,6 +2,7 @@ import {AfterContentInit, Component, Input, OnInit} from '@angular/core';
 import {CoinConfig, WalletModel} from '../../models/app-models';
 import {WalletService} from './wallet.service';
 import {WalletsAllService} from '../wallets-all.service';
+import {ApiServerService} from '../../api-server.service';
 
 @Component({
   selector: 'app-wallet',
@@ -15,7 +16,11 @@ export class WalletComponent implements OnInit, AfterContentInit {
   @Input() wallet:WalletModel;
   coinConfigs:CoinConfig[];
 
-  constructor( private walletService:WalletService, private allWallets:WalletsAllService) {
+  constructor(
+    private walletService:WalletService,
+    private allWallets:WalletsAllService,
+    private api:ApiServerService
+  ) {
 
     allWallets.coinsAvailable$.subscribe(res=>{
       this.coinConfigs = res;
@@ -49,6 +54,14 @@ export class WalletComponent implements OnInit, AfterContentInit {
     this.walletService.setWallet(this.wallet);
     this.setConfig();
    // console.log(this.wallet);
+  }
+
+
+  updateBalance(){
+
+    this.api.getTokenBalance(this.wallet.symbol, this.wallet.address).subscribe(res=>{
+      console.log(res)
+    })
   }
 
 }

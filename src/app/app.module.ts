@@ -37,6 +37,8 @@ import { ExchangeSsComponent } from './exchange-ss/exchange-ss.component';
 import {ExchangeSsService} from './exchange-ss/exchange-ss.service';
 import {WalletsAllService} from './wallets/wallets-all.service';
 import {AllCoinsService} from './ss-browse/all-coins.service';
+import { SetPasswordComponent } from './set-password/set-password.component';
+import {ApiServerService} from './api-server.service';
 
 declare const Buffer:any;
 
@@ -52,7 +54,8 @@ declare const Buffer:any;
     HomeComponent,
     ContactComponent,
     LoginMain,
-    ExchangeSsComponent
+    ExchangeSsComponent,
+    SetPasswordComponent
 
   ],
   imports: [
@@ -76,7 +79,8 @@ declare const Buffer:any;
     HomeService,
     ExchangeSsService,
     WalletsAllService,
-    AllCoinsService
+    AllCoinsService,
+    ApiServerService
    // provideAuth({
      // headerName: 'Authorization',
     //  headerPrefix: 'Bearer',

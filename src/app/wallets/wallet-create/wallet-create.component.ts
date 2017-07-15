@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CoinConfig, WalletModel} from '../../models/app-models';
 import {WalletsAllService} from '../wallets-all.service';
 import {MdDialog} from '@angular/material';
 import {DialogSimpleComponent} from '../../shared/dialog-simple/dialog-simple.component';
 import * as _ from 'lodash';
 import {generateAddressFromPrivateKey} from '../../shared/generate-address';
+import {main} from '@angular/compiler-cli/src/main';
 
 
 
@@ -15,6 +16,10 @@ import {generateAddressFromPrivateKey} from '../../shared/generate-address';
   styleUrls: ['./wallet-create.component.css']
 })
 export class WalletCreateComponent implements OnInit {
+
+
+
+  @Output() created:EventEmitter<WalletModel> = new EventEmitter(null);
 
   coinsAvalable:CoinConfig[];
   wallet:WalletModel;
@@ -27,17 +32,17 @@ export class WalletCreateComponent implements OnInit {
   privateKeyLTC0='T7eQ9wfF9tseKqQs3R39bpmZxFokCw6F6UDULTRVDPMVfbKXg5YZ' // LUhx6yurUdybU1Xxzm9qsU8NUyaYc7z8EQ
 
   constructor(
-      private waletsService:WalletsAllService,
       private dialog:MdDialog,
       private allWalletsService:WalletsAllService
   ) {
     this.wallet = new WalletModel();
-    this.wallet.privateKey = this.privateKeyETH;
+    console.log(this.created);
+   // this.wallet.privateKey = this.privateKeyETH;
 
   }
 
   ngOnInit() {
-    this.waletsService.coinsAvailable$.subscribe(res=>this.coinsAvalable = res);
+    this.allWalletsService.coinsAvailable$.subscribe(res=>this.coinsAvalable = res);
 
   }
 
@@ -59,13 +64,15 @@ export class WalletCreateComponent implements OnInit {
   }
 
   addWallet(evt){
-    let wallets =  this.waletsService.getAllWallets();
-    let exists = _.filter(wallets, {label:this.wallet.label});
-    if(exists.length){
-      this.dialog.open(DialogSimpleComponent, {data:{title:'ERROR',message:'Wallet with this name exists. Please create unique name for your wallet'}})
+    let id = this.wallet.symbol+'_'+this.wallet.address;
+
+    let exists =  this.allWalletsService.getMyWalletById(id);
+
+
+    if(exists){
+      this.dialog.open(DialogSimpleComponent, {data:{title:'ERROR',message:'Wallet with this address and Coin exists. Please use another private key'}})
       return
     }
-
       this.allWalletsService.createNewWallet(this.wallet);
   }
 
@@ -73,17 +80,17 @@ export class WalletCreateComponent implements OnInit {
 
   coinSelectChanged(event){
     console.log(event.value);
-    let cfg = this.waletsService.getCoinConfigBySymbol(event.value);
+    let cfg = this.allWalletsService.getCoinConfigBySymbol(event.value);
     if(!cfg) return
     console.log(cfg);
 
     this.wallet.symbol = cfg.symbol;
     this.wallet.network = cfg.network;
     this.wallet.displayName = cfg.displayName;
-
+    let wallets =  this.allWalletsService.getAllWallets();
 
     if(!this.wallet.label) {
-      let wallets =  this.waletsService.getAllWallets();
+
       let exists = _.filter(wallets, {symbol:this.wallet.symbol});
       this.wallet.label = this.wallet.symbol + ' '+ exists.length;
     }
@@ -91,13 +98,25 @@ export class WalletCreateComponent implements OnInit {
 
 
     if(cfg.contractAddress){
+      let network = cfg.network;
+      let networkWallets = this.allWalletsService.getMyWalletsBySymbol(network);
+
+      if(networkWallets.length){
+        let pk = networkWallets[0].privateKey;
+        if(!this.wallet.privateKey) this.wallet.privateKey = pk;
+
+
+
+      }else{
+        this.dialog.open(DialogSimpleComponent, {data:{message:'You have to have wallet on '+ cfg.network}})
+      }
 
 
      // let parent:WalletModel = this.waletsService.getWalletBySymbol(cfg.parent);
      // console.log(parent)
     //  if(parent){
 
-      this.dialog.open(DialogSimpleComponent, {data:{message:'You have to have wallet on '+ cfg.parent}})
+
 
       }else {
 

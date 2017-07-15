@@ -2,7 +2,7 @@
     <button md-raised-button color="primary" (click)="addWallet($event)"><div class="fa fa-plus"></div></button>
     <button md-raised-button color="warn" (click)="editWallet($event)"  ><div class="fa fa-edit"></div></button>
     <button md-raised-button color="accent" (click)="deleteWallet($event)"><div class="fa fa-minus"></div></button>
-    <app-wallet-create></app-wallet-create>
+    <app-wallet-create *ngIf="isCreate"></app-wallet-create>
     <div>
         <hr/>
 
@@ -19,5 +19,4 @@
 
         <hr/>
     </div>
-  my-wallets works!
 </div>
