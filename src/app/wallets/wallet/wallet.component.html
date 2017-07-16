@@ -1,4 +1,5 @@
 <div>
+    <span (click)="updateBalance()">Balance: </span><strong> ${{wallet.usd}} <small>{{wallet.symbol}}:</small>{{wallet.balanceDisplay?wallet.balanceDisplay:'0'}}</strong> |
    <span>{{wallet.label}}</span> | <span> {{wallet.address}} </span> | <span> {{wallet.symbol}} </span> - <span> {{wallet.displayName}} </span>
-    <span (click)="updateBalance()">{{wallet.balanceDisplay?wallet.balanceDisplay:'0'}}</span>
+
 </div>

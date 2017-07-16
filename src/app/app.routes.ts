@@ -19,13 +19,14 @@ import {SetPasswordComponent} from './set-password/set-password.component';
 export const rootRouterConfig: Routes = [
   { path: '', redirectTo: 'ss-main', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'login', component: LoginMain },
+ // { path: 'login', component: LoginMain },
   { path: 'about', component: AboutComponent },
   { path: 'exchange-ss', component:ExchangeSsComponent },
   { path: 'ss-main', component: SsMainComponent },
   { path: 'wallets', component: WalletsMainComponent },
   { path: 'my-wallets', component: MyWalletsComponent },
-  { path: 'set-password', component: SetPasswordComponent },
+  { path: 'login', component: SetPasswordComponent },
+  { path: 'logout', component: SetPasswordComponent },
   { path: 'github', component: RepoBrowserComponent,
     children: [
       { path: '', component: RepoListComponent },

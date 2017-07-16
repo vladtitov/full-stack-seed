@@ -63,7 +63,7 @@ export class ExchangeSsService {
 
   updateBalance(wallet:WalletModel){
 
-    this.api.getTokenBalance(wallet.symbol, wallet.address).subscribe(res=>{
+    this.api.getBalance(wallet.symbol, wallet.address).subscribe(res=>{
       console.log(res);
     })
 

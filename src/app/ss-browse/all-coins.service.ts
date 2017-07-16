@@ -30,6 +30,12 @@ export class AllCoinsService {
   totalSelectedCoins$:Observable<number>;
   totalSelectedCoinsSub:Subject<number>;
 
+
+  priceUSD:{[s:string]:number};
+  priceUSDSub:Subject<{[s:string]:number}>
+  priceUSD$:Observable<{[s:string]:number}>
+
+
   constructor(private http:Http) {
 
     this.allCoinsSub =  new BehaviorSubject([]);
@@ -54,8 +60,11 @@ export class AllCoinsService {
 
     this.selectedCoinsSub =  new BehaviorSubject([]);
     this.selectedCoins$ =  this.selectedCoinsSub.asObservable();
-  }
 
+    this.priceUSDSub = new Subject();
+    this.priceUSD$ = this.priceUSDSub.asObservable();
+    this.start();
+  }
 
 
   start():void{
@@ -64,19 +73,39 @@ export class AllCoinsService {
   }
 
 
+  getCoinPrice(symbol:string):number{
+    if(!this.priceUSD) this.priceUSD = this.getSelectedPrices();
+    return this.priceUSD[symbol];
+  }
+
+
+  getSelectedPrices():{[s:string]:number}{
+    let out = {};
+
+    this.selectedCoins.forEach(function (item) {
+      out[item.symbol]=item.price_usd
+    })
+
+    return out;
+  }
+
+
   setData(data:{payload:VOExchangeData[],timestamp:number}):void{
 
     let ar = data.payload;
+    let prices = {};
 
     let selNames:string[] = this.getSelectedNames();
     console.log(selNames);
 
 
     ar.forEach(function (item) {
+      prices[item.symbol] = item.price_usd
       item.selected = selNames.indexOf(item.symbol) !==-1
     })
 
     this.allCoins =ar;
+    this.priceUSD = prices;
 
 
     this.timestamp = data.timestamp;
@@ -87,7 +116,15 @@ export class AllCoinsService {
     });
 
 
+
+
+    this.selectedCoins.forEach(function (item) {
+      prices[item.symbol]=item.price_usd
+    })
+
     console.log(this.selectedCoins.length);
+
+
     this.broadcastUpdate()
   }
 
@@ -98,6 +135,8 @@ export class AllCoinsService {
 
     this.totalCoinsSub.next(this.allCoins.length);
     this.totalSelectedCoinsSub.next(this.selectedCoins.length);
+
+    this.priceUSDSub.next(this.priceUSD)
   }
 
   populateSelected():void{
@@ -126,16 +165,25 @@ export class AllCoinsService {
     return this.selectedCoinsNames;
   }
 
+
   addSelected(symbol:string){
     let ar = this.getSelectedNames()
     if(ar.indexOf(symbol) === -1)ar.push(symbol);
     this.saveSelectedNames(ar);
+    this.populateSelected();
+    this.selectedCoinsSub.next(this.selectedCoins);
 
   }
 
   removeSelected(symbol:string){
-
+    let ar = this.getSelectedNames()
+    for(let i= ar.length -1; i>=0; i--) if(ar[i] === symbol )ar.splice(i,1);
+    this.saveSelectedNames(ar);
+    this.populateSelected();
+    this.selectedCoinsSub.next(this.selectedCoins);
   }
+
+
   saveSelectedNames(val:string[]):void{
     this.selectedCoinsNames = val;
     localStorage.setItem('selectedCoinsNames', JSON.stringify(val));

@@ -46,7 +46,14 @@ export class AllCoinsTableComponent implements OnInit {
 
   onCoinSelected(event, coin:VOExchangeData):void {
     console.log(event.target.checked, coin);
-    coin.selected = event.target.checked;
+    if(event.target.checked){
+      this.allCoinsService.addSelected(coin.symbol);
+    }else{
+      this.allCoinsService.removeSelected(coin.symbol)
+    }
+
+
+
 
 
 

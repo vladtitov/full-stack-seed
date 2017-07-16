@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {WalletsAllService} from '../wallets/wallets-all.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-set-password',
@@ -12,10 +12,16 @@ export class SetPasswordComponent implements OnInit {
   mypassword:string
   constructor(
     private allWalletsService:WalletsAllService,
-    private router:Router
+    private router:Router,
+    private route:ActivatedRoute
   ) { }
 
   ngOnInit() {
+    let path = this.route.snapshot.url[0].path;
+    if(path === 'logout') {
+      this.allWalletsService.setPassword('');
+      this.router.navigate(['/my-wallets']);
+    }
   }
 
   setPassword(){

@@ -3,6 +3,10 @@ import {CoinConfig, WalletModel} from '../../models/app-models';
 import {WalletService} from './wallet.service';
 import {WalletsAllService} from '../wallets-all.service';
 import {ApiServerService} from '../../api-server.service';
+import {weiToEther} from '../../shared/math';
+import {AllCoinsService} from '../../ss-browse/all-coins.service';
+import {MdDialog} from '@angular/material';
+import {DialogSimpleComponent} from '../../shared/dialog-simple/dialog-simple.component';
 
 @Component({
   selector: 'app-wallet',
@@ -19,7 +23,9 @@ export class WalletComponent implements OnInit, AfterContentInit {
   constructor(
     private walletService:WalletService,
     private allWallets:WalletsAllService,
-    private api:ApiServerService
+    private api:ApiServerService,
+    private allCoinsService:AllCoinsService,
+    private dialog:MdDialog
   ) {
 
     allWallets.coinsAvailable$.subscribe(res=>{
@@ -31,6 +37,7 @@ export class WalletComponent implements OnInit, AfterContentInit {
   }
 
   setConfig(){
+
     if(this.coinConfigs && this.wallet && this.coinConfigs.length && this.wallet.symbol){
 
       let mySymbol:string = this.wallet.symbol;
@@ -47,6 +54,7 @@ export class WalletComponent implements OnInit, AfterContentInit {
 
 
   ngOnInit() {
+   // this.allCoinsService.start();
   }
 
   ngAfterContentInit(){
@@ -54,13 +62,31 @@ export class WalletComponent implements OnInit, AfterContentInit {
     this.walletService.setWallet(this.wallet);
     this.setConfig();
    // console.log(this.wallet);
+
+
   }
 
 
   updateBalance(){
+    //console.log('update balance  ');
 
-    this.api.getTokenBalance(this.wallet.symbol, this.wallet.address).subscribe(res=>{
+
+    this.api.getBalance(this.wallet.symbol, this.wallet.address).subscribe(res=>{
       console.log(res)
+      this.wallet.balance = res.result;
+
+      this.wallet.balanceDisplay = +this.wallet.balance/1e18;
+      let price = this.allCoinsService.getCoinPrice(this.wallet.symbol);
+      //console.log(price);
+      if(!price){
+
+        price = 0;
+        this.dialog.open(DialogSimpleComponent,{data:{title:'Error',message:'Please add ' + this.wallet.symbol+' coin to selected coins on Browse Market page'}});
+      }
+      this.wallet.price_usd = price;
+      this.wallet.usd = (price * this.wallet.balanceDisplay).toFixed(2);
+
+      this.allWallets.saveWalletes();
     })
   }
 

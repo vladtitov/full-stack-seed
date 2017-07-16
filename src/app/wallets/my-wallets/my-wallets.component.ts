@@ -6,6 +6,7 @@ import {WalletEditComponent} from '../wallet-edit/wallet-edit.component';
 import * as _ from 'lodash';
 import {connectableObservableDescriptor} from 'rxjs/observable/ConnectableObservable';
 import {DialogSimpleComponent} from '../../shared/dialog-simple/dialog-simple.component';
+import {AllCoinsService} from '../../ss-browse/all-coins.service';
 
 @Component({
   selector: 'app-my-wallets',
@@ -22,7 +23,8 @@ export class MyWalletsComponent implements OnInit {
 
   constructor(
     private walletsService:WalletsAllService,
-    private dialog:MdDialog
+    private dialog:MdDialog,
+    private allCoinsService:AllCoinsService
   ) { }
 
   ngOnInit() {
@@ -32,7 +34,17 @@ export class MyWalletsComponent implements OnInit {
      // console.log(res);
       this.myWallets = res
     });
+
+    this.allCoinsService.priceUSD$.subscribe(prices=>{
+      console.log(prices)
+
+      this.myWallets.forEach(function (wallet) {
+        wallet.price_usd =  prices[wallet.symbol]
+        wallet.usd =  (wallet.price_usd * wallet.balanceDisplay).toFixed(2);
+      })
+    })
   }
+
 
   addWallet(evt){
 

@@ -48,14 +48,16 @@ export class WalletModel{
   displayName:string;
   hdindex:number;
   privateKey:string;
-  balance:number;
+  balance:string;
   balanceDisplay:number;
+  usd:string;
+  price_usd:number;
   label:string;
   symbol:string;
   address:string;
   sort:number;
   createdAt:string;
-  updateAt:string;
+  updatedAt:string;
   index:number;
   amountSmall:number;
   amountString:string;

@@ -24,8 +24,7 @@ export class WalletService {
   setCoinConfig(config:CoinConfig){
     console.log(config);
     this.config = config;
-
-    this.loadBalance();
+   // this.loadBalance();
   }
 
   loadBalance(){
@@ -33,6 +32,7 @@ export class WalletService {
     let url = '/api/token/balance/'+this.config.symbol+'/'+this.wallet.address;
     console.log(url);
     this.http.get(url).map(res=>res.json()).subscribe(res=>{
+
       console.log(res);
     })
 
