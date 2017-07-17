@@ -49,7 +49,7 @@ export class WalletEditComponent implements OnInit {
       if(!exists){
         this.wallet.address = address;
         this.wallet.id = this.wallet.symbol+'_'+address;
-        this.allWalletsService.saveWalletes();
+        this.allWalletsService.saveWallets();
         this.allWalletsService.dispattchWalletChanges();
 
       }else{

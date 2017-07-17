@@ -5,6 +5,7 @@ import {CoinConfig, WalletModel} from '../models/app-models';
 import {Http} from '@angular/http';
 import  * as CryptoJS  from 'crypto-js';
 import * as _ from 'lodash';
+import {ApiServerService} from '../api-server.service';
 
 
 @Injectable()
@@ -19,17 +20,20 @@ export class WalletsAllService {
 
   config:any;
   password:string = 'my secure password';
+  email:string = 'vlad@gmail.com'
+
+  isRwmote:boolean = true;
   //password:string = '';
 
   constructor(
-    private http:Http
+    private api:ApiServerService
   ) {
     this.myWallets$ = this.myWalletsSub.asObservable();
     this.coinsAvailable$ = this.coinsAvailableSub.asObservable();
 
-
-    //this.loadConfig();
-    //this.loadWallets();
+    this.loadConfig();
+   // this.loadWallets();
+    this.loadWallets2();
   }
 
   getAllWallets():WalletModel[]{
@@ -40,8 +44,8 @@ export class WalletsAllService {
     let ar = this.myWallets;
     for(let i =ar.length-1;i>=0;i--)if(ar[i].label == wallet.label)ar.splice(i,1);
 
-    this.saveWalletes();
-    this.loadWallets();
+    this.saveWallets();
+   // this.loadWallets();
   }
 
   createNewWallet(wallet:WalletModel){
@@ -60,16 +64,21 @@ export class WalletsAllService {
 
     this.myWalletsSub.next(this.myWallets);
 
-    this.saveWalletes();
+    this.saveWallets();
   }
 
   dispattchWalletChanges():void{
     this.myWalletsSub.next(this.myWallets);
   }
 
-  loadWallets():void{
+
+
+  private loadWalletsLocaly():void{
+    console.warn('loadWalletsLocaly');
+
 
     let str =  localStorage.getItem('mywallets');
+    str = null;
     if(str) {
       let wallets =[]
       let crypto = CryptoJS
@@ -93,10 +102,83 @@ export class WalletsAllService {
       this.myWallets = wallets;
       this.dispattchWalletChanges();
 
+     /* this.saveWalletes().subscribe(res=>{
+        console.log(res);
+      });*/
+
     }
   }
 
-  saveWalletes():boolean{
+  saveWalletesRemote(){
+    let password = this.password;
+    if(!password) {
+      throw new Error('Password required')
+    }
+    let crypto = CryptoJS.AES
+    let walets = _.clone(this.myWallets);
+
+    walets.forEach(function (item) {
+      delete item.market;
+      delete item.analitics;
+      // item.privateKey = crypto.encrypt(item.privateKey, password).toString();
+    });
+
+    console.log(walets);
+
+
+    let payload = crypto.encrypt(JSON.stringify(walets), this.password).toString();
+    console.log(payload);
+
+    return this.api.saveWallets(payload, this.email)
+  }
+
+
+
+  loadWallets2(){
+    if(this.isRwmote) this.loadWalletsRemote();
+    else this.loadWalletsLocaly();
+
+  }
+
+
+  saveWallets(){
+    if(this.isRwmote) this.saveWalletesRemote();
+    else this.saveWalletesLoacaly();
+
+  }
+
+  private saveWalletesLoacaly(){
+
+
+
+   console.warn('saveWalletesLoacaly')
+
+   /*
+    let password = this.password;
+    if(!password) {
+      throw new Error('Password required')
+    }
+    let crypto = CryptoJS.AES
+    let walets = _.clone(this.myWallets);
+
+
+
+    walets.forEach(function (item) {
+      delete item.market;
+      delete item.analitics;
+      item.privateKey = crypto.encrypt(item.privateKey, password).toString();
+    });
+
+
+    let payload = crypto.encrypt(JSON.stringify(walets), this.password).toString();
+    console.log(payload);
+
+   localStorage.setItem('mywallets',JSON.stringify(walets));*/
+  }
+
+
+
+ /* saveWalletes():boolean{
 
     //console.log(this);
     let password = this.password;
@@ -104,22 +186,60 @@ export class WalletsAllService {
       throw new Error('Password required')
     }
     let crypto = CryptoJS.AES
-    let walets = _.cloneDeep(this.myWallets);
+    let walets = _.clone(this.myWallets);
 
-
-
-    _.each(walets, function (item) {
+   walets.forEach(function (item) {
+      delete item.market;
       item.privateKey = crypto.encrypt(item.privateKey, password).toString();
     });
     localStorage.setItem('mywallets',JSON.stringify(walets));
 
     return true;
+  }*/
+
+
+
+  login(email:string, password:string, isRemote:boolean){
+    this.isRwmote = isRemote;
+    this.email = email;
+    this.password = password;
+    if(isRemote) this.loadWalletsRemote();
+    else this.loadWalletsLocaly();
+  };
+
+
+  private loadWalletsRemote(){
+    let email = this.email;
+    let password = this.password;
+    let crypto = CryptoJS;
+
+    this.api.loadWallets(email).subscribe(res=>{
+      let payload = res.payload
+
+      let result  = crypto.AES.decrypt(res.payload, password).toString(crypto.enc.Utf8);
+
+      let wallets:WalletModel[] = JSON.parse(result);
+
+      wallets.forEach(function (wallet) {
+        wallet.privateKey = crypto.AES.decrypt(wallet.privateKey, password).toString(crypto.enc.Utf8);
+      });
+
+
+    //  console.log(res);
+    //  console.log(result)
+    //  console.log(result)
+    //  console.log(result)
+
+      this.myWallets = wallets ;
+     // console.log(wallets);
+      this.dispattchWalletChanges();
+
+     // this.saveWalletesRemote();
+    })
+
   }
 
-  setPassword(password:string){
-    this.password = password;
-    this.loadWallets();
-  }
+
 
 
   getMyWalletsBySymbol(symbol:string):WalletModel[]{
@@ -148,14 +268,18 @@ export class WalletsAllService {
   }
 
   loadConfig(){
-    let url = 'api/app-config';
-    this.http.get(url).map(res=>res.json()).subscribe(res=>{
-      console.log(res);
-
+    this.api.loadConfig().subscribe(res=>{
       this.config = res;
       this.coinsAvailable = res.coins.concat(res.tokens);
       this.coinsAvailableSub.next(this.coinsAvailable);
     })
+
   }
 
+  logout() {
+    this.email = null;
+    this.password = null;
+    this.myWallets = [];
+    this.dispattchWalletChanges();
+  }
 }

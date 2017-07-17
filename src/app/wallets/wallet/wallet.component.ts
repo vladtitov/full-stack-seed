@@ -73,20 +73,17 @@ export class WalletComponent implements OnInit, AfterContentInit {
 
     this.api.getBalance(this.wallet.symbol, this.wallet.address).subscribe(res=>{
       console.log(res)
-      this.wallet.balance = res.result;
+      this.wallet.balance = res.balance;
 
       this.wallet.balanceDisplay = +this.wallet.balance/1e18;
-      let price = this.allCoinsService.getCoinPrice(this.wallet.symbol);
+
+      let market = this.allCoinsService.getCoinMarket(this.wallet.symbol);
       //console.log(price);
-      if(!price){
 
-        price = 0;
-        this.dialog.open(DialogSimpleComponent,{data:{title:'Error',message:'Please add ' + this.wallet.symbol+' coin to selected coins on Browse Market page'}});
-      }
-      this.wallet.price_usd = price;
-      this.wallet.usd = (price * this.wallet.balanceDisplay).toFixed(2);
+      this.wallet.market = market;
+      this.wallet.usd = ( market.price_usd * this.wallet.balanceDisplay).toFixed(2);
 
-      this.allWallets.saveWalletes();
+      this.allWallets.saveWallets();
     })
   }
 

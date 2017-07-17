@@ -4,10 +4,13 @@
             Login
         </md-card-title>
         <md-input-container>
+            <input [(ngModel)] ="email"  mdInput placeholder="Email" type="email" name="email" >
+        </md-input-container>
+        <md-input-container>
             <input [(ngModel)] ="mypassword"  mdInput placeholder="Password" type="password" name="mypassword" >
         </md-input-container>
 
-                <button  md-raised-button color="accent"  (click)="setPassword($event)">Set Password</button>
+                <button  md-raised-button color="accent"  (click)="login($event)">Login</button>
 
     </md-card>
 

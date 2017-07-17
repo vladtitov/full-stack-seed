@@ -23,6 +23,7 @@ export class AllCoinsService {
   timestampSub:Subject<number>;
   timestamp$:Observable<number>;
   timestamp=0;
+  counter:number;
 
   totalCoins$:Observable<number>;
   totalCoinsSub:Subject<number>;
@@ -31,9 +32,9 @@ export class AllCoinsService {
   totalSelectedCoinsSub:Subject<number>;
 
 
-  priceUSD:{[s:string]:number};
-  priceUSDSub:Subject<{[s:string]:number}>
-  priceUSD$:Observable<{[s:string]:number}>
+  market:{[s:string]:VOExchangeData};
+  marketSub:Subject<{[s:string]:VOExchangeData}>;
+  market$:Observable<{[s:string]:VOExchangeData}>;
 
 
   constructor(private http:Http) {
@@ -61,22 +62,21 @@ export class AllCoinsService {
     this.selectedCoinsSub =  new BehaviorSubject([]);
     this.selectedCoins$ =  this.selectedCoinsSub.asObservable();
 
-    this.priceUSDSub = new Subject();
-    this.priceUSD$ = this.priceUSDSub.asObservable();
-    this.start();
-  }
-
-
-  start():void{
-    //setInterval(()=> this.loadData(),60000);
+    this.marketSub = new Subject();
+    this.market$ = this.marketSub.asObservable();
+    this.counter = 0;
     this.loadData();
   }
 
 
-  getCoinPrice(symbol:string):number{
-    if(!this.priceUSD) this.priceUSD = this.getSelectedPrices();
-    return this.priceUSD[symbol];
+  private interval;
+  start():void{
+   this.interval =  setInterval(()=> this.loadData(),60000);
+    this.loadData();
   }
+
+
+
 
 
   getSelectedPrices():{[s:string]:number}{
@@ -93,19 +93,19 @@ export class AllCoinsService {
   setData(data:{payload:VOExchangeData[],timestamp:number}):void{
 
     let ar = data.payload;
-    let prices = {};
+    let market = {};
 
     let selNames:string[] = this.getSelectedNames();
     console.log(selNames);
 
 
     ar.forEach(function (item) {
-      prices[item.symbol] = item.price_usd
+      market[item.symbol] = item
       item.selected = selNames.indexOf(item.symbol) !==-1
     })
 
     this.allCoins =ar;
-    this.priceUSD = prices;
+    this.market = market;
 
 
     this.timestamp = data.timestamp;
@@ -116,14 +116,9 @@ export class AllCoinsService {
     });
 
 
-
-
-    this.selectedCoins.forEach(function (item) {
-      prices[item.symbol]=item.price_usd
-    })
-
     console.log(this.selectedCoins.length);
 
+    this.counter++;
 
     this.broadcastUpdate()
   }
@@ -136,7 +131,7 @@ export class AllCoinsService {
     this.totalCoinsSub.next(this.allCoins.length);
     this.totalSelectedCoinsSub.next(this.selectedCoins.length);
 
-    this.priceUSDSub.next(this.priceUSD)
+    this.marketSub.next(this.market)
   }
 
   populateSelected():void{
@@ -211,5 +206,13 @@ export class AllCoinsService {
   }
 
 
+  getCoinMarket(symbol: string) {
+    return this.market[symbol]
 
+  }
+
+  stop() {
+    clearInterval(this.interval);
+
+  }
 }

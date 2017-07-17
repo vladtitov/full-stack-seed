@@ -37,8 +37,9 @@ import { ExchangeSsComponent } from './exchange-ss/exchange-ss.component';
 import {ExchangeSsService} from './exchange-ss/exchange-ss.service';
 import {WalletsAllService} from './wallets/wallets-all.service';
 import {AllCoinsService} from './ss-browse/all-coins.service';
-import { SetPasswordComponent } from './set-password/set-password.component';
+
 import {ApiServerService} from './api-server.service';
+import {Login2Component} from './login2/login2.component';
 
 declare const Buffer:any;
 
@@ -55,7 +56,7 @@ declare const Buffer:any;
     ContactComponent,
     LoginMain,
     ExchangeSsComponent,
-    SetPasswordComponent
+    Login2Component
 
   ],
   imports: [

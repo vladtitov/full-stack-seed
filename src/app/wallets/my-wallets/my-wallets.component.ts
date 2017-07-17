@@ -28,22 +28,24 @@ export class MyWalletsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.walletsService.loadConfig();
-    this.walletsService.loadWallets();
+    //this.walletsService.loadConfig();
+    //this.walletsService.loadWallets();
     this.walletsService.myWallets$.subscribe(res=>{
      // console.log(res);
       this.myWallets = res
     });
 
-    this.allCoinsService.priceUSD$.subscribe(prices=>{
-      console.log(prices)
+    this.allCoinsService.market$.subscribe(market=>{
+     // console.log(market)
 
       this.myWallets.forEach(function (wallet) {
-        wallet.price_usd =  prices[wallet.symbol]
-        wallet.usd =  (wallet.price_usd * wallet.balanceDisplay).toFixed(2);
+        wallet.market =  market[wallet.symbol]
+        wallet.usd =  (wallet.market.price_usd * wallet.balanceDisplay).toFixed(2);
       })
     })
   }
+
+
 
 
   addWallet(evt){
@@ -94,10 +96,7 @@ export class MyWalletsComponent implements OnInit {
 
         let newname = wallet.label;
 
-
-
-
-        this.walletsService.saveWalletes();
+        this.walletsService.saveWallets();
       }
 
     })

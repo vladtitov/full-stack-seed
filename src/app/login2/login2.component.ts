@@ -3,13 +3,17 @@ import {WalletsAllService} from '../wallets/wallets-all.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-set-password',
-  templateUrl: './set-password.component.html',
-  styleUrls: ['./set-password.component.css']
+  selector: 'app-login2',
+  templateUrl: './login2.component.html',
+  styleUrls: ['./login2.component.css']
 })
-export class SetPasswordComponent implements OnInit {
+export class Login2Component implements OnInit {
 
-  mypassword:string
+  mypassword:string;
+  email:string;
+  isRemote:boolean = true;
+
+
   constructor(
     private allWalletsService:WalletsAllService,
     private router:Router,
@@ -19,14 +23,14 @@ export class SetPasswordComponent implements OnInit {
   ngOnInit() {
     let path = this.route.snapshot.url[0].path;
     if(path === 'logout') {
-      this.allWalletsService.setPassword('');
+      this.allWalletsService.logout();
       this.router.navigate(['/my-wallets']);
     }
   }
 
-  setPassword(){
+  login(){
 
-    if(this.mypassword)this.allWalletsService.setPassword(this.mypassword);
+    if(this.mypassword)this.allWalletsService.login(this.email, this.mypassword, this.isRemote);
     console.log(this.mypassword);
 
     this.router.navigate(['/my-wallets']);

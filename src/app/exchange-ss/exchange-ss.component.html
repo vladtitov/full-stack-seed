@@ -1,12 +1,25 @@
 <div>
-    <div>
-        <h3>Coins</h3>
-        <div *ngFor="let coin of myCoins">{{coin.symbol}} {{coin.name}}</div>
+    <h2>Exchange <small>{{counter}}</small> <button md-raised-button  (click)="startStop($event)"><md-spinner *ngIf="active" color="accent" mode="determinate" value="+{{seconds}}"></md-spinner> {{start_stop}} </button></h2>
 
-    </div>
     <div>
         <h3>Wallets</h3>
-        <div *ngFor="let wallet of myWallets">{{wallet.label}} <h2 (click)="updateBalance(wallet)">{{wallet.balanceDisplay}}</h2></div>
+
+        <table>
+            <tr><th>Wallet</th><th>Amount</th><th>Price $US</th><th>Ptice mB</th><th>1h</th><th>24h</th><th>7d</th></tr>
+            <tr *ngFor="let wallet of myWallets" >
+                <td>{{wallet.label}}</td>
+                <td>${{wallet.usd}} <span (click)="updateBalance(wallet)" class="fa fa-refresh"></span></td>
+                <td>{{wallet.market.price_usd.toFixed(2)}}</td>
+                <td>{{(wallet.market.price_btc*1000).toFixed(2)}}</td>
+                <td [style.color] = "(wallet.market.percent_change_1h > 0)? 'green' : 'red'">{{wallet.market.percent_change_1h}}</td>
+                <td [style.color] = "(wallet.market.percent_change_24h > 0)? 'green' : 'red'">{{wallet.market.percent_change_24h}}</td>
+                <td [style.color] = "(wallet.market.percent_change_7d > 0)? 'green' : 'red'">{{wallet.market.percent_change_7d}}</td>
+
+
+            </tr>
+        </table>
+
+
     </div>
-  exchange-ss works!
+
 </div>

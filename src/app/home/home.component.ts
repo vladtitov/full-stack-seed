@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit():void{
-   this.posts$ =  this.homeService.getPosts()
+  // this.posts$ =  this.homeService.getPosts()
     /* .subscribe(res=>{
       this.posts = res;
       console.log(res);

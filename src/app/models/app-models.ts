@@ -1,4 +1,5 @@
 
+import {VOExchangeData} from './SS-models';
 /**
  * Created by Vlad on 7/8/2017.
  */
@@ -18,6 +19,8 @@ export interface CoinConfig{
   shapeshift:any;
   transactionType:string;
 }
+
+
 
 export class UTXO{
   address:string;
@@ -40,6 +43,19 @@ export class CoinsAvailable{
 }
 
 
+export class VOBalance{
+  address:string;
+  symbol:string;
+  balance:string;
+}
+
+export class Analitycs{
+
+  price_usd_last100:number[];
+  price_btc_last100:number[];
+
+}
+
 export class WalletModel{
  // config:CoinConfig;
   id:string;
@@ -47,20 +63,20 @@ export class WalletModel{
   network:any;
   displayName:string;
   hdindex:number;
+  market:VOExchangeData;
+  analitics:Analitycs;
   privateKey:string;
   balance:string;
   balanceDisplay:number;
   usd:string;
   price_usd:number;
+
+
   label:string;
   symbol:string;
   address:string;
   sort:number;
   createdAt:string;
   updatedAt:string;
-  index:number;
-  amountSmall:number;
-  amountString:string;
-  amountLarge:number;
 
 }

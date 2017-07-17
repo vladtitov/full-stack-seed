@@ -23,11 +23,6 @@ export class ExchangeSsService {
   allCoins:VOExchangeData[];
 
 
-
-
-
-
-
   constructor(
     private allWallets:WalletsAllService,
     private allCoinsService:AllCoinsService,
@@ -47,8 +42,8 @@ export class ExchangeSsService {
     this.myCoinsSub = new BehaviorSubject([]);
     this.myCoins$ = this.myCoinsSub.asObservable();
 
-    allWallets.loadConfig();
-    allWallets.loadWallets()
+    //allWallets.loadConfig();
+    //allWallets.loadWallets()
 
     allCoinsService.allCoins$.subscribe(res=>{
       this.allCoins = res;

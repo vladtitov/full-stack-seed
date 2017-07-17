@@ -1,7 +1,8 @@
 import {Injectable, OnInit} from '@angular/core';
 //import {AuthHttp, getToken, getTokenExpiredDate, tokenNotExpired} from '../../../arch/angular2-jwt';
-import {Observable} from 'rxjs/Observable';
+//import {Observable} from 'rxjs/Observable';
 import {Http} from '@angular/http';
+
 /**
  * Created by Vlad on 4/3/2017.
  */
@@ -11,7 +12,7 @@ export class HomeService{
 
   }
 
-  getPosts(): Observable<any>{
+ /* getPosts(): Observable<any>{
     //console.log(getTokenExpiredDate());
    // if(tokenNotExpired()){
     //  console.log(' not yet');
@@ -33,5 +34,5 @@ export class HomeService{
       .catch(err=>{
       return Observable.throw(err);
     });
-  }
+  }*/
 }

@@ -14,7 +14,8 @@ import {SsMainComponent} from './ss-browse/ss-main/ss-main.component';
 import {WalletsMainComponent} from './wallets/wallets-main/wallets-main.component';
 import {MyWalletsComponent} from './wallets/my-wallets/my-wallets.component';
 import {ExchangeSsComponent} from './exchange-ss/exchange-ss.component';
-import {SetPasswordComponent} from './set-password/set-password.component';
+import {Login2Component} from './login2/login2.component';
+
 
 export const rootRouterConfig: Routes = [
   { path: '', redirectTo: 'ss-main', pathMatch: 'full' },
@@ -25,8 +26,8 @@ export const rootRouterConfig: Routes = [
   { path: 'ss-main', component: SsMainComponent },
   { path: 'wallets', component: WalletsMainComponent },
   { path: 'my-wallets', component: MyWalletsComponent },
-  { path: 'login', component: SetPasswordComponent },
-  { path: 'logout', component: SetPasswordComponent },
+  { path: 'login', component: Login2Component },
+  { path: 'logout', component: Login2Component },
   { path: 'github', component: RepoBrowserComponent,
     children: [
       { path: '', component: RepoListComponent },
