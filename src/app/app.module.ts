@@ -40,6 +40,7 @@ import {AllCoinsService} from './ss-browse/all-coins.service';
 
 import {ApiServerService} from './api-server.service';
 import {Login2Component} from './login2/login2.component';
+import {BittrexModule} from './bittrex/bittrex.module';
 
 declare const Buffer:any;
 
@@ -69,6 +70,7 @@ declare const Buffer:any;
     BrowserAnimationsModule,
     HttpModule,
     SharedModule,
+    BittrexModule,
    // AuthModule,
     RouterModule.forRoot(rootRouterConfig, { useHash: true })
   ],

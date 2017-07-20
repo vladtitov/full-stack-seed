@@ -4,6 +4,7 @@
         <md-sidenav #sidenav>
             <md-list>
                 <a md-list-item routerLink='/ss-main'>Browse Market</a>
+                <a md-list-item routerLink='/bittrex'>Bittrex</a>
                 <a md-list-item routerLink='/exchange-ss'>Exchange SS</a>
                 <a md-list-item routerLink='/my-wallets'>My Wallets</a>
                 <a md-list-item routerLink='/login'>Login</a>
@@ -16,6 +17,9 @@
         <div>
             <div (click)="sidenav.open()" class="fa fa-bars">  </div>
         </div>
-        <router-outlet></router-outlet>
+        <div id="MainOutlet">
+            <router-outlet></router-outlet>
+        </div>
+
     </md-sidenav-container>
 </diV>

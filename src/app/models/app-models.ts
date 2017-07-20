@@ -51,8 +51,9 @@ export class VOBalance{
 
 export class Analitycs{
 
-  price_usd_last100:number[];
-  price_btc_last100:number[];
+  price_usd_history:string[];
+  price_btc_history:string[];
+  price_usd_historyDisplay:string;
 
 }
 

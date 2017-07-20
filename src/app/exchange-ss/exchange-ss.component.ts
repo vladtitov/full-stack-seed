@@ -34,7 +34,7 @@ export class ExchangeSsComponent implements OnInit {
 
     this.allWallets.myWallets$.subscribe(wallets=>{
 
-      this._myWallets = wallets
+      this._myWallets = wallets;
       this.refreshData();
     });
 
@@ -58,25 +58,39 @@ export class ExchangeSsComponent implements OnInit {
 
   refreshData(){
 
-    if(!this.market || !this._myWallets) return
+    if(!this.market || !this._myWallets) return;
 
     let market = this.market;
-    let wallets = this._myWallets
+    let wallets = this._myWallets;
     this.counter = this.allCoins.counter;
     this.seconds = 30;
     wallets.forEach(function (wallet) {
 
       let newMarket =  market[wallet.symbol];
+      let last = newMarket.price_usd.toFixed(2);
+      let lastB = (newMarket.price_btc/1000).toFixed(2);
 
-      if(!wallet.analitics) wallet.analitics={price_usd_last100:[], price_btc_last100:[]};
+      if(!wallet.analitics) wallet.analitics={price_usd_history:[last], price_btc_history:[lastB], price_usd_historyDisplay:''};
 
-      wallet.analitics.price_btc_last100.push(newMarket.price_btc);
 
-      wallet.analitics.price_usd_last100.push(newMarket.price_usd);
+      let ar1 = wallet.analitics.price_usd_history;
 
-      if(wallet.analitics.price_btc_last100.length>100){
-        wallet.analitics.price_usd_last100.shift();
+      if(ar1[ar1.length-1] !== last){
+        ar1.push(last);
+        if(ar1.length>10) ar1.shift();
+        wallet.analitics.price_usd_historyDisplay = ar1.toString();
       }
+
+
+/*
+      if(wallet.analitics.price_btc_history.length>50){
+        wallet.analitics.price_usd_history.shift();
+        wallet.analitics.price_btc_history.shift();
+      }*/
+
+      console.log(wallet.analitics.price_usd_history);
+
+
 
       /* if(wallet.market){
        if(newMarket.percent_change_1h !== wallet.market.percent_change_1h){
@@ -98,10 +112,10 @@ export class ExchangeSsComponent implements OnInit {
 
 
 
-      wallet.market = newMarket
+      wallet.market = newMarket;
 
       wallet.usd =  (wallet.market.price_usd * wallet.balanceDisplay).toFixed(2);
-    })
+    });
 
     this.myWallets = wallets;
 
@@ -111,15 +125,15 @@ export class ExchangeSsComponent implements OnInit {
   startStop(){
     if(this.start_stop === 'Start'){
       this.start_stop = 'Stop';
-      this.active = true
+      this.active = true;
       this.seconds = 30;
-      this.interval = setInterval(()=>{this.seconds++},1000)
+      this.interval = setInterval(()=>{this.seconds++},1000);
       this.allCoins.start();
     }else{
-      this.start_stop === 'Start';
+      this.start_stop = 'Start';
       this.seconds =0;
       clearInterval(this.interval);
-      this.active = false
+      this.active = false;
       this.allCoins.stop();
     }
   }
@@ -131,6 +145,10 @@ export class ExchangeSsComponent implements OnInit {
     })
 
    // this.exchangeService.updateBalance(wallet);
+  }
+
+  onUsdClick(wallet){
+
   }
 
 

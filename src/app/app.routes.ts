@@ -15,6 +15,7 @@ import {WalletsMainComponent} from './wallets/wallets-main/wallets-main.componen
 import {MyWalletsComponent} from './wallets/my-wallets/my-wallets.component';
 import {ExchangeSsComponent} from './exchange-ss/exchange-ss.component';
 import {Login2Component} from './login2/login2.component';
+import {BittrexMarketComponent} from './bittrex/bittrex-market/bittrex-market.component';
 
 
 export const rootRouterConfig: Routes = [
@@ -26,6 +27,7 @@ export const rootRouterConfig: Routes = [
   { path: 'ss-main', component: SsMainComponent },
   { path: 'wallets', component: WalletsMainComponent },
   { path: 'my-wallets', component: MyWalletsComponent },
+  { path: 'bittrex', component: BittrexMarketComponent },
   { path: 'login', component: Login2Component },
   { path: 'logout', component: Login2Component },
   { path: 'github', component: RepoBrowserComponent,
