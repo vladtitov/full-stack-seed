@@ -42,6 +42,7 @@ import {ApiServerService} from './api-server.service';
 import {Login2Component} from './login2/login2.component';
 import {BittrexModule} from './bittrex/bittrex.module';
 import {ChangellyModule} from './changelly/changelly.module';
+import {SendAlertService} from './exchange-ss/send-alert.service';
 
 declare const Buffer:any;
 
@@ -85,7 +86,8 @@ declare const Buffer:any;
     ExchangeSsService,
     WalletsAllService,
     AllCoinsService,
-    ApiServerService
+    ApiServerService,
+    SendAlertService
    // provideAuth({
      // headerName: 'Authorization',
     //  headerPrefix: 'Bearer',

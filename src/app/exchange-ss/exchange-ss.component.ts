@@ -5,6 +5,7 @@ import {VOExchangeData} from '../models/SS-models';
 import {WalletsAllService} from '../wallets/wallets-all.service';
 import {AllCoinsService} from '../ss-browse/all-coins.service';
 import {ApiServerService} from '../api-server.service';
+import {SendAlertService} from './send-alert.service';
 
 
 @Component({
@@ -25,10 +26,13 @@ export class ExchangeSsComponent implements OnInit {
 
   seconds:number;
   interval:any;
+  tollerance:number = 5;
   constructor(
     private api:ApiServerService,
     private allWallets:WalletsAllService,
-    private allCoins:AllCoinsService) { }
+    private allCoins:AllCoinsService,
+    private sendAlertService:SendAlertService
+  ) { }
 
   ngOnInit() {
 
@@ -61,62 +65,55 @@ export class ExchangeSsComponent implements OnInit {
     if(!this.market || !this._myWallets) return;
 
     let market = this.market;
+
     let wallets = this._myWallets;
     this.counter = this.allCoins.counter;
     this.seconds = 30;
+    let tollerance = 100/this.tollerance;
+    let alerts:any[] = [];
     wallets.forEach(function (wallet) {
 
       let newMarket =  market[wallet.symbol];
-      let last = newMarket.price_usd.toFixed(2);
-      let lastB = (newMarket.price_btc/1000).toFixed(2);
 
-      if(!wallet.analitics) wallet.analitics={price_usd_history:[last], price_btc_history:[lastB], price_usd_historyDisplay:''};
+      let newUsd = newMarket.price_usd;
+
+      let newBTC = (newMarket.price_btc/1000);
+
+      if(!wallet.analitics) wallet.analitics={price_usd_history:[newUsd], price_btc_history:[newBTC], price_usd_historyDisplay:''};
+
+      let usdHistory = wallet.analitics.price_usd_history;
+      let lastUsd = usdHistory[usdHistory.length-1];
+
+      let report
+      if(Math.abs(newUsd - lastUsd) > lastUsd*tollerance){
+        usdHistory.push(newUsd);
+        //if(ar1.length>10) ar1.shift();
 
 
-      let ar1 = wallet.analitics.price_usd_history;
+        wallet.analitics.price_usd_historyDisplay = usdHistory.map(function (item) {
+          return item.toFixed(2);
+        }).toString();
 
-      if(ar1[ar1.length-1] !== last){
-        ar1.push(last);
-        if(ar1.length>10) ar1.shift();
-        wallet.analitics.price_usd_historyDisplay = ar1.toString();
+        report = {
+          symbol:newMarket.symbol,
+          history: wallet.analitics.price_usd_historyDisplay
+
+        }
       }
 
 
-/*
-      if(wallet.analitics.price_btc_history.length>50){
-        wallet.analitics.price_usd_history.shift();
-        wallet.analitics.price_btc_history.shift();
-      }*/
-
       console.log(wallet.analitics.price_usd_history);
-
-
-
-      /* if(wallet.market){
-       if(newMarket.percent_change_1h !== wallet.market.percent_change_1h){
-       wallet.prev_1h = wallet.market.percent_change_1h;
-       wallet.prev_1h_stamp = Date.now();
-
-       }else{
-       let delta =  (Date.now()  - wallet.prev_1h_stamp)/60000
-
-       }
-
-
-       }else{
-       wallet.prev_1h = newMarket.percent_change_1h;
-       wallet.prev_1h_stamp = Date.now();
-       }
-
-       */
-
-
-
       wallet.market = newMarket;
 
       wallet.usd =  (wallet.market.price_usd * wallet.balanceDisplay).toFixed(2);
+      if(report) {
+        report.have = wallet.usd;
+        alerts.push(report)
+      }
+
     });
 
+    if(alerts.length)this.sendAlertService.sendMarketChange(alerts)
     this.myWallets = wallets;
 
 

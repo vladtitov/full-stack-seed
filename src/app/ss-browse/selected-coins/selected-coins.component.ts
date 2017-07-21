@@ -15,9 +15,11 @@ export class SelectedCoinsComponent implements OnInit {
   selectedCoins:VOExchangeData[]
   sortCreteria:string = 'rank';
   asc_desc='asc';
+
   constructor(private allCoinsService:AllCoinsService) { }
 
   ngOnInit() {
+
     this.allCoinsService.selectedCoins$.subscribe(res=>this.selectedCoins = res)
 
   }

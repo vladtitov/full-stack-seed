@@ -29,7 +29,6 @@ export const rootRouterConfig: Routes = [
   { path: 'ss-main', component: SsMainComponent },
   { path: 'shapeshift', component: AllCoinsTableComponent },
   { path: 'changelly', component: ChMarketComponent },
-
   { path: 'wallets', component: WalletsMainComponent },
   { path: 'my-wallets', component: MyWalletsComponent },
   { path: 'bittrex', component: BittrexMarketComponent },
