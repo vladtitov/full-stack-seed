@@ -40,10 +40,10 @@ export class AllCoinsTableComponent implements OnInit {
   }
 
 
-  private changeStatus(coin:VOExchangeData):void{
+  /*private changeStatus(coin:VOExchangeData):void{
 
   }
-
+*/
   onCoinSelected(event, coin:VOExchangeData):void {
     console.log(event.target.checked, coin);
     if(event.target.checked){

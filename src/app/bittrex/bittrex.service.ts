@@ -45,7 +45,12 @@ export class BittrexService {
   getMarketSummaries() {
 
     let url = 'api/bittrex/public/getmarketsummaries';
-    return this.http.get(url).map(res => res.json().result);
+    return this.http.get(url).map(res =>{
+      return res.json().result.map(function (item) {
+        item.TimeStamp = (new Date(item.TimeStamp)).toLocaleTimeString()
+        return item
+      })
+    } );
   }
 
   getTicker(market:string) {

@@ -19,7 +19,7 @@ export class BittrexMarketComponent implements OnInit {
 
   ngOnInit() {
 
-    this.bittrexService.getMarkets().subscribe(res=>{
+   /* this.bittrexService.getMarkets().subscribe(res=>{
      // console.log(res);
       this.marketModels1 = res;
     })
@@ -27,9 +27,9 @@ export class BittrexMarketComponent implements OnInit {
     this.bittrexService.getCurrencies().subscribe(res=>{
      /// console.log(res);
      // this.marketModels1 = res;
-    })
+    })*/
     this.bittrexService.getMarketSummaries().subscribe(res=>{
-      console.log(res);
+     // console.log(res);
 
      this.doSort(res);
       // this.marketModels1 = res;

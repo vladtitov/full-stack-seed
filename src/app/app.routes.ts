@@ -16,6 +16,8 @@ import {MyWalletsComponent} from './wallets/my-wallets/my-wallets.component';
 import {ExchangeSsComponent} from './exchange-ss/exchange-ss.component';
 import {Login2Component} from './login2/login2.component';
 import {BittrexMarketComponent} from './bittrex/bittrex-market/bittrex-market.component';
+import {AllCoinsTableComponent} from './ss-browse/all-coins-table/all-coins-table.component';
+import {ChMarketComponent} from './changelly/ch-market/ch-market.component';
 
 
 export const rootRouterConfig: Routes = [
@@ -25,6 +27,9 @@ export const rootRouterConfig: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'exchange-ss', component:ExchangeSsComponent },
   { path: 'ss-main', component: SsMainComponent },
+  { path: 'shapeshift', component: AllCoinsTableComponent },
+  { path: 'changelly', component: ChMarketComponent },
+
   { path: 'wallets', component: WalletsMainComponent },
   { path: 'my-wallets', component: MyWalletsComponent },
   { path: 'bittrex', component: BittrexMarketComponent },

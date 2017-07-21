@@ -41,6 +41,7 @@ import {AllCoinsService} from './ss-browse/all-coins.service';
 import {ApiServerService} from './api-server.service';
 import {Login2Component} from './login2/login2.component';
 import {BittrexModule} from './bittrex/bittrex.module';
+import {ChangellyModule} from './changelly/changelly.module';
 
 declare const Buffer:any;
 
@@ -71,6 +72,7 @@ declare const Buffer:any;
     HttpModule,
     SharedModule,
     BittrexModule,
+    ChangellyModule,
    // AuthModule,
     RouterModule.forRoot(rootRouterConfig, { useHash: true })
   ],

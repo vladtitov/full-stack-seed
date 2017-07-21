@@ -5,3 +5,7 @@ table td{
 table th{
     cursor: pointer;
 }
+
+h3{
+    display: inline;
+}

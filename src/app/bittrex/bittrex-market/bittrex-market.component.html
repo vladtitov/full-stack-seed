@@ -1,7 +1,15 @@
 <div>
-    <h3>Bittrex Summary</h3>
+
     <div>
         <md-card>
+            <md-card-header>
+                <md-card-title>
+                    <h3>Bittrex Summary </h3> <small *ngIf="summaries"> Total {{summaries.length}}</small>
+                </md-card-title>
+            </md-card-header>
+            <md-card-content>
+
+
             <table>
                 <tr>
                     <th  (click)="onClickHeader('MarketName')">Name</th>
@@ -40,13 +48,14 @@
 
 
                     <td>{{market.PrevDay}}</td>
-                    <td>{{market.TimeStamp}}</td>
+                    <td><small>{{market.TimeStamp}}</small></td>
 
                   <!--  <td>{{market.IsSponsored}}</td>
                     <td class="my-timestamp"><div>{{market.Created}}</div></td>
                     <td class="notice">{{market.Notice}}</td>-->
                 </tr>
             </table>
+            </md-card-content>
         </md-card>
         <md-card>
         </md-card>
