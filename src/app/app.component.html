@@ -3,14 +3,24 @@
     <md-sidenav-container >
         <md-sidenav #sidenav>
             <md-list>
+                <a md-list-item routerLink='/email-service/watch-dog'>Bittrex</a>
                 <a md-list-item routerLink='/bittrex'>Bittrex</a>
                 <a md-list-item routerLink='/shapeshift'>ShapeShift</a>
                 <a md-list-item routerLink='/changelly'>Changelly</a>
                 <a md-list-item routerLink='/ss-main'>Shapeshift Selected</a>
-                <a md-list-item routerLink='/exchange-ss'>Exchange SS</a>
-                <a md-list-item routerLink='/my-wallets'>My Wallets</a>
-                <a md-list-item routerLink='/login'>Login</a>
-                <a md-list-item routerLink='/logout'>Logout</a>
+                <hr/>
+                <div>
+
+                    <a md-list-item routerLink='/exchange-ss'>Exchange SS</a>
+                    <a md-list-item routerLink='/my-wallets'>My Wallets</a>
+                    <hr/>
+                </div>
+
+
+                <a md-list-item [routerLink]="['/login/sign-in']">Login</a>
+                <a md-list-item [routerLink]="['/login/forgot-password']">Forgot Password</a>
+                <a md-list-item [routerLink]="['/login/register']">Register</a>
+                <a md-list-item [routerLink]="['/login/logout']">Logout</a>
 
             </md-list>
 

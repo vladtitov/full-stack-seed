@@ -9,15 +9,19 @@ import { RepoBrowserComponent } from './github/repo-browser/repo-browser.compone
 import { RepoListComponent } from './github/repo-list/repo-list.component';
 import { RepoDetailComponent } from './github/repo-detail/repo-detail.component';
 import { ContactComponent } from './contact/contact.component';
-import {LoginMain} from './login/login-main.component';
+
 import {SsMainComponent} from './ss-browse/ss-main/ss-main.component';
 import {WalletsMainComponent} from './wallets/wallets-main/wallets-main.component';
 import {MyWalletsComponent} from './wallets/my-wallets/my-wallets.component';
 import {ExchangeSsComponent} from './exchange-ss/exchange-ss.component';
-import {Login2Component} from './login2/login2.component';
+
 import {BittrexMarketComponent} from './bittrex/bittrex-market/bittrex-market.component';
 import {AllCoinsTableComponent} from './ss-browse/all-coins-table/all-coins-table.component';
 import {ChMarketComponent} from './changelly/ch-market/ch-market.component';
+import {WatchDogComponent} from './email-service/watch-dog/watch-dog.component';
+import {LoginComponent} from './login/login/login.component';
+import {ConfirmComponent} from './login/confirm/confirm.component';
+
 
 
 export const rootRouterConfig: Routes = [
@@ -30,10 +34,11 @@ export const rootRouterConfig: Routes = [
   { path: 'shapeshift', component: AllCoinsTableComponent },
   { path: 'changelly', component: ChMarketComponent },
   { path: 'wallets', component: WalletsMainComponent },
+  { path: 'email-service/watch-dog', component: WatchDogComponent },
   { path: 'my-wallets', component: MyWalletsComponent },
   { path: 'bittrex', component: BittrexMarketComponent },
-  { path: 'login', component: Login2Component },
-  { path: 'logout', component: Login2Component },
+  { path: 'login/:topic', component: LoginComponent },
+  { path: 'login-confirm', component:ConfirmComponent },
   { path: 'github', component: RepoBrowserComponent,
     children: [
       { path: '', component: RepoListComponent },

@@ -18,7 +18,7 @@ import {
   MdTabsModule,
   MdSelectModule,
   MdSnackBarModule,
-  MdProgressSpinnerModule
+  MdProgressSpinnerModule, MdChipsModule
 
 } from "@angular/material";
 
@@ -40,7 +40,8 @@ import {
     MdTabsModule,
     MdSelectModule,
     MdSnackBarModule,
-    MdProgressSpinnerModule
+    MdProgressSpinnerModule,
+    MdChipsModule
 
 
   ],
@@ -61,6 +62,7 @@ import {
     MdSelectModule,
     MdSnackBarModule,
     MdProgressSpinnerModule,
+    MdChipsModule
 
 
   ]

@@ -23,8 +23,8 @@ import { RepoListComponent } from './github/repo-list/repo-list.component';
 import { RepoDetailComponent } from './github/repo-detail/repo-detail.component';
 import { ContactComponent } from './contact/contact.component';
 import {GithubService} from './github/shared/github.service';
-import {LoginMain} from './login/login-main.component';
-import {LoginService} from './login/login.service';
+
+
 import {MaterialModule} from '@angular/material';
 //import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HomeService} from './home/home.service';
@@ -43,6 +43,9 @@ import {Login2Component} from './login2/login2.component';
 import {BittrexModule} from './bittrex/bittrex.module';
 import {ChangellyModule} from './changelly/changelly.module';
 import {SendAlertService} from './exchange-ss/send-alert.service';
+import {EmailServiceModule} from './email-service/email-service.module';
+import {AuthHttpService} from './login/auth-http.service';
+import {LoginModule} from './login/login.module';
 
 declare const Buffer:any;
 
@@ -57,7 +60,6 @@ declare const Buffer:any;
     RepoDetailComponent,
     HomeComponent,
     ContactComponent,
-    LoginMain,
     ExchangeSsComponent,
     Login2Component
 
@@ -74,6 +76,8 @@ declare const Buffer:any;
     SharedModule,
     BittrexModule,
     ChangellyModule,
+    EmailServiceModule,
+    LoginModule,
    // AuthModule,
     RouterModule.forRoot(rootRouterConfig, { useHash: true })
   ],
@@ -81,7 +85,7 @@ declare const Buffer:any;
 
     //AuthHttp,
     GithubService,
-    LoginService,
+    AuthHttpService,
     HomeService,
     ExchangeSsService,
     WalletsAllService,

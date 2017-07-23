@@ -221,6 +221,7 @@ export class AuthHttp {
     return this.requestHelper({ body: '', method: RequestMethod.Options, url: url }, options);
   }
 
+
 }
 
 /**

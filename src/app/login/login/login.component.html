@@ -1,0 +1,118 @@
+<div id="LoginScreen">
+    <md-tab-group [selectedIndex]="selectedTab">
+        <md-tab label="Login">
+            <form  #f1="ngForm" (ngSubmit)="signUp()"  autocomplete="off" >
+                    <md-list>
+                        <md-list-item>
+                            <md-input-container>
+                                <input #username mdInput [(ngModel)]="login.email"   required
+                                       minlength="6" type="text"  placeholder="email" name="email" type="email"  />
+                            </md-input-container>
+                        </md-list-item>
+
+                        <md-list-item>
+                            <md-input-container>
+                                <input mdInput
+                                       placeholder="Password"
+                                       name="password"
+                                       [(ngModel)]="login.password"
+                                       required
+                                       minlength="6"
+                                       [type]="showPass ? 'text': 'password'"
+                                       style="width: 100%"/>
+                            </md-input-container>
+                        </md-list-item>
+                        <md-list-item>
+                           <md-checkbox #showpass (change)="onShowPasswordChanged($event, showpass)" >Show password</md-checkbox>
+                        </md-list-item>
+
+                        <md-list-item>
+                            <button md-raised-button color="accent" [disabled]="!f1.valid"  (click)="onSubmit()">
+                                Sign In
+                            </button>
+                        </md-list-item>
+                    </md-list>
+
+            </form>
+        </md-tab>
+        <md-tab label="Register">
+            <form  #f2="ngForm" (ngSubmit)="signUp()"  autocomplete="off" >
+
+                <md-list>
+                    <md-list-item>
+                        <md-chip-list  *ngIf="exists">
+                            <md-chip color="accent" selected="true">
+                                User with this email exists
+                                <!--  <br/>
+                                  <a  [routerLink]="['/login/forgot-password']">Reset Password</a>-->
+                            </md-chip>
+
+                        </md-chip-list>
+
+                        <md-input-container>
+                            <input #username mdInput [(ngModel)]="login.email"   required
+                                   minlength="6" type="text"  placeholder="email" name="email" type="email"  />
+                        </md-input-container>
+
+                    </md-list-item>
+
+
+                    <md-list-item>
+                        <md-input-container>
+                            <input mdInput
+                                   placeholder="Password"
+                                   name="password"
+                                   [(ngModel)]="login.password"
+                                   required
+                                   minlength="6"
+                                   [type]="showPass ? 'text': 'password'"
+                                   style="width: 100%"/>
+                        </md-input-container>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-input-container>
+                            <input mdInput
+                                   placeholder="Confirm Password"
+                                   name="password"
+                                   [(ngModel)]="confirmPassword"
+                                   required
+                                   minlength="6"
+                                   [type]="showPass ? 'text': 'password'"
+                                   style="width: 100%"/>
+                        </md-input-container>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-checkbox #showpass (change)="onShowPasswordChanged($event, showpass)" >Show password</md-checkbox>
+                    </md-list-item>
+
+                    <md-list-item>
+                        <button md-raised-button color="accent" [disabled]="!f2.valid"  (click)="onRegister()">
+                            Register
+                        </button>
+                    </md-list-item>
+                </md-list>
+            </form>
+        </md-tab>
+        <md-tab label="Forget Password">
+            <form  #f3="ngForm" (ngSubmit)="signUp()"  autocomplete="off" >
+
+                <md-list>
+                    <md-list-item>
+                        <md-input-container>
+                            <input #username mdInput [(ngModel)]="login.email"   required
+                                   minlength="6" type="text"  placeholder="Email" name="email" type="email"  />
+                        </md-input-container>
+                    </md-list-item>
+
+                    <md-list-item>
+                        <button md-raised-button color="accent" [disabled]="!f3.valid"  (click)="onSubmit()">
+                            Reset Password
+                        </button>
+                    </md-list-item>
+                </md-list>
+
+            </form>
+        </md-tab>
+
+    </md-tab-group>
+</div>
