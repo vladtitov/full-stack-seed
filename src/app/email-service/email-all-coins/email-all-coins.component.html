@@ -1,0 +1,33 @@
+<div class="content">
+          <h3>All Coins </h3><small>Total {{allCoinsData.length}}</small>
+            <table>
+                <tr>
+                    <th (click)="onClickHeader('market_cap_usd')">market cap usd</th>
+                    <th (click)="onClickHeader('percent_change_1h')">1h%</th>
+                    <th (click)="onClickHeader('percent_change_24h')" >24h%</th>
+                    <th (click)="onClickHeader('percent_change_7d')">7 days%</th>
+                    <th (click)="onClickHeader('price_usd')">$US</th>
+                    <th (click)="onClickHeader('rank')">Rank</th>
+                    <th (click)="onClickHeader('symbol')">Symbol</th>
+                    <th>#</th>
+                    <th>Name</th>
+                </tr>
+
+                <tbody *ngFor="let item of allCoinsData">
+                <tr>
+                    <td>{{item.market_cap_usd}}</td>
+                    <td>{{item.percent_change_1h}}</td>
+                    <td>{{item.percent_change_24h}}</td>
+                    <td>{{item.percent_change_7d}}</td>
+                    <td>{{item.price_usd}}</td>
+                    <td>{{item.rank}}</td>
+                    <td>{{item.symbol}}</td>
+                    <td><input type="checkbox"  (change)="onCoinSelected($event, item)" [checked]="item.selected"   name="selected"/></td>
+                    <td>{{item.name}}</td>
+
+                </tr>
+
+                </tbody>
+            </table>
+
+</div>

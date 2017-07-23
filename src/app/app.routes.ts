@@ -21,6 +21,11 @@ import {ChMarketComponent} from './changelly/ch-market/ch-market.component';
 import {WatchDogComponent} from './email-service/watch-dog/watch-dog.component';
 import {LoginComponent} from './login/login/login.component';
 import {ConfirmComponent} from './login/confirm/confirm.component';
+import {EmailMainComponent} from './email-service/email-main/email-main.component';
+import {EmailAllCoinsComponent} from './email-service/email-all-coins/email-all-coins.component';
+import {EmailSelectedCoinsComponent} from './email-service/email-selected-coins/email-selected-coins.component';
+import {CreateWatchdogComponent} from './email-service/create-watchdog/create-watchdog.component';
+import {RunWatchdogsComponent} from './email-service/run-watchdogs/run-watchdogs.component';
 
 
 
@@ -34,7 +39,16 @@ export const rootRouterConfig: Routes = [
   { path: 'shapeshift', component: AllCoinsTableComponent },
   { path: 'changelly', component: ChMarketComponent },
   { path: 'wallets', component: WalletsMainComponent },
-  { path: 'email-service/watch-dog', component: WatchDogComponent },
+  { path: 'email-service', component: EmailMainComponent,
+    children:[
+      { path: '', component: EmailAllCoinsComponent },
+      { path: 'all-coins', component: EmailAllCoinsComponent},
+      { path: 'selected-coins', component: EmailSelectedCoinsComponent},
+      { path: 'create-watch-dog', component: CreateWatchdogComponent},
+      { path: 'run-watch-dog', component: RunWatchdogsComponent}
+    ]
+
+  },
   { path: 'my-wallets', component: MyWalletsComponent },
   { path: 'bittrex', component: BittrexMarketComponent },
   { path: 'login/:topic', component: LoginComponent },

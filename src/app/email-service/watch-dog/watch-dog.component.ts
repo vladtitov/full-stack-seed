@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthHttpService} from '../../login/auth-http.service';
 
 @Component({
   selector: 'app-watch-dog',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WatchDogComponent implements OnInit {
 
-  constructor() { }
+  constructor(private auth:AuthHttpService) { }
 
   ngOnInit() {
+    this.auth.setLastVisited()
   }
 
 }

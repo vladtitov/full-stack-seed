@@ -20,3 +20,11 @@ export class VOExchangeData{
   last_updated_date:string;
   selected:boolean;
 }
+
+
+export class WatchDog {
+  label:string;
+  uid:string;
+  symbol:string;
+  coin:VOExchangeData;
+}

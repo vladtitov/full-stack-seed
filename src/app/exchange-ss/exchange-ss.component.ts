@@ -30,7 +30,7 @@ export class ExchangeSsComponent implements OnInit {
   constructor(
     private api:ApiServerService,
     private allWallets:WalletsAllService,
-    private allCoins:AllCoinsService,
+    private coinsService:AllCoinsService,
     private sendAlertService:SendAlertService
   ) { }
 
@@ -42,14 +42,14 @@ export class ExchangeSsComponent implements OnInit {
       this.refreshData();
     });
 
-    this.allCoins.market$.subscribe(market =>{
+    /*this.coinsService.selectedMarketIndexed$.subscribe(market =>{
 
       this.market = market;
       this.refreshData();
 
 
 
-    })
+    })*/
    // this.exchangeService.init();
     //this.exchangeService.myWallets$.subscribe(res=>this.myWallets= res);
 
@@ -62,7 +62,7 @@ export class ExchangeSsComponent implements OnInit {
 
   refreshData(){
 
-    if(!this.market || !this._myWallets) return;
+   /* if(!this.market || !this._myWallets) return;
 
     let market = this.market;
 
@@ -115,7 +115,7 @@ export class ExchangeSsComponent implements OnInit {
 
     if(alerts.length)this.sendAlertService.sendMarketChange(alerts)
     this.myWallets = wallets;
-
+*/
 
   }
 
@@ -125,13 +125,13 @@ export class ExchangeSsComponent implements OnInit {
       this.active = true;
       this.seconds = 30;
       this.interval = setInterval(()=>{this.seconds++},1000);
-      this.allCoins.start();
+      this.coinsService.start();
     }else{
       this.start_stop = 'Start';
       this.seconds =0;
       clearInterval(this.interval);
       this.active = false;
-      this.allCoins.stop();
+      this.coinsService.stop();
     }
   }
 

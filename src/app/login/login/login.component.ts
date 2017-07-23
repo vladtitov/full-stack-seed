@@ -59,14 +59,10 @@ export class LoginComponent implements OnInit {
             break;
           default:
             this.selectedTab = 0;
-            break
-
+            break;
         }
-
-
       }
       console.log(this.selectedTab);
-
     });
 
   }
@@ -80,17 +76,22 @@ export class LoginComponent implements OnInit {
   onSubmit(){
     this.authHttp.login(this.login.email, this.login.password).subscribe(res => {
       console.log(res);
-      if(res){
+      if(res.success){
+        this.authHttp.setUser(res.success)
+        let redirect =  this.authHttp.getLastVisited() ||'/email-service/watch-dog';
+        this.router.navigate([redirect]);
+
         //this.fullName = res.firstName + ' ' + res.lastName;
         //setTimeout(()=>this.modal.closeWindow('login success'), 3000);
       }
-      else console.error(' error login');
+      else console.error(' error login', res);
     });
 
 
   }
 
   signUp() {
+
     console.log("Sign Up Data:" , this.login);
   }
 }

@@ -12,7 +12,8 @@ export class SelectedCoinsComponent implements OnInit {
 
   //@Input() modelCoins:VOExchangeData[];
 
-  selectedCoins:VOExchangeData[]
+  selectedCoins:VOExchangeData[] =[];
+
   sortCreteria:string = 'rank';
   asc_desc='asc';
 

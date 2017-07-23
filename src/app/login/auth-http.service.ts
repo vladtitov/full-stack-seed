@@ -4,6 +4,8 @@ import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 
 import { Http, Response, Headers, RequestOptions, CookieXSRFStrategy, XSRFStrategy, ResponseContentType,} from '@angular/http';
+import {ActivatedRoute, Router} from '@angular/router';
+
 
 @Injectable()
 export class AuthHttpService {
@@ -11,16 +13,17 @@ export class AuthHttpService {
 
   private userSub: BehaviorSubject<VOUser>;
   user$: Observable<VOUser>;
-  private user: VOUser;
+  private user: VOUser = null;
   authenticatedSub: Subject<boolean>;
   authenticated$: Observable<boolean>;
 
-  constructor( private http:Http) {
+  constructor( private http:Http, private router:Router, private route:ActivatedRoute) {
 
     this.userSub = new BehaviorSubject<VOUser>(null);
     this.user$ = this.userSub.asObservable();
     this.authenticatedSub = new BehaviorSubject<boolean>(false);
     this.authenticated$ = this.authenticatedSub.asObservable();
+    setTimeout(()=>this.autoLogin(),2000);
   }
 
   login(email: string, password: string) {
@@ -28,7 +31,7 @@ export class AuthHttpService {
    // let sub: Subject<VOUser> = new Subject();
 
     let url ='/api/login/login';
-    return this.http.post(url,{email:email, password:password})
+    return this.http.post(url,{email:email, password:password}).map(res=>res.json())
 
 
 
@@ -41,41 +44,44 @@ export class AuthHttpService {
   }
 
   autoLogin(): void {
-    let user: VOUser = this.readUser();
-    //TODO if expired error
-    console.log(user);
-   /* this.getUsersExtended(user).subscribe(user => {
-      //console.log(user);
-      this.userSub.next(user);
-    });*/
+
+    let lastVisited = this.getLastVisited();
+    let user = this.getUser();
+    this.user = user
+    this.dispatchUser();
+    if(user && lastVisited && lastVisited !== 'undefined') {
+      console.warn(lastVisited);
+      this.router.navigate([lastVisited]);
+    }
 
   }
 
 
+  dispatchUser():void{
+    this.userSub.next(this.user);
+    this.authenticatedSub.next((this.user !== null));
+  }
   logout() {
-
-
-
     this.user = null;
-    this.userSub.next(null);
-    this.authenticatedSub.next(false);
+    this.dispatchUser();
   }
 
 
 
   getToken(): string {
-    let user: VOUser = this.readUser();
+    let user: VOUser = this.getUser();
     return user ? user.token : null;
   }
 
 
-  readUser(): VOUser {
-    // if(!this.us)
+  getUser(): VOUser {
     if (!this.user) {
       let str = localStorage.getItem('authentication');
       try {
-        if (str) this.user = JSON.parse(atob(str));  //   new VOUser(JSON.parse(atob(str)));
+        if (str) this.user = JSON.parse(atob(str));
+        // /   new VOUser(JSON.parse(atob(str)));
       } catch (e) {
+        console.error(e);
         //this.removeAuthentication();
       }
     }
@@ -85,6 +91,10 @@ export class AuthHttpService {
   removeAuthentication(): void {
     this.logout();
     localStorage.removeItem('authentication');
+  }
+
+  saveUser(){
+    localStorage.setItem('authentication',btoa(JSON.stringify(this.user)));
   }
 
 
@@ -141,6 +151,21 @@ export class AuthHttpService {
     return this.http.options(url, this.addHeaders(options));
   }
 
+  setLastVisited(url?:string){
+    if(!url)url = this.router.url;
+   localStorage.setItem('lastVisited', url);
+  }
+
+  getLastVisited():string{
+    return localStorage.getItem('lastVisited');
+  }
+
+  setUser(user:any) {
+
+    this.user = user;
+    this.saveUser();
+    this.dispatchUser();
+  }
 }
 
 

@@ -35,14 +35,14 @@ export class MyWalletsComponent implements OnInit {
       this.myWallets = res
     });
 
-    this.allCoinsService.market$.subscribe(market=>{
+    /*this.allCoinsService.selectedMarketIndexed$.subscribe(market=>{
      // console.log(market)
 
       this.myWallets.forEach(function (wallet) {
         wallet.market =  market[wallet.symbol]
         wallet.usd =  (wallet.market.price_usd * wallet.balanceDisplay).toFixed(2);
       })
-    })
+    })*/
   }
 
 

@@ -1,0 +1,14 @@
+<div>
+    <md-input-container>
+        <input [(ngModel)]="watchDog.label"  mdInput placeholder="Dog Name" name="label">
+    </md-input-container>
+
+    <md-select placeholder="Select Coin" (change)="coinSelectChanged($event)">
+        <md-option *ngFor="let coin of coinsAvailable" [value]="coin.symbol">
+             {{ coin.symbol}} {{ coin.name}}
+        </md-option>
+    </md-select>
+
+    <button md-raised-button color="accent" (click)="createDog($event)">Create</button>
+
+</div>
