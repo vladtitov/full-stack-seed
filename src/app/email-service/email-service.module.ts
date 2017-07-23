@@ -12,6 +12,7 @@ import { EmailSelectedCoinsComponent } from './email-selected-coins/email-select
 import {RouterModule} from '@angular/router';
 import {MaterialAppModule} from '../material/material-app.module';
 import {FormsModule} from '@angular/forms';
+import {EmailServiceService} from './email-service.service';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import {FormsModule} from '@angular/forms';
   ],
   declarations: [WatchDogComponent, CreateWatchdogComponent, RunWatchdogsComponent, EmailMainComponent, EmailAllCoinsComponent, EmailSelectedCoinsComponent],
   providers:[
-    WatchDogService
+    WatchDogService,
+    EmailServiceService
   ]
 
 })

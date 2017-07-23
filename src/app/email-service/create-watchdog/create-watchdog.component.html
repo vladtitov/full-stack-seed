@@ -1,14 +1,87 @@
-<div>
+<div class="content">
+<hr/>
+    <table>
+        <tbody>
+        <tr>
+            <td>Market Cap $US</td>
+            <td><small>%</small>1h</td>
+            <td><small>%</small>24h</td>
+            <td><small>%</small>7d</td>
+        </tr>
+        <tr  *ngIf="coinMarket">
+            <td>{{coinMarket.market_cap_usd}}</td>
+            <td>{{coinMarket.percent_change_1h}}</td>
+            <td>{{coinMarket.percent_change_24h}}</td>
+            <td>{{coinMarket.percent_change_7d}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br/>
+    <md-input-container>
+      <small> <input [(ngModel)]="watchDog.uid"  mdInput placeholder="ID"  disabled name="uid"></small>
+    </md-input-container>
     <md-input-container>
         <input [(ngModel)]="watchDog.label"  mdInput placeholder="Dog Name" name="label">
     </md-input-container>
 
+
     <md-select placeholder="Select Coin" (change)="coinSelectChanged($event)">
         <md-option *ngFor="let coin of coinsAvailable" [value]="coin.symbol">
-             {{ coin.symbol}} {{ coin.name}}
+             {{ coin.symbol}} <small>{{ coin.name}}</small>
         </md-option>
     </md-select>
 
     <button md-raised-button color="accent" (click)="createDog($event)">Create</button>
+
+    <hr/>
+    <div>
+        <h4> Watch Dogs </h4> <small>Total {{watchDogs.length}}</small>
+        <table>
+            <tr>
+                <th><button md-button (click)="onClickHeader('uid')">ID</button></th>
+                <th><button md-button (click)="onClickHeader('label')">Name</button></th>
+                <th><button md-button (click)="onClickHeader('symbol')">Symbol</button></th>
+                <th><button md-button (click)="onClickHeader('percent_change_1h')" >1h%</button></th>
+                <th><button md-button (click)="onClickHeader('percent_change_24h')">24h%</button></th>
+                <th><button md-button (click)="onClickHeader('percent_change_7d')" > 7days%</button></th>
+                <th><button md-button (click)="onClickHeader('price_usd')" >$US</button></th>
+                <th><button md-button (click)="onClickHeader('rank')" >Rank</button></th>
+                <td><small>Delete</small></td>
+
+               <!-- <th><button md-button (click)="onClickHeader('percent_change_24h')" >24h%</button></th>
+                <th><button md-button (click)="onClickHeader('percent_change_7d')">7 days%</button></th>
+
+
+                <th><button md-button (click)="onClickHeader('symbol')">Symbol</button></th>-->
+
+            </tr>
+
+            <tbody *ngFor="let dog of watchDogs">
+
+            <tr>
+                <td><small>{{dog.uid}}</small></td>
+                <td>{{dog.label}}</td>
+                <td><b><small>{{dog.symbol}}</small></b></td>
+                <td>{{dog.market?.percent_change_1h}}</td>
+                <td>{{dog.market?.percent_change_24h}}</td>
+                <td>{{dog.market?.percent_change_7d}}</td>
+                <td>{{dog.market?.price_usd}}</td>
+                <td>{{dog.market?.rank}}</td>
+                <td><div (click)="onDeleteClick(dog)"  class="fa fa-close"></div></td>
+
+               <!-- <td>{{item.percent_change_1h}}</td>
+                <td>{{item.percent_change_24h}}</td>
+                <td>{{item.percent_change_7d}}</td>
+                <td>{{item.price_usd}}</td>
+                <td>{{item.rank}}</td>
+                <td>{{item.symbol}}</td>
+                <td>{{item.name}}</td>-->
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
 
 </div>

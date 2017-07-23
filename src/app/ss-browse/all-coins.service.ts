@@ -5,18 +5,18 @@ import {Http} from '@angular/http';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Subject} from 'rxjs/Subject';
 import {script} from 'bitcoinjs-lib';
-import number = script.number;
+import * as _ from 'lodash';
 
 @Injectable()
 export class AllCoinsService {
 
   private allCoins:VOExchangeData[];
   allCoins$:Observable<VOExchangeData[]>;
-  private allCoinsSub:BehaviorSubject<VOExchangeData[]>
+  private allCoinsSub:BehaviorSubject<VOExchangeData[]>;
 
   private selectedCoins:{[symbol:string]:VOExchangeData};
   selectedCoins$:Observable<{[symbol:string]:VOExchangeData}>;
-  private selectedCoinsSub:BehaviorSubject<{[symbol:string]:VOExchangeData}>
+  private selectedCoinsSub:BehaviorSubject<{[symbol:string]:VOExchangeData}>;
 
   private selectedCoinsNames:string[];
 
@@ -45,19 +45,19 @@ export class AllCoinsService {
     this.allCoinsSub =  new BehaviorSubject([]);
     this.allCoins$ =  this.allCoinsSub.asObservable();
 
-    this.timestampSub = new Subject()
+    this.timestampSub = new Subject();
     this.timestamp$ = this.timestampSub.asObservable();
 
 
-    this.totalCoinsSub = new Subject()
+    this.totalCoinsSub = new Subject();
     this.totalCoins$ = this.totalCoinsSub.asObservable();
 
 
-    this.totalCoinsSub = new Subject()
+    this.totalCoinsSub = new Subject();
     this.totalCoins$ = this.totalCoinsSub.asObservable();
 
 
-    this.totalSelectedCoinsSub = new Subject()
+    this.totalSelectedCoinsSub = new Subject();
     this.totalSelectedCoins$ = this.totalCoinsSub.asObservable();
 
 
@@ -179,8 +179,12 @@ export class AllCoinsService {
 
 
   addSelected(symbol:string){
-    let ar = this.getSelectedNames()
+
+    let ar:string[] = _.keys(this.selectedCoins);
+
+
     if(ar.indexOf(symbol) === -1)ar.push(symbol);
+
     this.saveSelectedNames(ar);
     this.populateSelected();
     this.selectedCoinsSub.next(this.selectedCoins);

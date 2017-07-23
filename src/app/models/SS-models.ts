@@ -26,5 +26,11 @@ export class WatchDog {
   label:string;
   uid:string;
   symbol:string;
-  coin:VOExchangeData;
+  watchScript?:any;
+  market?:VOExchangeData;
+  percent_change_1h?:number;
+  percent_change_24h?:number;
+  percent_change_7d?:number;
+  price_usd?: number;
+  rank?: number;
 }

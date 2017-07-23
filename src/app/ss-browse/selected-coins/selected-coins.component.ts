@@ -21,7 +21,7 @@ export class SelectedCoinsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.allCoinsService.selectedCoins$.subscribe(res=>this.selectedCoins = res)
+    this.allCoinsService.selectedCoins$.subscribe(res=>this.selectedCoins = _.values(res))
 
   }
 
