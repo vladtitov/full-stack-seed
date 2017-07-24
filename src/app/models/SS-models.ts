@@ -24,10 +24,17 @@ export class VOExchangeData{
 
 export class WatchDog {
   label:string;
+  description?:string;
   uid:string;
   symbol:string;
-  watchScript?:any;
+
+  price_usdlast100?:number[];
+  price_usd_changes?:{[time:string]:number};
+  savedValues?:any;
+  watchScript?:string;
+  watchwers?:any;
   market?:VOExchangeData;
+  prevMarket?:VOExchangeData;
   percent_change_1h?:number;
   percent_change_24h?:number;
   percent_change_7d?:number;

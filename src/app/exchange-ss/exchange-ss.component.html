@@ -1,5 +1,6 @@
 <div>
-    <h2>Exchange <small>{{counter}}</small> <button md-raised-button  (click)="startStop($event)"><md-spinner *ngIf="active" color="accent" mode="determinate" value="+{{seconds}}"></md-spinner> {{start_stop}} </button></h2>
+    <h2>Exchange <small>{{counter}}</small> <button md-raised-button  (click)="startStop($event)">
+        <md-spinner *ngIf="active" color="accent" mode="determinate" value="+{{seconds}}"></md-spinner> {{start_stop}} </button></h2>
 
     <div>
         <h3>Wallets</h3>

@@ -1,3 +1,88 @@
-<p>
-  run-watchdogs works!
-</p>
+<div class="content">
+
+    <section *ngIf="currentDog">
+        <h3>{{currentDog.uid}}</h3>
+        <md-input-container>
+            <small> <input [(ngModel)]="currentDog.label"  mdInput placeholder="Name"   name="name"></small>
+        </md-input-container>
+        <md-input-container>
+            <small> <input [(ngModel)]="currentDog.description"  mdInput placeholder="Description"  name="description"></small>
+        </md-input-container>
+
+        <button md-raised-button color="primary" (click)="saveDog($event)"><span class="fa fa-save"></span> Save</button>
+        <button md-raised-button  (click)="closeDog($event)"><span class="fa fa-close"></span> Close</button>
+
+        <div>
+
+            <button md-raised-button color="accent"  (click)="testScript(scriptContent)"><span class="fa fa-play"></span> Test</button>
+            <button md-raised-button  (click)="viewSorse($event)"><span class="fa fa-eye"></span> Source</button>
+
+            <div *ngIf="!isSource">
+                <h3>Wizard</h3>
+                <div>
+
+                </div>
+            </div>
+
+
+            <div *ngIf="isSource" class="content" style="margin-left: 20px">
+                <div #scriptContent contenteditable="true">
+                    {{currentDog.watchScript}}
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+    </section>
+
+    <section>
+        <h4> Watch Dogs </h4>
+        <small>Total {{watchDogs.length}}</small>
+        <button color="accent" md-raised-button  (click)="startRefreshTimer()" title="{{start_stop}}">
+            <span *ngIf="!active" class="fa fa-play"></span>
+            <md-spinner *ngIf="active"  mode="determinate" value="+{{seconds}}"></md-spinner>
+            <span *ngIf="active" class="fa fa-pause"></span>
+        </button>
+
+        <table>
+            <tr>
+                <th><button md-button >Setup</button></th>
+                <th><button md-button (click)="onClickHeader('uid')">ID</button></th>
+                <th><button md-button (click)="onClickHeader('label')">Name</button></th>
+               <!-- <th><button md-button (click)="onClickHeader('symbol')">Symbol</button></th>-->
+                <th><button md-button (click)="onClickHeader('percent_change_1h')" >1h%</button></th>
+                <th><button md-button (click)="onClickHeader('percent_change_24h')">24h%</button></th>
+                <th><button md-button (click)="onClickHeader('percent_change_7d')" > 7days%</button></th>
+                <th><button md-button (click)="onClickHeader('price_usd')" >$US</button></th>
+                <th><button md-button (click)="onClickHeader('rank')" >Rank</button></th>
+            </tr>
+
+            <tbody *ngFor="let dog of watchDogs">
+
+            <tr>
+                <td><div class="fa fa-edit" (click)="onEditDog(dog)"></div></td>
+                <td><small>{{dog.uid}}</small></td>
+                <td>{{dog.label}}</td>
+                <!--<td><b><small>{{dog.symbol}}</small></b></td>-->
+                <td>{{dog.percent_change_1h}}</td>
+                <td>{{dog.percent_change_24h}}</td>
+                <td>{{dog.percent_change_7d}}</td>
+                <td>{{dog.price_usd}}</td>
+                <td>{{dog.rank}}</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </section>
+
+
+
+    <section>
+
+    </section>
+</div>

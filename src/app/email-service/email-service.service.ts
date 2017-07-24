@@ -20,21 +20,33 @@ export class EmailServiceService {
   }
 
   saveData(){
-    let dogs =  _.cloneDeep(this.watchDogs);
-    console.log(dogs);
-    for(let str in dogs){
-      delete dogs[str].market;
-      dogs[str].uid = str;
+    let tosave:WatchDog[] =[] ;//=  _.cloneDeep(this.watchDogs);
+
+
+
+   // console.log(dogs);
+    for(let str in this.watchDogs){
+      let item =  this.watchDogs[str];
+      tosave.push({
+        uid:str,
+        label:item.label,
+        description:item.description,
+        symbol:item.symbol
+      })
     }
-    localStorage.setItem('watch-dogs', JSON.stringify(dogs));
+    localStorage.setItem('watch-dogs', JSON.stringify(tosave));
   }
 
   loadWatchDogs():void{
     let str = localStorage.getItem('watch-dogs');
+    this.watchDogs ={};
     if(str)
-
-      this.watchDogs = JSON.parse(str);
-    else this.watchDogs ={};
+      try{
+        let saved = JSON.parse(str);
+        this.watchDogs = <any>_.keyBy(saved,'uid');
+      }catch(e){
+      console.error(e);
+      }
     this.watchDogsSub.next(this.watchDogs);
   }
 
@@ -61,6 +73,13 @@ export class EmailServiceService {
     delete this.watchDogs[dog.uid];
     this.saveData();
     this.watchDogsSub.next(this.watchDogs);
+
+  }
+
+  saveDog(currentDog: WatchDog) {
+    let uid = currentDog.uid;
+    this.watchDogs[uid] = currentDog;
+    this.saveData();
 
   }
 }
