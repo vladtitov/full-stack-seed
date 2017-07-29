@@ -28,13 +28,14 @@ export class WatchDog {
   uid:string;
   symbol:string;
 
-  price_usdlast100?:number[];
-  price_usd_changes?:{[time:string]:number};
+  time?:string;
+  price_usd_history?:{time:string, value:number}[];
   savedValues?:any;
-  watchScript?:string;
+  scriptText?:string;
   watchwers?:any;
   market?:VOExchangeData;
   prevMarket?:VOExchangeData;
+  marketHistory?:VOExchangeData[];
   percent_change_1h?:number;
   percent_change_24h?:number;
   percent_change_7d?:number;

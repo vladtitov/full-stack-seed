@@ -1,38 +1,95 @@
 <div class="content">
 
     <section *ngIf="currentDog">
-        <h3>{{currentDog.uid}}</h3>
-        <md-input-container>
-            <small> <input [(ngModel)]="currentDog.label"  mdInput placeholder="Name"   name="name"></small>
-        </md-input-container>
-        <md-input-container>
-            <small> <input [(ngModel)]="currentDog.description"  mdInput placeholder="Description"  name="description"></small>
-        </md-input-container>
-
-        <button md-raised-button color="primary" (click)="saveDog($event)"><span class="fa fa-save"></span> Save</button>
-        <button md-raised-button  (click)="closeDog($event)"><span class="fa fa-close"></span> Close</button>
-
-        <div>
-
-            <button md-raised-button color="accent"  (click)="testScript(scriptContent)"><span class="fa fa-play"></span> Test</button>
-            <button md-raised-button  (click)="viewSorse($event)"><span class="fa fa-eye"></span> Source</button>
-
-            <div *ngIf="!isSource">
-                <h3>Wizard</h3>
-                <div>
-
-                </div>
-            </div>
 
 
-            <div *ngIf="isSource" class="content" style="margin-left: 20px">
-                <div #scriptContent contenteditable="true">
-                    {{currentDog.watchScript}}
+            <h3>{{currentDog.uid}}</h3>
 
-                </div>
-            </div>
+            <md-input-container>
+                <small> <input [(ngModel)]="currentDog.label"  mdInput placeholder="Name"   name="name"></small>
+            </md-input-container>
+            <md-input-container>
+                <small> <input [(ngModel)]="currentDog.description"  mdInput placeholder="Description"  name="description"></small>
+            </md-input-container>
 
+            <button md-raised-button color="primary" (click)="saveDog($event)"><span class="fa fa-save"></span> Save</button>
+            <button md-raised-button  (click)="closeDog($event)"><span class="fa fa-close"></span> Close</button>
+
+        <hr/>
+
+
+        <br/>
+
+<div style=" display: flex; flex-direction: row" >
+    <div id="ScriptContentContainer">
+
+            <span>{{currentDog.uid}}</span>
+
+        <small>{{currentDog.label}}</small>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+        <md-select  [(ngModel)]="currentTrigger" id="SelectTrigger" #selectedTrigger placeholder="Select Variable" >
+            <md-option [value]="'send_notification'"> <span class="fa fa-flash"></span> Send Notification</md-option>
+            <md-option *ngFor="let myvar of variablesAvailable" [value]="myvar.index">{{myvar.label}}</md-option>
+        </md-select>
+        <span class="fa fa-arrow-left"> </span>
+        <button md-raised-button color="primary" (click)="insertTrigget(selectedTrigger)">
+            <span class="fa fa-paste"></span>
+            Insert
+        </button>
+        <button color="accent" md-raised-button  (click)="runScript()" title="Run Script">
+            <span class="fa fa-flash"></span>
+            Run
+        </button>
+
+
+
+        <div id="ScriptContent"
+             #scriptContent
+             contenteditable="true"
+             spellcheck="false"
+             (blur)="onScriptContentBlur(scriptContent)"
+             (change)="onScriptContentChange(scriptContent)">
+
+            {{currentDog.scriptText}}
         </div>
+    </div>
+
+    <div class="current-changes">
+        <h3>Current Values</h3>
+        <table>
+            <tbody>
+            <tr *ngFor="let myvar of variablesAvailable">
+                <td>{{myvar.index}}</td>
+                <td>
+                    <input style="width: 3em" type="text" [(ngModel)]="myvar.value"  name="value" />
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+
+
+           <!-- <button md-raised-button color="accent"  (click)="testScript(scriptContent)"><span class="fa fa-play"></span> Test</button>
+            <button md-raised-button  (click)="viewSorse($event)"><span class="fa fa-eye"></span> Source</button>
+-->
+
+
+
+                <!--
+                  let prev_usd_percent_change_1h:number, prev_usd_percent_change_24h:number, prev_usd_percent_change_7d:number,
+    usd_percent_change_1h:number, usd_percent_change_24h:number, usd_percent_change_7d:number;
+                -->
+
+
+
+
 
 
 
@@ -43,9 +100,9 @@
         <h4> Watch Dogs </h4>
         <small>Total {{watchDogs.length}}</small>
         <button color="accent" md-raised-button  (click)="startRefreshTimer()" title="{{start_stop}}">
-            <span *ngIf="!active" class="fa fa-play"></span>
-            <md-spinner *ngIf="active"  mode="determinate" value="+{{seconds}}"></md-spinner>
-            <span *ngIf="active" class="fa fa-pause"></span>
+            <span *ngIf="!isRunning" class="fa fa-play"></span>
+            <md-spinner *ngIf="isRunning" mode="determinate" value="+{{seconds}}"></md-spinner>
+            <span *ngIf="isRunning" class="fa fa-pause"></span>
         </button>
 
         <table>
@@ -82,7 +139,4 @@
 
 
 
-    <section>
-
-    </section>
 </div>

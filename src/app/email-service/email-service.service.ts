@@ -31,7 +31,9 @@ export class EmailServiceService {
         uid:str,
         label:item.label,
         description:item.description,
-        symbol:item.symbol
+        symbol:item.symbol,
+        scriptText:item.scriptText
+
       })
     }
     localStorage.setItem('watch-dogs', JSON.stringify(tosave));
