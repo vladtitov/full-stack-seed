@@ -1,24 +1,6 @@
 <div class="content">
-
     <section *ngIf="currentDog">
 
-
-            <h3>{{currentDog.uid}}</h3>
-
-            <md-input-container>
-                <small> <input [(ngModel)]="currentDog.label"  mdInput placeholder="Name"   name="name"></small>
-            </md-input-container>
-            <md-input-container>
-                <small> <input [(ngModel)]="currentDog.description"  mdInput placeholder="Description"  name="description"></small>
-            </md-input-container>
-
-            <button md-raised-button color="primary" (click)="saveDog($event)"><span class="fa fa-save"></span> Save</button>
-            <button md-raised-button  (click)="closeDog($event)"><span class="fa fa-close"></span> Close</button>
-
-        <hr/>
-
-
-        <br/>
 
 <div style=" display: flex; flex-direction: row" >
     <div id="ScriptContentContainer">
@@ -42,6 +24,10 @@
             <span class="fa fa-flash"></span>
             Run
         </button>
+        <button md-raised-button color="primary" (click)="saveDog($event)">
+            <span class="fa fa-save"></span>
+            Save
+        </button>
 
 
 
@@ -51,8 +37,6 @@
              spellcheck="false"
              (blur)="onScriptContentBlur(scriptContent)"
              (change)="onScriptContentChange(scriptContent)">
-
-            {{currentDog.scriptText}}
         </div>
     </div>
 

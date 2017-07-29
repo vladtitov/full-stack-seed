@@ -38,12 +38,12 @@ export class RunWatchdogsComponent implements OnInit, AfterViewInit {
   start_stop:string= "Start Refresh Timer";
 
   variablesAvailable:{label:string, index:string, value:number}[] =[
-    {label:'usd_percent_change_1h',index:'usd_percent_change_1h',value:0},
-    {label:'usd_percent_change_24h',index:'usd_percent_change_24h', value:0},
-    {label:'usd_percent_change_7d',index:'usd_percent_change_7d',value:0},
-    {label:'prev_usd_percent_change_1h',index:'prev_usd_percent_change_1h',value:0},
-    {label:'prev_usd_percent_change_24h',index:'prev_usd_percent_change_24h',value:0},
-    {label:'prev_usd_percent_change_7d',index:'prev_usd_percent_change_7d',value:0}
+    {label:'percent_change_1h',index:'percent_change_1h',value:0},
+    {label:'percent_change_24h',index:'percent_change_24h', value:0},
+    {label:'percent_change_7d',index:'percent_change_7d',value:0},
+    {label:'prev_percent_change_1h',index:'prev_percent_change_1h',value:0},
+    {label:'prev_percent_change_24h',index:'prev_percent_change_24h',value:0},
+    {label:'prev_percent_change_7d',index:'prev_percent_change_7d',value:0}
   ]
 
   @ViewChild('scriptContent') scriptContent;
@@ -66,15 +66,23 @@ export class RunWatchdogsComponent implements OnInit, AfterViewInit {
 
     console.log(script);
 
+    let ar = this.variablesAvailable;
 
+
+
+    let market={};
+    let history ={};
+
+    ar.forEach(function (item) {
+      if(item.index.indexOf('prev_') ===-1)market[item.index] = +item.value;
+      else history[item.index.substr(5)] = +item.value;
+    });
 
     let dog ={
-      market:{
-        percent_change_1h:3,
-        percent_change_24h:20,
-        percent_change_7d:30
-      }
-    }
+      market:market,
+      marketHistory:[history]
+    };
+    console.log(dog);
 
     let result =  runDogScript(dog, script);
     console.log(result);
@@ -150,8 +158,16 @@ export class RunWatchdogsComponent implements OnInit, AfterViewInit {
 
   setCurrentScript(script:string){
 
-    console.log('setCurrentScript  ' + script);
-    if(this.scriptContent)this.scriptContent.nativeElement.innerHTML = script;
+
+   // console.log(script.indexOf("\n"));
+
+
+    if(this.scriptContent){
+      console.log('setCurrentScript  ' + script);
+      script = script.replace(new RegExp("\n","g"),'<br/>');
+     // console.log('setCurrentScript  ' + script);
+      this.scriptContent.nativeElement.innerHTML = script;
+    }
     else setTimeout(()=>this.setCurrentScript(script),2000);
   }
   getCurrentScript():string{
@@ -185,6 +201,7 @@ export class RunWatchdogsComponent implements OnInit, AfterViewInit {
   }
 
   setCurrentDog(dog:WatchDog){
+    console.log(' set dog ', dog);
     let script = (dog && dog.scriptText)?dog.scriptText:'';
     this.setCurrentScript(script);
     this.currentDog = dog;
